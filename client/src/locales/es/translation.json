@@ -1,0 +1,216 @@
+{
+  "nav": {
+    "home": "INICIO",
+    "gallery": "GALERÍA",
+    "shop": "TIENDA",
+    "about": "SOBRE MÍ",
+    "contact": "CONTACTO"
+  },
+  "home": {
+    "hero": {
+      "title": "Arte que Captura\nla Esencia Nórdica",
+      "subtitle": "Explorando la luz, el paisaje y las emociones a través de la pintura contemporánea",
+      "viewGallery": "Ver Galería",
+      "learnMore": "Conocer Más"
+    },
+    "featured": {
+      "title": "Obras Destacadas",
+      "subtitle": "Una selección de mis trabajos más recientes",
+      "viewAll": "Ver Toda la Galería"
+    },
+    "about": {
+      "title": "Sobre Mí",
+      "text1": "Soy Minna Kattelus, artista finlandesa y profesora de artes visuales. Mi trabajo explora la relación entre la luz nórdica y las emociones humanas, creando paisajes y pinturas que capturan la esencia tranquila y contemplativa del norte.",
+      "text2": "A través de la pintura, busco capturar momentos efímeros de belleza y contemplación, invitando al espectador a pausar y reconectar con lo que nos rodea.",
+      "button": "Conoce Más"
+    },
+    "cta": {
+      "title": "Adquiere una Obra Original",
+      "subtitle": "Cada pieza es única y viene con certificado de autenticidad. Envíos seguros a toda Europa.",
+      "button": "Explorar Tienda"
+    }
+  },
+  "gallery": {
+    "title": "Galería",
+    "description": "Una colección de mis obras que explora la luz, el color y la emoción de la naturaleza nórdica",
+    "filters": {
+      "all": "TODAS",
+      "landscapes": "PAISAJES",
+      "abstract": "ABSTRACTO",
+      "portraits": "RETRATOS",
+      "nature": "NATURALEZA"
+    }
+  },
+  "shop": {
+    "title": "Tienda",
+    "description": "Obras originales disponibles para adquisición. Cada pieza es única y viene con certificado de autenticidad.",
+    "sort": {
+      "label": "Ordenar por:",
+      "featured": "Destacadas",
+      "newest": "Más recientes",
+      "priceLow": "Precio: menor a mayor",
+      "priceHigh": "Precio: mayor a menor"
+    },
+    "results": "{{count}} obra disponible",
+    "results_plural": "{{count}} obras disponibles",
+    "badges": {
+      "sold": "VENDIDA",
+      "featured": "DESTACADA"
+    },
+    "buttons": {
+      "viewDetails": "Ver Detalles",
+      "addToCart": "Agregar al Carrito",
+      "notAvailable": "No Disponible"
+    },
+    "info": {
+      "original": {
+        "title": "Obras Originales",
+        "text": "Cada pieza es una obra original única, pintada a mano por Minna Kattelus."
+      },
+      "certificate": {
+        "title": "Certificado de Autenticidad",
+        "text": "Todas las obras incluyen certificado firmado que garantiza su autenticidad."
+      },
+      "shipping": {
+        "title": "Envío Seguro",
+        "text": "Embalaje profesional y envío asegurado a toda Europa."
+      },
+      "consultation": {
+        "title": "Consultas Personalizadas",
+        "text": "¿Interesado en una obra? Contáctanos para más información o visita al estudio."
+      }
+    },
+    "cta": {
+      "title": "¿No encuentras lo que buscas?",
+      "text": "Acepto encargos personalizados. Contacta conmigo para discutir tu visión y crear una obra única para tu espacio.",
+      "button": "Solicitar Encargo"
+    }
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "subtitle": "Artista Finlandesa y Profesora de Artes Visuales",
+    "intro": "Soy Minna Kattelus, artista finlandesa cuyo trabajo se centra en la exploración de la luz nórdica y las emociones humanas a través de la pintura contemporánea.",
+    "journey": {
+      "title": "Mi Camino Artístico",
+      "p1": "Nacida y criada en Finlandia, mi conexión con la naturaleza y el paisaje finlandés fue innegable desde joven. Durante mi infancia, pasaba horas observando cómo la luz cambiante transformaba los bosques y lagos que me rodeaban. Esa fascinación temprana por la luz y el color se convirtió en el fundamento de mi práctica artística.",
+      "p2": "Tras completar mis estudios en la Academia de Bellas Artes de Vaasa, me sumergí en la exploración de diferentes técnicas y medios. Fue durante mi Maestría en Bellas Artes en la Universidad de Helsinki donde encontré mi voz única: una fusión de paisaje nórdico, abstracción emocional y una paleta de colores inspirada en las estaciones finlandesas.",
+      "p3": "Mi práctica artística combina técnicas tradicionales con enfoques contemporáneos, trabajando principalmente con acrílico y óleo sobre lienzo. Creo firmemente en el poder transformador del arte y en su capacidad para conectar lo que nos rodea con nuestras emociones más profundas."
+    },
+    "teaching": {
+      "title": "Enseñanza y Vocación",
+      "p1": "Además de mi práctica artística, soy profesora en un centro vocacional donde comparto el principio de pintar a través de la emoción en un paisaje creativo. La enseñanza me ha enriquecido como artista al poder transformar y compartir el arte con mis estudiantes, fomentando la creatividad y la expresión personal.",
+      "p2": "Creo firmemente en el poder transformador del arte y en su capacidad para conectar a las personas con sus emociones más profundas. En mis clases, animo a los estudiantes a encontrar su propia voz artística y a experimentar sin miedo al error.",
+      "p3": "La enseñanza me permite devolver lo que el arte me ha dado: una forma de ver el mundo con mayor sensibilidad y una herramienta para expresar lo inexpresable."
+    },
+    "education": {
+      "title": "Educación",
+      "mfa": "MFA en Bellas Artes",
+      "mfaInstitution": "Universidad de Helsinki",
+      "bfa": "BFA en Pintura",
+      "bfaInstitution": "Academia de Bellas Artes de Vaasa"
+    },
+    "exhibitions": {
+      "title": "Exposiciones Recientes",
+      "solo": "Solo",
+      "group": "Colectiva"
+    },
+    "techniques": {
+      "title": "Técnicas",
+      "acrylic": "Acrílico sobre lienzo",
+      "oil": "Óleo sobre lienzo",
+      "layering": "Pintura en capas",
+      "mixed": "Técnica mixta"
+    },
+    "philosophy": {
+      "title": "Mi Filosofía Artística",
+      "quote": "El arte no se trata solo de lo que ves, sino de lo que sientes. Cada pincelada es una emoción, cada color es un recuerdo, y cada obra es una ventana al alma del paisaje nórdico.",
+      "text": "Mi trabajo busca capturar la esencia de los paisajes finlandeses y las emociones que evocan. No busco crear representaciones literales, sino interpretaciones emocionales que inviten al espectador a su propia contemplación. La luz, la atmósfera y el color son mis herramientas para construir puentes entre el mundo exterior y nuestro mundo interior."
+    },
+    "cta": {
+      "title": "¿Interesado en mi trabajo?",
+      "text": "Me encantaría conectar contigo. Ya sea para adquirir una obra, comisionar un encargo personalizado, o simplemente charlar sobre arte.",
+      "viewWorks": "Ver Obras Disponibles",
+      "contact": "Contactar"
+    }
+  },
+  "contact": {
+    "title": "Contacto",
+    "description": "¿Interesado en una obra o tienes alguna consulta? Me encantaría saber de ti.",
+    "form": {
+      "title": "Envía un Mensaje",
+      "name": "Nombre",
+      "email": "Email",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "required": "*",
+      "placeholders": {
+        "name": "Tu nombre",
+        "email": "tu@email.com",
+        "subject": "Asunto del mensaje",
+        "message": "Escribe tu mensaje aquí..."
+      },
+      "errors": {
+        "nameRequired": "El nombre es requerido",
+        "emailRequired": "El email es requerido",
+        "emailInvalid": "El email no es válido",
+        "messageRequired": "El mensaje es requerido",
+        "messageShort": "El mensaje debe tener al menos 10 caracteres"
+      },
+      "submit": "Enviar Mensaje",
+      "submitting": "Enviando...",
+      "success": "✓ ¡Mensaje enviado con éxito! Te responderé pronto."
+    },
+    "info": {
+      "title": "Información de Contacto",
+      "email": "Email",
+      "instagram": "Instagram",
+      "location": "Ubicación",
+      "locationValue": "Helsinki, Finlandia",
+      "responseTime": {
+        "title": "Horario de Respuesta",
+        "text": "Normalmente respondo en 24-48 horas. Si tu consulta es urgente, por favor indícalo en el asunto del mensaje."
+      },
+      "studioVisit": {
+        "title": "Visitas al Estudio",
+        "text": "Si estás en Helsinki y te gustaría visitar mi estudio para ver las obras en persona, contáctame para coordinar una cita. Las visitas son con cita previa únicamente."
+      }
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "q1": {
+        "question": "¿Realizas encargos personalizados?",
+        "answer": "Sí, acepto encargos personalizados. Contáctame con tus ideas y te proporcionaré un presupuesto y tiempo estimado."
+      },
+      "q2": {
+        "question": "¿Envías internacionalmente?",
+        "answer": "Actualmente envío a toda Europa. Para envíos fuera de Europa, contáctame para discutir opciones y costos."
+      },
+      "q3": {
+        "question": "¿Las obras incluyen certificado?",
+        "answer": "Todas mis obras originales incluyen certificado de autenticidad firmado y numerado."
+      },
+      "q4": {
+        "question": "¿Ofreces impresiones?",
+        "answer": "Actualmente solo vendo obras originales. Si estás interesado en impresiones de edición limitada, contáctame para más información."
+      }
+    }
+  },
+  "footer": {
+    "about": "Artista finlandesa y profesora de artes visuales especializada en pintura contemporánea inspirada por la luz y el paisaje nórdico.",
+    "links": "Enlaces",
+    "contact": "Contacto",
+    "follow": "Sígueme",
+    "rights": "Todos los derechos reservados."
+  },
+  "common": {
+    "year": "{{year}}",
+    "medium": "Técnica",
+    "size": "Tamaño"
+  },
+  "error404": {
+    "title": "¡Vaya! Parece que la musa se ha llevado esta página.",
+    "message": "La URL que intentaste acceder no existe o la obra maestra que buscabas se encuentra en otra pared. El arte a veces es caótico.",
+    "homeButton": "Volver a la Galería Principal",
+    "imageAlt": "Artista pintando con caos de pintura. Error 404"
+  }
+}
