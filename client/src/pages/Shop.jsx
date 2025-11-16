@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import './Shop.css';
+import { useTranslation } from 'react-i18next';
 
 const Shop = () => {
+  const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState('TODAS');
   const [sortBy, setSortBy] = useState('featured');
   
-  const filters = ['TODAS', 'PAISAJES', 'ABSTRACTO', 'RETRATOS', 'NATURALEZA'];
+  const filters = [t('gallery.filters.all'), t('gallery.filters.landscapes'),t('gallery.filters.abstract'),t('gallery.filters.portraits'),t('gallery.filters.nature')];
   
   const artworks = [
     {
       id: 1,
       title: 'Silencio Blanco',
-      category: 'PAISAJES',
+      category: t('gallery.filters.landscapes'),
       medium: 'Acrílico sobre lienzo',
       size: '80 x 60 cm',
       year: '2024',
@@ -23,7 +25,7 @@ const Shop = () => {
     {
       id: 2,
       title: 'Luces del Norte',
-      category: 'ABSTRACTO',
+      category: t('gallery.filters.abstract'),
       medium: 'Óleo sobre lienzo',
       size: '100 x 100 cm',
       year: '2023',
@@ -35,7 +37,7 @@ const Shop = () => {
     {
       id: 3,
       title: 'Bosque de Bruma',
-      category: 'NATURALEZA',
+      category: t('gallery.filters.nature'),
       medium: 'Acrílico sobre lienzo',
       size: '70 x 90 cm',
       year: '2024',
@@ -47,7 +49,7 @@ const Shop = () => {
     {
       id: 4,
       title: 'Contemplación',
-      category: 'RETRATOS',
+      category: t('gallery.filters.portraits'),
       medium: 'Óleo sobre lienzo',
       size: '50 x 70 cm',
       year: '2023',
@@ -59,7 +61,7 @@ const Shop = () => {
     {
       id: 5,
       title: 'Horizonte Infinito',
-      category: 'PAISAJES',
+      category: t('gallery.filters.landscapes'),
       medium: 'Acrílico sobre lienzo',
       size: '120 x 60 cm',
       year: '2024',
@@ -71,7 +73,7 @@ const Shop = () => {
     {
       id: 6,
       title: 'Geometría Orgánica',
-      category: 'ABSTRACTO',
+      category: t('gallery.filters.abstract'),
       medium: 'Acrílico sobre lienzo',
       size: '80 x 80 cm',
       year: '2023',
@@ -83,7 +85,7 @@ const Shop = () => {
     {
       id: 7,
       title: 'Reflejo Invernal',
-      category: 'PAISAJES',
+      category: t('gallery.filters.landscapes'),
       medium: 'Óleo sobre lienzo',
       size: '90 x 70 cm',
       year: '2024',
@@ -95,7 +97,7 @@ const Shop = () => {
     {
       id: 8,
       title: 'Forma y Color',
-      category: 'ABSTRACTO',
+      category: t('gallery.filters.abstract'),
       medium: 'Acrílico sobre lienzo',
       size: '60 x 80 cm',
       year: '2023',
@@ -107,7 +109,7 @@ const Shop = () => {
   ];
   
   // Filtrar por categoría
-  let filteredArtworks = activeFilter === 'TODAS' 
+  let filteredArtworks = activeFilter === t('gallery.filters.all') 
     ? artworks 
     : artworks.filter(work => work.category === activeFilter);
   
@@ -131,10 +133,9 @@ const Shop = () => {
       {/* Header */}
       <div className="shop-header">
         <div className="container">
-          <h1>Tienda</h1>
+          <h1>{t('shop.title')}</h1>
           <p className="shop-description">
-            Obras originales disponibles para adquisición. 
-            Cada pieza es única y viene con certificado de autenticidad.
+            {t('shop.description')}
           </p>
         </div>
       </div>
@@ -156,24 +157,24 @@ const Shop = () => {
             </div>
             
             <div className="shop-sort">
-              <label htmlFor="sort-select">Ordenar por:</label>
+              <label htmlFor="sort-select">{t('shop.sort.label')}</label>
               <select 
                 id="sort-select"
                 value={sortBy} 
                 onChange={(e) => setSortBy(e.target.value)}
                 className="sort-select"
               >
-                <option value="featured">Destacadas</option>
-                <option value="newest">Más recientes</option>
-                <option value="price-low">Precio: menor a mayor</option>
-                <option value="price-high">Precio: mayor a menor</option>
+                <option value="featured">{t('shop.sort.featured')}</option>
+                <option value="newest">{t('shop.sort.newest')}</option>
+                <option value="price-low">{t('shop.sort.priceLow')}</option>
+                <option value="price-high">{t('shop.sort.priceHigh')}</option>
               </select>
             </div>
           </div>
 
           {/* Results count */}
           <div className="results-count">
-            <p>{filteredArtworks.length} {filteredArtworks.length === 1 ? 'obra' : 'obras'} disponibles</p>
+            <p>{filteredArtworks.length} {filteredArtworks.length === 1 ? t('shop.results') : t('shop.results_plural')}</p>
           </div>
 
           {/* Products Grid */}
@@ -184,11 +185,11 @@ const Shop = () => {
                   <img src={artwork.image} alt={artwork.title} className="product-image" />
                   
                   {!artwork.available && (
-                    <div className="sold-badge">VENDIDA</div>
+                    <div className="sold-badge">{t('shop.badges.sold')}</div>
                   )}
                   
                   {artwork.featured && artwork.available && (
-                    <div className="featured-badge">DESTACADA</div>
+                    <div className="featured-badge">{t('shop.badges.featured')}</div>
                   )}
                   
                   <div className="product-overlay">
@@ -196,7 +197,7 @@ const Shop = () => {
                       className={`btn-add-cart ${!artwork.available ? 'disabled' : ''}`}
                       disabled={!artwork.available}
                     >
-                      {artwork.available ? 'Ver Detalles' : 'No Disponible'}
+                      {artwork.available ? t('shop.buttons.viewDetails') : t('shop.buttons.notAvailable')}
                     </button>
                   </div>
                 </div>
@@ -209,11 +210,11 @@ const Shop = () => {
                   
                   {artwork.available ? (
                     <button className="btn-primary btn-full">
-                      Agregar al Carrito
+                      {t('shop.buttons.addToCart')}
                     </button>
                   ) : (
                     <button className="btn-secondary btn-full" disabled>
-                      No Disponible
+                      {t('shop.buttons.notAvailable')}
                     </button>
                   )}
                 </div>
@@ -229,26 +230,26 @@ const Shop = () => {
           <div className="shop-info-grid">
             <div className="info-card">
               <div className="info-icon">🎨</div>
-              <h3>Obras Originales</h3>
-              <p>Cada pieza es una obra original única, pintada a mano por Minna Kattelus.</p>
+              <h3>{t('shop.info.original.title')}</h3>
+              <p>{t('shop.info.original.text')}</p>
             </div>
             
             <div className="info-card">
               <div className="info-icon">📜</div>
-              <h3>Certificado de Autenticidad</h3>
-              <p>Todas las obras incluyen certificado firmado que garantiza su autenticidad.</p>
+              <h3>{t('shop.info.certificate.title')}</h3>
+              <p>{t('shop.info.certificate.text')}</p>
             </div>
             
             <div className="info-card">
               <div className="info-icon">📦</div>
-              <h3>Envío Seguro</h3>
-              <p>Embalaje profesional y envío asegurado a toda Europa.</p>
+              <h3>{t('shop.info.shipping.title')}</h3>
+              <p>{t('shop.info.shipping.text')}</p>
             </div>
             
             <div className="info-card">
               <div className="info-icon">💬</div>
-              <h3>Consultas Personalizadas</h3>
-              <p>¿Interesado en una obra? Contáctanos para más información o visita al estudio.</p>
+              <h3>{t('shop.info.consultation.title')}</h3>
+              <p>{t('shop.info.consultation.text')}</p>
             </div>
           </div>
         </div>
@@ -257,12 +258,11 @@ const Shop = () => {
       {/* CTA Section */}
       <section className="section cta-section">
         <div className="container cta-content">
-          <h2>¿No encuentras lo que buscas?</h2>
+          <h2>{t('shop.cta.title')}</h2>
           <p>
-            Acepto encargos personalizados. Contacta conmigo para discutir 
-            tu visión y crear una obra única para tu espacio.
+            {t('shop.cta.text')}
           </p>
-          <button className="btn-primary">Solicitar Encargo</button>
+          <button className="btn-primary">{t('shop.cta.button')}</button>
         </div>
       </section>
     </div>

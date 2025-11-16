@@ -68,7 +68,7 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div className="footer-bottom">
-          <p>&copy; {currentYear} Minna Kattelus. {t('footer.rights')}.</p>
+          <p>&copy; {currentYear} Minna Kattelus. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>

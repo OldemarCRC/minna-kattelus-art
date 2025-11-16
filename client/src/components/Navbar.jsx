@@ -25,22 +25,22 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/galeria" className={`nav-link ${isActive('/galeria')}`}>
+            <Link to="/gallery" className={`nav-link ${isActive('/gallery')}`}>
               {t('nav.gallery')}
             </Link>
           </li>
           <li>
-            <Link to="/tienda" className={`nav-link ${isActive('/tienda')}`}>
+            <Link to="/shop" className={`nav-link ${isActive('/shop')}`}>
               {t('nav.shop')}
             </Link>
           </li>
           <li>
-            <Link to="/sobre-mi" className={`nav-link ${isActive('/sobre-mi')}`}>
+            <Link to="/about-me" className={`nav-link ${isActive('/about-me')}`}>
               {t('nav.about')}
             </Link>
           </li>
           <li>
-            <Link to="/contacto" className={`nav-link ${isActive('/contacto')}`}>
+            <Link to="/contact" className={`nav-link ${isActive('/contact')}`}>
               {t('nav.contact')}
             </Link>
           </li>

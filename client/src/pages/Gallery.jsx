@@ -65,7 +65,7 @@ const Gallery = () => {
     }
   ];
   
-  const filteredArtworks = activeFilter === 'TODAS' 
+  const filteredArtworks = activeFilter === t('gallery.filters.all') 
     ? artworks 
     : artworks.filter(work => work.category === activeFilter);
 

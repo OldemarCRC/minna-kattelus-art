@@ -1,0 +1,29 @@
+{
+  "name": "minna-kattelus-art",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OldemarCRC/minna-kattelus-art.git"
+  },
+  "keywords": [],
+  "author": "Jose Oldemar Chaves Urbina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OldemarCRC/minna-kattelus-art/issues"
+  },
+  "homepage": "https://github.com/OldemarCRC/minna-kattelus-art#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

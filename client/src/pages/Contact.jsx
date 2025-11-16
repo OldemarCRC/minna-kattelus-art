@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import './Contact.css';
+import { useTranslation } from 'react-i18next';
+
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -32,19 +35,19 @@ const Contact = () => {
     const newErrors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'El nombre es requerido';
+      newErrors.name = t('contact.form.errors.nameRequired');
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'El email es requerido';
+      newErrors.email = t('contact.form.errors.emailRequired');
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'El email no es válido';
+      newErrors.email = t('contact.form.errors.emailInvalid');
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'El mensaje es requerido';
+      newErrors.message = t('contact.form.errors.messageRequired');
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'El mensaje debe tener al menos 10 caracteres';
+      newErrors.message = t('contact.form.errors.messageShort');
     }
 
     return newErrors;
@@ -64,7 +67,7 @@ const Contact = () => {
 
     // Simular envío (aquí conectarías con tu backend)
     setTimeout(() => {
-      console.log('Formulario enviado:', formData);
+      console.log('Form submitted:', formData);
       setIsSubmitting(false);
       setSubmitSuccess(true);
       setFormData({
@@ -74,7 +77,6 @@ const Contact = () => {
         message: ''
       });
       
-      // Ocultar mensaje de éxito después de 5 segundos
       setTimeout(() => {
         setSubmitSuccess(false);
       }, 5000);
@@ -86,9 +88,9 @@ const Contact = () => {
       {/* Header */}
       <div className="contact-header">
         <div className="container">
-          <h1>Contacto</h1>
+          <h1>{t('contact.title')}</h1>
           <p className="contact-description">
-            ¿Interesado en una obra o tienes alguna consulta? Me encantaría saber de ti.
+            {t('contact.description')}
           </p>
         </div>
       </div>
@@ -99,18 +101,18 @@ const Contact = () => {
           <div className="contact-grid">
             {/* Contact Form */}
             <div className="contact-form-section">
-              <h2>Envía un Mensaje</h2>
+              <h2>{t('contact.form.title')}</h2>
               
               {submitSuccess && (
                 <div className="success-message">
-                  ✓ ¡Mensaje enviado con éxito! Te responderé pronto.
+                  {t('contact.form.succes')}
                 </div>
               )}
 
               <form onSubmit={handleSubmit} className="contact-form">
                 <div className="form-group">
                   <label htmlFor="name">
-                    Nombre <span className="required">*</span>
+                    {t('contact.form.name')} <span className="required">*</span>
                   </label>
                   <input
                     type="text"
@@ -119,7 +121,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     className={errors.name ? 'error' : ''}
-                    placeholder="Tu nombre"
+                    placeholder={t('contact.form.placeholders.name')}
                   />
                   {errors.name && (
                     <span className="error-message">{errors.name}</span>
@@ -128,7 +130,7 @@ const Contact = () => {
 
                 <div className="form-group">
                   <label htmlFor="email">
-                    Email <span className="required">*</span>
+                    {t('contact.form.email')} <span className="required">*</span>
                   </label>
                   <input
                     type="email"
@@ -137,7 +139,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     className={errors.email ? 'error' : ''}
-                    placeholder="tu@email.com"
+                    placeholder={t('contact.form.placeholders.email')}
                   />
                   {errors.email && (
                     <span className="error-message">{errors.email}</span>
@@ -145,20 +147,20 @@ const Contact = () => {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="subject">Asunto</label>
+                  <label htmlFor="subject">{t('contact.form.subject')}</label>
                   <input
                     type="text"
                     id="subject"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    placeholder="Asunto del mensaje"
+                    placeholder={t('contact.form.placeholders.subject')}
                   />
                 </div>
 
                 <div className="form-group">
                   <label htmlFor="message">
-                    Mensaje <span className="required">*</span>
+                    {t('contact.form.message')} <span className="required">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -167,7 +169,7 @@ const Contact = () => {
                     onChange={handleChange}
                     className={errors.message ? 'error' : ''}
                     rows="6"
-                    placeholder="Escribe tu mensaje aquí..."
+                    placeholder={t('contact.form.placeholders.message')}
                   ></textarea>
                   {errors.message && (
                     <span className="error-message">{errors.message}</span>
@@ -179,20 +181,20 @@ const Contact = () => {
                   className="btn-primary btn-full"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
+                  {isSubmitting ? t('contact.form.submitting') : t('contact.form.submit')}
                 </button>
               </form>
             </div>
 
             {/* Contact Info */}
             <div className="contact-info-section">
-              <h2>Información de Contacto</h2>
+              <h2>{t('contact.info.title')}</h2>
               
               <div className="contact-info-items">
                 <div className="contact-info-item">
                   <div className="info-icon">✉️</div>
                   <div className="info-content">
-                    <h3>Email</h3>
+                    <h3>{t('contact.info.email')}</h3>
                     <p>
                       <a href="mailto:contact@minna-kattelus.fi">contact@minna-kattelus.fi</a>
                     </p>
@@ -202,7 +204,7 @@ const Contact = () => {
                 <div className="contact-info-item">
                   <div className="info-icon">📷</div>
                   <div className="info-content">
-                    <h3>Instagram</h3>
+                    <h3>{t('contact.info.instagram')}</h3>
                     <p>
                       <a href="https://instagram.com/minnak_art" target="_blank" rel="noopener noreferrer">
                         @minnak_art
@@ -214,26 +216,23 @@ const Contact = () => {
                 <div className="contact-info-item">
                   <div className="info-icon">📍</div>
                   <div className="info-content">
-                    <h3>Ubicación</h3>
-                    <p>Helsinki, Finlandia</p>
+                    <h3>{t('contact.info.location')}</h3>
+                    <p>{t('contact.info.locationValue')}</p>
                   </div>
                 </div>
               </div>
 
               <div className="response-time">
-                <h3>Horario de Respuesta</h3>
+                <h3>{t('contact.info.responseTime.title')}</h3>
                 <p>
-                  Normalmente respondo en 24-48 horas. Si tu consulta es urgente, 
-                  por favor indícalo en el asunto del mensaje.
+                  {t('contact.info.responseTime.text')}
                 </p>
               </div>
 
               <div className="studio-visit">
-                <h3>Visitas al Estudio</h3>
+                <h3>{t('contact.info.studioVisit.title')}</h3>
                 <p>
-                  Si estás en Helsinki y te gustaría visitar mi estudio para ver 
-                  las obras en persona, contáctame para coordinar una cita. 
-                  Las visitas son con cita previa únicamente.
+                  {t('contact.info.studioVisit.text')}
                 </p>
               </div>
             </div>
@@ -244,38 +243,34 @@ const Contact = () => {
       {/* FAQ Section */}
       <section className="section contact-faq">
         <div className="container">
-          <h2 className="section-title">Preguntas Frecuentes</h2>
+          <h2 className="section-title">{t('contact.faq.title')}</h2>
           
           <div className="faq-grid">
             <div className="faq-item">
-              <h3>¿Realizas encargos personalizados?</h3>
+              <h3>{t('contact.faq.q1.question')}</h3>
               <p>
-                Sí, acepto encargos personalizados. Contáctame con tus ideas y 
-                te proporcionaré un presupuesto y tiempo estimado.
+                {t('contact.faq.q1.answer')}
               </p>
             </div>
 
             <div className="faq-item">
-              <h3>¿Envías internacionalmente?</h3>
+              <h3>{t('contact.faq.q2.question')}</h3>
               <p>
-                Actualmente envío a toda Europa. Para envíos fuera de Europa, 
-                contáctame para discutir opciones y costos.
+                {t('contact.faq.q2.answer')}
               </p>
             </div>
 
             <div className="faq-item">
-              <h3>¿Las obras incluyen certificado?</h3>
+              <h3>{t('contact.faq.q3.question')}</h3>
               <p>
-                Todas mis obras originales incluyen certificado de autenticidad 
-                firmado y numerado.
+                {t('contact.faq.q3.answer')}
               </p>
             </div>
 
             <div className="faq-item">
-              <h3>¿Ofreces impresiones?</h3>
+              <h3>{t('contact.faq.q4.question')}</h3>
               <p>
-                Actualmente solo vendo obras originales. Si estás interesado en 
-                impresiones de edición limitada, contáctame para más información.
+                {t('contact.faq.q4.answer')}
               </p>
             </div>
           </div>
