@@ -128,7 +128,7 @@ const Home = () => {
             <h2>{t('home.about.title')}</h2>
             <p>{t('home.about.text1')}</p>
             <p>{t('home.about.text2')}</p>
-            <Link to="/sobre-mi">
+            <Link to="/about-me">
               <button className="btn-primary">{t('home.about.button')}</button>
             </Link>
           </div>
@@ -142,7 +142,7 @@ const Home = () => {
           <p>
             {t('home.cta.subtitle')}
           </p>
-          <Link to="/tienda">
+          <Link to="/shop">
             <button className="btn-primary">{t('home.cta.button')}</button>
           </Link>
         </div>
