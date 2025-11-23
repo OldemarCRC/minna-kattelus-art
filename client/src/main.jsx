@@ -11,6 +11,7 @@ import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import UserRegister from './pages/UserRegister';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       { path: 'olivia', element: <Login /> },
       { path: 'teresa', element: <Login /> },
       { path: 'dashboard', element: <Dashboard /> },
+      { path: 'user-register', element: <UserRegister />},
       { path: '*', element: <NotFound /> },
     ],
   },
