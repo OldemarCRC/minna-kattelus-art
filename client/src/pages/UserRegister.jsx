@@ -11,28 +11,27 @@ const UserRegister = () => {
     email: '',
     role: '',
     phone: '',
-    createdBy: ''
+    //createdBy: ''
   };
 
   const [formData, setFormData] = useState(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
 
-  // Verificar si el usuario actual es admin
-  /*   useEffect(() => {
-      const currentUser = localStorage.getItem('user');
-      if (!currentUser) {
-        navigate('/login');
-        return;
-      }
-      
-      const user = JSON.parse(currentUser);
-      if (user.role !== 'admin') {
-        navigate('/dashboard');
-      }
-      
-      setFormData(prev => ({ ...prev, createdBy: user.username }));
-    }, [navigate]); */
+  useEffect(() => {
+    const currentUser = localStorage.getItem('user');
+    if (!currentUser) {
+      navigate('/login');
+      return;
+    }
+
+    const user = JSON.parse(currentUser);
+    if (user.role !== 'admin') {
+      navigate('/dashboard');
+    }
+
+    setFormData(prev => ({ ...prev, createdBy: user.username }));
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -47,8 +46,8 @@ const UserRegister = () => {
     setIsSubmitting(true);
     setMessage({ type: '', text: '' });
 
-    const { username, fullName, email, role, phone, createdBy } = formData;
-    const payload = { username, fullName, email, role, phone, createdBy };
+    const { username, fullName, email, role, phone } = formData; // incluir createdBy cuando tengo el primer usuario
+    const payload = { username, fullName, email, role, phone }; // incluir createdBy cuando tengo el primer usuario
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {

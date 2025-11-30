@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './i18n';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AuthContextProvider } from './context/AuthContext'; // ← AGREGAR
 import App from './App.jsx';
 import Home from './pages/Home';
 import Gallery from './pages/Gallery';
@@ -12,6 +13,8 @@ import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import UserRegister from './pages/UserRegister';
+import ProtectedRoute from './components/ProtectedRoute';
+import VerifyEmail from './pages/VerifyEmail.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,8 +28,21 @@ const router = createBrowserRouter([
       { path: 'contact', element: <Contact /> },
       { path: 'olivia', element: <Login /> },
       { path: 'teresa', element: <Login /> },
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: 'user-register', element: <UserRegister />},
+      { path: 'verify-email/:token', element: <VerifyEmail /> },
+      {
+        path: 'dashboard', element: (
+          <ProtectedRoute allowedRoles={['admin', 'editor']}>
+            <Dashboard />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'user-register', element: (
+          <ProtectedRoute allowedRoles={['admin']}>
+            <UserRegister />
+          </ProtectedRoute>
+        )
+      },
       { path: '*', element: <NotFound /> },
     ],
   },
@@ -34,6 +50,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthContextProvider>  {/* ← AGREGAR ESTA LÍNEA */}
+      <RouterProvider router={router} />
+    </AuthContextProvider>  {/* ← AGREGAR ESTA LÍNEA */}
   </React.StrictMode>,
 );

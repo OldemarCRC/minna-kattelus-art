@@ -1,15 +1,24 @@
 import express from 'express';
+import {
+  registerUser,
+  loginUser,
+  verifyEmail,
+  changePassword,
+  getAllUsers,
+  deleteUser
+} from '../controllers/authController.js';
+import { protect, authorize } from '../middleware/auth.js';
+
 const router = express.Router();
-import { registerUser, loginUser, getAllUsers, deleteUser } from '../controllers/authController.js';
-// TODO: Agregar middleware de autenticación para rutas protegidas
-// const { protect, authorize } = require('../middleware/auth');
 
 // Public routes
 router.post('/login', loginUser);
+router.get('/verify-email/:token', verifyEmail);
 
-// Protected routes (por ahora sin middleware, agregar después)
-router.post('/register', registerUser); // Requiere: protect, authorize('admin')
-router.get('/users', getAllUsers);      // Requiere: protect, authorize('admin')
-router.delete('/users/:id', deleteUser); // Requiere: protect, authorize('admin')
+// Protected routes
+router.post('/register', protect, authorize('admin'), registerUser);
+router.put('/change-password', protect, changePassword);
+router.get('/users', protect, authorize('admin'), getAllUsers);
+router.delete('/users/:id', protect, authorize('admin'), deleteUser);
 
 export default router;

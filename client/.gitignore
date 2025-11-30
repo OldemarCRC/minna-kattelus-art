@@ -31,7 +31,4 @@ dist-ssr
 .env.local
 .env.*.local
 
-#Temporales, se agregarán a GitHub cuando estén completos
-src/pages/Dashboard.*
-src/pages/Login.*
 
