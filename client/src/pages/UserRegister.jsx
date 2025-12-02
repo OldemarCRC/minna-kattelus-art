@@ -11,7 +11,7 @@ const UserRegister = () => {
     email: '',
     role: '',
     phone: '',
-    //createdBy: ''
+    createdBy: ''
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -19,9 +19,9 @@ const UserRegister = () => {
   const [message, setMessage] = useState({ type: '', text: '' });
 
   useEffect(() => {
-    const currentUser = localStorage.getItem('user');
+    const currentUser = sessionStorage.getItem('user');
     if (!currentUser) {
-      navigate('/login');
+      navigate('/olivia');
       return;
     }
 
@@ -46,8 +46,8 @@ const UserRegister = () => {
     setIsSubmitting(true);
     setMessage({ type: '', text: '' });
 
-    const { username, fullName, email, role, phone } = formData; // incluir createdBy cuando tengo el primer usuario
-    const payload = { username, fullName, email, role, phone }; // incluir createdBy cuando tengo el primer usuario
+    const { username, fullName, email, role, phone, createdBy } = formData;
+    const payload = { username, fullName, email, role, phone, createdBy };
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {

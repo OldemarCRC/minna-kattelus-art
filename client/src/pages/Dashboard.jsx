@@ -338,9 +338,15 @@ const Dashboard = () => {
     const { t } = useTranslation();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
+    // Obtener usuario actual de sessionStorage
+    const userStr = sessionStorage.getItem('user');
+    const currentUser = userStr ? JSON.parse(userStr) : null;
+
     const handleLogout = () => {
         console.log('Logging out...');
-        window.location.href = '/olivia';
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('token');
+        window.location.href = '/';
     };
 
     return (
@@ -364,12 +370,14 @@ const Dashboard = () => {
                         </svg>
                         {isSidebarOpen && <span>{t('admin.formTitle')}</span>}
                     </a>
-                    <a href="/user-register" className="sidebar-nav-link">
-                        <svg className="sidebar-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
-                        </svg>
-                        {isSidebarOpen && <span>Register User</span>}
-                    </a>
+                    {currentUser?.role === 'admin' && (
+                        <a href="/user-register" className="sidebar-nav-link">
+                            <svg className="sidebar-nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                            </svg>
+                            {isSidebarOpen && <span>Register User</span>}
+                        </a>
+                    )}
                 </nav>
 
                 {/* Botón de Cerrar Sesión */}

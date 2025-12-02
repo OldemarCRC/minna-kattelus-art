@@ -7,8 +7,8 @@ export const protect = async (req, res, next) => {
     let token;
 
     // 1. Obtener token de cookie
-    if (req.cookies && req.cookies.token) {
-      token = req.cookies.token;
+    if (req.cookies && req.cookies.access_token) {
+      token = req.cookies.access_token;
     }
     // 2. O del header Authorization
     else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {

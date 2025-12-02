@@ -5,7 +5,7 @@ import './VerifyEmail.css';
 const VerifyEmail = () => {
   const { token } = useParams();
   const navigate = useNavigate();
-  const [status, setStatus] = useState('verifying'); // verifying, success, error
+  const [status, setStatus] = useState('verifying');
   const [message, setMessage] = useState('');
 
   useEffect(() => {

@@ -183,12 +183,12 @@ export const loginUser = async (req, res, next) => {
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'lax', // ✅ CAMBIADO
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', // ✅ CAMBIADO
       maxAge: 24 * 60 * 60 * 1000, // 24 horas
       path: '/'
     };
 
-    res.cookie('access_token', token, cookieOptions);
+    res.cookie('token', token, cookieOptions);
 
     // Enviar notificación de login exitoso
     try {
@@ -230,11 +230,17 @@ export const verifyEmail = async (req, res, next) => {
   try {
     const { token } = req.params;
 
-    // Buscar usuario con el token
-    const user = await User.findOne({ verificationToken: token });
+    // Primero buscar usuario con el token
+    let user = await User.findOne({ verificationToken: token });
 
     if (!user) {
-      throw createError(400, 'Invalid or expired verification token');
+      // Si no encuentra, puede ser que ya esté verificado
+      // Retornar mensaje amigable en lugar de error
+      return res.status(200).json({
+        success: true,
+        message: 'This verification link has already been used or your account is already verified. You can now log in.',
+        alreadyVerified: true
+      });
     }
 
     // Verificar cuenta
@@ -244,7 +250,8 @@ export const verifyEmail = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Email verified successfully. You can now log in.'
+      message: 'Email verified successfully! You can now log in.',
+      alreadyVerified: false
     });
 
   } catch (error) {
