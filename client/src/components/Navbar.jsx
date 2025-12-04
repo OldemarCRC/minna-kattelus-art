@@ -16,21 +16,22 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    // Verificar si hay usuario en sesión
+  const checkUser = () => {
     const userStr = sessionStorage.getItem('user');
-    if (userStr) {
-      setUser(JSON.parse(userStr));
-    }
+    setUser(userStr ? JSON.parse(userStr) : null);
+  };
 
-    // Escuchar cambios en sessionStorage
-    const handleStorageChange = () => {
-      const updatedUserStr = sessionStorage.getItem('user');
-      setUser(updatedUserStr ? JSON.parse(updatedUserStr) : null);
-    };
+  checkUser();
 
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+  checkUser();
+
+  const handleStorageChange = () => {
+    checkUser();
+  };
+
+  window.addEventListener('storage', handleStorageChange);
+  return () => window.removeEventListener('storage', handleStorageChange);
+}, [location]);
 
   const handleLogout = () => {
     sessionStorage.removeItem('user');

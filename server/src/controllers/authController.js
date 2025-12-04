@@ -42,16 +42,16 @@ export const registerUser = async (req, res, next) => {
     });
 
     if (existingUser) {
-      throw createError(400, 
-        existingUser.email === email 
-          ? 'Email already registered' 
+      throw createError(400,
+        existingUser.email === email
+          ? 'Email already registered'
           : 'Username already taken'
       );
     }
 
     // Generar contraseña temporal
     const tempPassword = crypto.randomBytes(8).toString('hex');
-    
+
     // Hash de la contraseña
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(tempPassword, salt);
@@ -119,10 +119,10 @@ export const loginUser = async (req, res, next) => {
     }
 
     // Obtener IP real del usuario
-    const userIp = req.headers['x-forwarded-for'] || 
-                   req.connection.remoteAddress || 
-                   req.socket.remoteAddress ||
-                   req.ip;
+    const userIp = req.headers['x-forwarded-for'] ||
+      req.connection.remoteAddress ||
+      req.socket.remoteAddress ||
+      req.ip;
     const loginDate = new Date().toLocaleString();
 
     // Buscar usuario
@@ -183,12 +183,14 @@ export const loginUser = async (req, res, next) => {
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', // ✅ CAMBIADO
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       maxAge: 24 * 60 * 60 * 1000, // 24 horas
       path: '/'
     };
 
     res.cookie('token', token, cookieOptions);
+    console.log('Cookie set for user:', user.username);
+    console.log('Cookie options:', cookieOptions);
 
     // Enviar notificación de login exitoso
     try {
@@ -214,8 +216,7 @@ export const loginUser = async (req, res, next) => {
         email: user.email,
         role: user.role,
         isVerified: user.isVerified
-      },
-      token // También devolver en JSON por compatibilidad
+      }
     });
 
   } catch (error) {
@@ -297,10 +298,10 @@ export const changePassword = async (req, res, next) => {
     await user.save();
 
     // Obtener IP real
-    const userIp = req.headers['x-forwarded-for'] || 
-                   req.connection.remoteAddress || 
-                   req.socket.remoteAddress ||
-                   req.ip;
+    const userIp = req.headers['x-forwarded-for'] ||
+      req.connection.remoteAddress ||
+      req.socket.remoteAddress ||
+      req.ip;
     const changeDate = new Date().toLocaleString();
 
     // Enviar notificación de cambio de contraseña
