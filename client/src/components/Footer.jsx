@@ -10,7 +10,7 @@ const Footer = () => {
   useEffect(() => {
     // Email ofuscado en Base64
     const encoded = 'bWlubmFrYXR0ZWx1c0BnbWFpbC5jb20='; // minnakattelus@gmail.com, cambiar cuando tengamos email del dominio
-    const emailLink = document.getElementById('email-link');
+    const emailLink = document.getElementById('footer-email-link');
 
     if (emailLink) {
       const email = atob(encoded);
@@ -46,7 +46,7 @@ const Footer = () => {
             <h3>{t('contact.title')}</h3>
             <ul className="footer-contact">
               <li>
-                <a id="email-link" href="#">Loading...</a>
+                <a id="footer-email-link" href="#">Loading...</a>
               </li>
               <li>{t('contact.info.locationValue')}</li>
             </ul>

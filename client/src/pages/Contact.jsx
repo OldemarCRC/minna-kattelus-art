@@ -133,7 +133,7 @@ const Contact = () => {
   useEffect(() => {
       // Email ofuscado en Base64
       const encoded = 'bWlubmFrYXR0ZWx1c0BnbWFpbC5jb20='; // minnakattelus@gmail.com, cambiar cuando tengamos email del dominio
-      const emailLink = document.getElementById('email-link');
+      const emailLink = document.getElementById('contact-email-link');
 
       if (emailLink) {
         const email = atob(encoded);
@@ -255,7 +255,7 @@ const Contact = () => {
                   <div className="info-content">
                     <h3>{t('contact.info.email')}</h3>
                     <p>
-                      <a id="email-link" href="#">Loading...</a>
+                      <a id="contact-email-link" href="#">Loading...</a>
                     </p>
                   </div>
                 </div>

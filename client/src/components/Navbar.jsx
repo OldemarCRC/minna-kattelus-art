@@ -10,73 +10,78 @@ const Navbar = () => {
   const { t } = useTranslation();
   const [user, setUser] = useState(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const isActive = (path) => {
     return location.pathname === path ? 'active' : '';
   };
 
   useEffect(() => {
-  const checkUser = () => {
-    const userStr = sessionStorage.getItem('user');
-    setUser(userStr ? JSON.parse(userStr) : null);
-  };
+    const checkUser = () => {
+      const userStr = sessionStorage.getItem('user');
+      setUser(userStr ? JSON.parse(userStr) : null);
+    };
 
-  checkUser();
-
-  checkUser();
-
-  const handleStorageChange = () => {
     checkUser();
-  };
 
-  window.addEventListener('storage', handleStorageChange);
-  return () => window.removeEventListener('storage', handleStorageChange);
-}, [location]);
+    const handleStorageChange = () => {
+      checkUser();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [location]);
 
   const handleLogout = () => {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('token');
     setUser(null);
     setShowUserMenu(false);
+    setShowMenu(false);
     navigate('/');
+  };
+
+  const closeMobileMenu = () => {
+    setShowMenu(false);
   };
 
   return (
     <nav className="navbar">
       <div className="container navbar-content">
-        <Link to="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand" onClick={closeMobileMenu}>
           Minna Kattelus
         </Link>
 
-        <ul className="navbar-menu">
+        {/* Menú de Navegación - Se oculta en móvil */}
+        <ul className={`navbar-menu ${showMenu ? 'open' : ''}`}>
           <li>
-            <Link to="/" className={`nav-link ${isActive('/')}`}>
+            <Link to="/" className={`nav-link ${isActive('/')}`} onClick={closeMobileMenu}>
               {t('nav.home')}
             </Link>
           </li>
           <li>
-            <Link to="/gallery" className={`nav-link ${isActive('/gallery')}`}>
+            <Link to="/gallery" className={`nav-link ${isActive('/gallery')}`} onClick={closeMobileMenu}>
               {t('nav.gallery')}
             </Link>
           </li>
           <li>
-            <Link to="/shop" className={`nav-link ${isActive('/shop')}`}>
+            <Link to="/shop" className={`nav-link ${isActive('/shop')}`} onClick={closeMobileMenu}>
               {t('nav.shop')}
             </Link>
           </li>
           <li>
-            <Link to="/about-me" className={`nav-link ${isActive('/about-me')}`}>
+            <Link to="/about-me" className={`nav-link ${isActive('/about-me')}`} onClick={closeMobileMenu}>
               {t('nav.about')}
             </Link>
           </li>
           <li>
-            <Link to="/contact" className={`nav-link ${isActive('/contact')}`}>
+            <Link to="/contact" className={`nav-link ${isActive('/contact')}`} onClick={closeMobileMenu}>
               {t('nav.contact')}
             </Link>
           </li>
           {user && (user.role === 'admin' || user.role === 'editor') && (
             <li>
-              <Link to="/dashboard" className={`nav-link ${isActive('/dashboard')}`}>
+              <Link to="/dashboard" className={`nav-link ${isActive('/dashboard')}`} onClick={closeMobileMenu}>
                 DASHBOARD
               </Link>
             </li>
@@ -114,9 +119,22 @@ const Navbar = () => {
           )}
         </ul>
 
+        {/* Contenedor de Acciones (Idioma y Carrito) - Visible en todas las pantallas */}
+        {/* Lo mantenemos fuera de la UL para que no se oculte en móvil */}
         <div className="navbar-actions">
           <LanguageSwitcher />
           <span className="icon-cart">🛒</span>
+
+          {/* Botón de Hamburguesa - Visible solo en móvil */}
+          <button className="menu-toggle" onClick={() => setShowMenu(!showMenu)}>
+            <svg className="hamburguer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {showMenu ? (
+                <path d="M18 6L6 18M6 6l12 12" />
+              ) : (
+                <path d="M3 12h18M3 6h18M3 18h18" />
+              )}
+            </svg>
+          </button>
         </div>
 
       </div>
