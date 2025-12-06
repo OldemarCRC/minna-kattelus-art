@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.js';
+import contactRoutes from './routes/contact.js';
 
 dotenv.config();
 
@@ -50,6 +51,7 @@ app.get('/api/health', (req, res) => {
 
 // API Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

@@ -74,7 +74,7 @@ const Home = () => {
             {t('home.hero.subtitle')}
           </p>
           <div className="hero-buttons">
-            <Link to="/galeria">
+            <Link to="/gallery">
               <button className="btn-primary">{t('home.hero.viewGallery')}</button>
             </Link>
             <Link to="/about-me">
@@ -107,7 +107,7 @@ const Home = () => {
           </div>
 
           <div className="view-all-container">
-            <Link to="/galeria">
+            <Link to="/gallery">
               <button className="btn-secondary">{t('home.featured.viewAll')}</button>
             </Link>
           </div>

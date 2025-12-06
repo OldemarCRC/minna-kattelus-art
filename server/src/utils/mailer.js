@@ -232,3 +232,45 @@ export const sendDBConnectionFailureNotification = async (date, ipAddress) => {
     html: htmlContent,
   });
 };
+
+// Enviar mensaje del formulario de contacto
+export const sendContactFormEmail = async (name, email, subject, message) => {
+  const emailSubject = subject || "New Contact Form Message - Minna Kattelus Art Gallery";
+  const htmlContent = `
+    <div style="font-family: 'Cormorant Garamond', serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #2D4A3E;">
+      <h1 style="color: #2D4A3E; font-size: 28px; margin-bottom: 20px;">New Contact Message</h1>
+      
+      <div style="background-color: #F5F3F0; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <p style="margin: 5px 0;"><strong>From:</strong> ${name}</p>
+        <p style="margin: 5px 0;"><strong>Email:</strong> <a href="mailto:${email}" style="color: #2D4A3E;">${email}</a></p>
+      </div>
+      
+      <div style="background-color: #fff; padding: 20px; border: 1px solid #E5E7EB; border-radius: 8px; margin: 20px 0;">
+        <p style="margin: 0 0 10px 0;"><strong>Message:</strong></p>
+        <p style="margin: 0; line-height: 1.6; white-space: pre-wrap;">${message}</p>
+      </div>
+      
+      <hr style="border: none; border-top: 1px solid #E5E7EB; margin: 30px 0;">
+      
+      <p style="font-size: 12px; color: #6B7280; text-align: center;">
+        This message was sent from the contact form at minnakattelus.art
+      </p>
+    </div>
+  `;
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  await transporter.sendMail({
+    from: `"Contact Form - Minna Art" <${process.env.EMAIL_FROM}>`,
+    replyTo: email,
+    to: process.env.CONTACT_EMAIL || process.env.EMAIL_ADMIN,
+    subject: emailSubject,
+    html: htmlContent,
+  });
+};

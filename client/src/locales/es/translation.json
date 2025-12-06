@@ -158,7 +158,8 @@
       },
       "submit": "Enviar Mensaje",
       "submitting": "Enviando...",
-      "success": "✓ ¡Mensaje enviado con éxito! Te responderé pronto."
+      "successMessage": "✓ ¡Mensaje enviado con éxito! Te responderé pronto.",
+      "errorMessage":"Error al enviar el mensaje. Por favor, intenta de nuevo."
     },
     "info": {
       "title": "Información de Contacto",

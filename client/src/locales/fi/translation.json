@@ -158,7 +158,8 @@
       },
       "submit": "Lähetä viesti",
       "submitting": "Lähetetään...",
-      "success": "✓ Viesti lähetetty onnistuneesti! Vastaan pian."
+      "successMessage": "✓ Viesti lähetetty onnistuneesti! Vastaan pian.",
+      "errorMessage": "✕ Viestin lähettäminen epäonnistui. Yritä uudelleen."
     },
     "info": {
       "title": "Yhteystiedot",

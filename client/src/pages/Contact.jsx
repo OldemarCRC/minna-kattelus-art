@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Contact.css';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +14,8 @@ const Contact = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
+  const [submitSuccess, setSubmitSuccess] = useState(false);//borrar esta linea
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +23,10 @@ const Contact = () => {
       ...prev,
       [name]: value
     }));
+
+    if (message.text) {
+      setMessage({ type: '', text: '' });
+    };
     // Limpiar error del campo al escribir
     if (errors[name]) {
       setErrors(prev => ({
@@ -55,15 +60,16 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const newErrors = validateForm();
-    
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
     setIsSubmitting(true);
+    setMessage({ type: '', text: '' });
 
     // Simular envío (aquí conectarías con tu backend)
     setTimeout(() => {
@@ -76,12 +82,65 @@ const Contact = () => {
         subject: '',
         message: ''
       });
-      
+
       setTimeout(() => {
         setSubmitSuccess(false);
       }, 5000);
     }, 1500);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || undefined,
+          message: formData.message
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setMessage({
+          type: 'success',
+          text: data.message || t('contact.form.successMessage')
+        });
+        // Limpiar formulario
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        throw new Error(data.message || 'Failed to send message');
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      setMessage({
+        type: 'error',
+        text: error.message || t('contact.errorMessage')
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  useEffect(() => {
+      // Email ofuscado en Base64
+      const encoded = 'bWlubmFrYXR0ZWx1c0BnbWFpbC5jb20='; // minnakattelus@gmail.com, cambiar cuando tengamos email del dominio
+      const emailLink = document.getElementById('email-link');
+
+      if (emailLink) {
+        const email = atob(encoded);
+        emailLink.textContent = email;
+        emailLink.href = '/contact';
+      }
+    }, []);
 
   return (
     <div className="contact-page">
@@ -102,10 +161,10 @@ const Contact = () => {
             {/* Contact Form */}
             <div className="contact-form-section">
               <h2>{t('contact.form.title')}</h2>
-              
+
               {submitSuccess && (
                 <div className="success-message">
-                  {t('contact.form.succes')}
+                  {t('contact.form.successMessage')}
                 </div>
               )}
 
@@ -176,8 +235,8 @@ const Contact = () => {
                   )}
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="btn-primary btn-full"
                   disabled={isSubmitting}
                 >
@@ -189,14 +248,14 @@ const Contact = () => {
             {/* Contact Info */}
             <div className="contact-info-section">
               <h2>{t('contact.info.title')}</h2>
-              
+
               <div className="contact-info-items">
                 <div className="contact-info-item">
                   <div className="info-icon">✉️</div>
                   <div className="info-content">
                     <h3>{t('contact.info.email')}</h3>
                     <p>
-                      <a href="mailto:contact@minna-kattelus.fi">contact@minna-kattelus.fi</a>
+                      <a id="email-link" href="#">Loading...</a>
                     </p>
                   </div>
                 </div>
@@ -244,7 +303,7 @@ const Contact = () => {
       <section className="section contact-faq">
         <div className="container">
           <h2 className="section-title">{t('contact.faq.title')}</h2>
-          
+
           <div className="faq-grid">
             <div className="faq-item">
               <h3>{t('contact.faq.q1.question')}</h3>

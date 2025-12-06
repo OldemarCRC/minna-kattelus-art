@@ -158,7 +158,8 @@
       },
       "submit": "Send Message",
       "submitting": "Sending...",
-      "success": "✓ Message sent successfully! I'll respond soon."
+      "successMessage": "✓ Message sent successfully! I'll get back to you soon.",
+      "errorMessage": "✕ Failed to send message. Please try again."
     },
     "info": {
       "title": "Contact Information",

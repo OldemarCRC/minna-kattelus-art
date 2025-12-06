@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import './Footer.css';
 import { useTranslation } from 'react-i18next';
 
@@ -6,6 +7,17 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   const { t } = useTranslation();
 
+  useEffect(() => {
+    // Email ofuscado en Base64
+    const encoded = 'bWlubmFrYXR0ZWx1c0BnbWFpbC5jb20='; // minnakattelus@gmail.com, cambiar cuando tengamos email del dominio
+    const emailLink = document.getElementById('email-link');
+
+    if (emailLink) {
+      const email = atob(encoded);
+      emailLink.textContent = email;
+      emailLink.href = '/contact';
+    }
+  }, []);
   return (
     <footer className="footer">
       <div className="container">
@@ -22,10 +34,10 @@ const Footer = () => {
           <div className="footer-section">
             <h3>{t('footer.links')}</h3>
             <ul className="footer-links">
-              <li><Link to="/galeria">{t('gallery.title')}</Link></li>
-              <li><Link to="/tienda">{t('shop.title')}</Link></li>
-              <li><Link to="/sobre-mi">{t('about.title')}</Link></li>
-              <li><Link to="/contacto">{t('contact.title')}</Link></li>
+              <li><Link to="/gallery">{t('gallery.title')}</Link></li>
+              <li><Link to="/shop">{t('shop.title')}</Link></li>
+              <li><Link to="/about-me">{t('about.title')}</Link></li>
+              <li><Link to="/contact">{t('contact.title')}</Link></li>
             </ul>
           </div>
 
@@ -34,7 +46,7 @@ const Footer = () => {
             <h3>{t('contact.title')}</h3>
             <ul className="footer-contact">
               <li>
-                <a href="mailto:contact@minnakattelus.fi">contact@minnakattelus.fi</a>
+                <a id="email-link" href="#">Loading...</a>
               </li>
               <li>{t('contact.info.locationValue')}</li>
             </ul>
@@ -53,7 +65,7 @@ const Footer = () => {
                 Instagram
               </a>
             </div>
-             <div className="footer-social">
+            <div className="footer-social">
               <a
                 href="https://www.linkedin.com/in/minna-kaisu-kattelus-7102b7201/"
                 target="_blank"

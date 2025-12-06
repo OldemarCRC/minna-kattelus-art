@@ -187,10 +187,10 @@ const About = () => {
           <h2>{t('about.cta.title')}</h2>
           <p>{t('about.cta.text')}</p>
           <div className="cta-buttons">
-            <a href="/tienda">
+            <a href="/shop">
               <button className="btn-primary">{t('about.cta.viewWorks')}</button>
             </a>
-            <a href="/contacto">
+            <a href="/contact">
               <button className="btn-secondary">{t('about.cta.contact')}</button>
             </a>
           </div>

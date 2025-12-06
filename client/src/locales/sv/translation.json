@@ -158,7 +158,8 @@
       },
       "submit": "Skicka meddelande",
       "submitting": "Skickar...",
-      "success": "✓ Meddelandet skickat! Jag svarar snart."
+      "successMessage": "✓ Meddelandet har skickats! Jag svarar snart.",
+      "errorMessage": "✕ Kunde inte skicka meddelandet. Försök igen."
     },
     "info": {
       "title": "Kontaktinformation",
