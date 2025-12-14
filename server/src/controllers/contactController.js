@@ -6,7 +6,19 @@ import { sendContactFormEmail } from '../utils/mailer.js';
 // @access  Public
 export const sendContactMessage = async (req, res, next) => {
   try {
-    const { name, email, subject, message } = req.body;
+    const { name, email, subject, message, phone_optional } = req.body;
+    
+    // HONEYPOTS: Si alguno o todos los campos "phone_optional", "company_name" o "mailing_address" están llenos = BOT
+    if (phone_optional || company_name || mailing_address) {
+      console.log('Bot detected! Multiple honeypots filled');
+      // Responder como si todo estuviera bien para no revelar el honeypot
+      return res.status(200).json({
+        success: true,
+        message: 'Your message has been sent successfully.'
+      });
+    }
+
+    console.log('Honeypot check passed - processing legitimate message');
 
     // Validar campos requeridos
     if (!name || !email || !message) {
@@ -29,10 +41,10 @@ export const sendContactMessage = async (req, res, next) => {
     }
 
     // Obtener IP del usuario (para logs de seguridad)
-    const userIp = req.headers['x-forwarded-for'] || 
-                   req.connection.remoteAddress || 
-                   req.socket.remoteAddress ||
-                   req.ip;
+    const userIp = req.headers['x-forwarded-for'] ||
+      req.connection.remoteAddress ||
+      req.socket.remoteAddress ||
+      req.ip;
 
     console.log(`Contact form submission from ${name} (${email}) - IP: ${userIp}`);
 

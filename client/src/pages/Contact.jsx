@@ -9,9 +9,12 @@ const Contact = () => {
     name: '',
     email: '',
     subject: '',
-    message: ''
+    message: '',
+    phone_optional: '',   // Honeypot 1
+    company_name: '',     // Honeypot 2
+    mailing_address: ''   // Honeypot 3
   });
-
+  const [formStartTime] = useState(Date.now());
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
@@ -61,6 +64,20 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log('Form submission started');
+    console.log('Form data:', formData);
+
+    // VALIDAR TIEMPO MÍNIMO (anti-bots)
+    const timeSpent = (Date.now() - formStartTime) / 1000;
+    if (timeSpent < 3) {
+      console.log('Form submitted too fast');
+      setMessage({
+        type: 'error',
+        text: 'Please take your time filling the form.'
+      });
+      return;
+    }
+
     const newErrors = validateForm();
 
     if (Object.keys(newErrors).length > 0) {
@@ -71,24 +88,25 @@ const Contact = () => {
     setIsSubmitting(true);
     setMessage({ type: '', text: '' });
 
-    // Simular envío (aquí conectarías con tu backend)
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-
-      setTimeout(() => {
-        setSubmitSuccess(false);
-      }, 5000);
-    }, 1500);
+    /*     setTimeout(() => {
+          console.log('Form submitted:', formData);
+          setIsSubmitting(false);
+          setSubmitSuccess(true);
+          setFormData({
+            name: '',
+            email: '',
+            subject: '',
+            message: ''
+          });
+    
+          setTimeout(() => {
+            setSubmitSuccess(false);
+          }, 5000);
+        }, 1500); */
 
     try {
+      console.log('Sending request to backend...');
+
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
         method: 'POST',
         headers: {
@@ -98,13 +116,21 @@ const Contact = () => {
           name: formData.name,
           email: formData.email,
           subject: formData.subject || undefined,
-          message: formData.message
+          message: formData.message,
+          phone_optional: formData.phone_optional,
+          company_name: formData.company_name,
+          mailing_address: formData.mailing_address
         })
       });
 
+      console.log('Response status:', response.status);
+
       const data = await response.json();
 
+      console.log('Response data:', data);
+
       if (response.ok && data.success) {
+        console.log('Message sent successfully');
         setMessage({
           type: 'success',
           text: data.message || t('contact.form.successMessage')
@@ -114,7 +140,10 @@ const Contact = () => {
           name: '',
           email: '',
           subject: '',
-          message: ''
+          message: '',
+          phone_optional: '',
+          company_name: '',
+          mailing_address: ''
         });
       } else {
         throw new Error(data.message || 'Failed to send message');
@@ -127,20 +156,21 @@ const Contact = () => {
       });
     } finally {
       setIsSubmitting(false);
+      console.log('Form submission finished');
     }
   };
 
   useEffect(() => {
-      // Email ofuscado en Base64
-      const encoded = 'bWlubmFrYXR0ZWx1c0BnbWFpbC5jb20='; // minnakattelus@gmail.com, cambiar cuando tengamos email del dominio
-      const emailLink = document.getElementById('contact-email-link');
+    // Email ofuscado en Base64
+    const encoded = 'bWlubmFrYXR0ZWx1c0BnbWFpbC5jb20='; // minnakattelus@gmail.com, cambiar cuando tengamos email del dominio
+    const emailLink = document.getElementById('contact-email-link');
 
-      if (emailLink) {
-        const email = atob(encoded);
-        emailLink.textContent = email;
-        emailLink.href = '/contact';
-      }
-    }, []);
+    if (emailLink) {
+      const email = atob(encoded);
+      emailLink.textContent = email;
+      emailLink.href = '/contact';
+    }
+  }, []);
 
   return (
     <div className="contact-page">
@@ -233,6 +263,51 @@ const Contact = () => {
                   {errors.message && (
                     <span className="error-message">{errors.message}</span>
                   )}
+                </div>
+
+                {/* HONEYPOT 1 - Campo oculto para atrapar bots */}
+                <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
+                  <label htmlFor="phone_optional">Phone (optional - leave blank if you prefer email contact)</label>
+                  <input
+                    type="tel"
+                    id="phone_optional"
+                    name="phone_optional"
+                    value={formData.phone_optional}
+                    onChange={handleChange}
+                    tabIndex="-1"
+                    autoComplete="off"
+                    placeholder="Optional"
+                  />
+                </div>
+
+                {/* HONEYPOT 2 - Campo oculto para atrapar bots */}
+                <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
+                  <label htmlFor="company_name">Company Name (optional)</label>
+                  <input
+                    type="text"
+                    id="company_name"
+                    name="company_name"
+                    value={formData.company_name}
+                    onChange={handleChange}
+                    tabIndex="-1"
+                    autoComplete="off"
+                    placeholder="Optional"
+                  />
+                </div>
+
+                {/* HONEYPOT 3 - Campo oculto para atrapar bots */}
+                <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
+                  <label htmlFor="mailing_address">Mailing Address (optional)</label>
+                  <input
+                    type="text"
+                    id="mailing_address"
+                    name="mailing_address"
+                    value={formData.mailing_address}
+                    onChange={handleChange}
+                    tabIndex="-1"
+                    autoComplete="off"
+                    placeholder="Optional"
+                  />
                 </div>
 
                 <button
