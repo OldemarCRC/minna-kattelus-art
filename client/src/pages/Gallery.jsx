@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './Gallery.css';
 import { useTranslation } from 'react-i18next';
+import GalleryGrid from '../components/GalleryGrid';
 
 const Gallery = () => {
   const { t } = useTranslation();
@@ -112,6 +113,9 @@ const Gallery = () => {
           </div>
         </div>
       </section>
+      <div className="gallery-page">
+      <GalleryGrid />
+    </div>
     </div>
   );
 };

@@ -295,7 +295,7 @@ export const changePassword = async (req, res, next) => {
     // Hash de la nueva contraseña
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);
-    await user.save();
+    await user.save({ validateBeforeSave: false });
 
     // Obtener IP real
     const userIp = req.headers['x-forwarded-for'] ||

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Dashboard.css';
+import ArtworkManager from '../components/ArtworkManager';
 
 // Datos simulados
 const mockStats = {
@@ -55,7 +56,11 @@ const ChartPlaceholder = ({ title, data }) => {
                 ))}
             </div>
             <p className="chart-info">{t('dashboard.chartSimulated')}</p>
+            <section className="dashboard-section">
+                <ArtworkManager />
+            </section>
         </div>
+
     );
 };
 

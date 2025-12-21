@@ -295,3 +295,36 @@
   width: 18px;
   height: 18px;
 }
+
+.change-password-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: #2c3e2e;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 0.5rem;
+}
+
+.change-password-button:hover {
+  background-color: #f5f5f5;
+}
+
+.password-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Separador visual entre cambiar contraseña y logout */
+.change-password-button + .logout-button {
+  border-top: 1px solid #e8e8e8;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}

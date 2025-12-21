@@ -44,3 +44,11 @@ coverage/
 
 # Optional: PM2
 .pm2/
+
+uploads/temp/*
+!uploads/temp/.gitkeep
+
+# Mantener carpetas vacías
+uploads/artworks/.gitkeep
+uploads/profiles/.gitkeep
+uploads/temp/.gitkeep

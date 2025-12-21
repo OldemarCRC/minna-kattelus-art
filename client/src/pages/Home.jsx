@@ -7,41 +7,39 @@ const Home = () => {
   const { t } = useTranslation();
 
   const heroImages = [
-    '/home_hero_1.jpg',
-    '/home_hero_2.jpg',
-    '/home_hero_3.jpg',
-    '/home_hero_4.jpg',
-    '/paint_1.jpg',
-    '/paint_2.png',
-    'https://images.pexels.com/photos/316018/pexels-photo-316018.jpeg?_gl=1*44bfzp*_ga*MTUxMjg0MzA3OS4xNzYyNjAzNTU0*_ga_8JE65Q40S6*czE3NjI2MDgwMTkkbzIkZzEkdDE3NjI2MDgwMjkkajUwJGwwJGgw',
-    'https://images.pexels.com/photos/5563094/pexels-photo-5563094.jpeg?_gl=1*18d66qn*_ga*MTUxMjg0MzA3OS4xNzYyNjAzNTU0*_ga_8JE65Q40S6*czE3NjI2MDgwMTkkbzIkZzEkdDE3NjI2MDgwODMkajU5JGwwJGgw',
+    'hero/home_hero_1.jpg',
+    'hero/home_hero_2.jpg',
+    'hero/home_hero_3.jpg',
+    'hero/home_hero_4.jpg',
+    'hero/home_hero_5.jpg',
+    'hero/home_hero_6.jpg',
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const featuredWorks = [
-    {
-      id: 1,
-      title: 'Título de Obra 1',
-      medium: 'Acrílico sobre lienzo',
-      year: '2024',
-      image: '/paint_1.jpg'
-    },
-    {
-      id: 2,
-      title: 'Título de Obra 2',
-      medium: 'Acrílico sobre lienzo',
-      year: '2024',
-      image: '/paint_2.png'
-    },
-    {
-      id: 3,
-      title: 'Título de Obra 3',
-      medium: 'Acrílico sobre lienzo',
-      year: '2024',
-      image: '/paint_1.jpg'
-    }
-  ];
+  {
+    id: 1,
+    title: 'Joki',
+    medium: 'Acrílico sobre lienzo',
+    year: '2024',
+    image: `${import.meta.env.VITE_API_URL}/uploads/artworks/joki.jpg`
+  },
+  {
+    id: 2,
+    title: 'Kesä-puu',
+    medium: 'Acrílico sobre lienzo',
+    year: '2024',
+    image: `${import.meta.env.VITE_API_URL}/uploads/artworks/kesa-puu.jpg`
+  },
+  {
+    id: 3,
+    title: 'Koivu-talvi',
+    medium: 'Acrílico sobre lienzo',
+    year: '2024',
+    image: `${import.meta.env.VITE_API_URL}/uploads/artworks/koivu-talvi.jpg`
+  }
+];
 
   useEffect(() => {
     const intervalId = setInterval(() => {

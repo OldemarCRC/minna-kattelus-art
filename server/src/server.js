@@ -3,14 +3,20 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
 import contactRoutes from './routes/contact.js';
+import artworkRoutes from './routes/artworks.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // MongoDB Connection
 const connectDB = async () => {
@@ -37,6 +43,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Servir archivos estáticos de uploads
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
 // Routes
 app.get('/api', (req, res) => {
   res.json({ message: 'Minna Kattelus Art Gallery API' });
@@ -54,6 +63,7 @@ app.get('/api/health', (req, res) => {
 app.use('/api', apiLimiter);
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/artworks', artworkRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

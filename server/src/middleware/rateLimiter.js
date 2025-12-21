@@ -84,3 +84,26 @@ export const apiLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
+
+export const uploadArtworkLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hora
+  max: 10, // Máximo 10 uploads por hora
+  message: {
+    success: false,
+    message: 'Too many upload attempts. Please try again later.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Rate limiter para consultas públicas de artworks
+export const publicArtworkLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 100, // Máximo 100 requests por IP
+  message: {
+    success: false,
+    message: 'Too many requests. Please try again later.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
