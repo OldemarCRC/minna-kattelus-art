@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import './ChangePasswordModal.css';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const ChangePasswordModal = ({ isOpen, onClose, user }) => {
   const [formData, setFormData] = useState({
@@ -49,16 +47,15 @@ const ChangePasswordModal = ({ isOpen, onClose, user }) => {
 
     try {
       const response = await axios.put(
-        `${API_URL}/api/auth/change-password`,
+        '/api/auth/change-password',
         {
           currentPassword: formData.currentPassword,
           newPassword: formData.newPassword
-        },
-        { withCredentials: true }
+        }
       );
 
       setSuccess(response.data.message);
-      
+
       // Limpiar formulario
       setFormData({
         currentPassword: '',

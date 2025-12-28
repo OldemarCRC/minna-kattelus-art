@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './VerifyEmail.css';
+import axios from '../utils/axios';
 
 const VerifyEmail = () => {
   const { token } = useParams();
@@ -9,46 +10,37 @@ const VerifyEmail = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const verifyAccount = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/auth/verify-email/${token}`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            }
-          }
-        );
+  const verifyAccount = async () => {
+    try {
+      const response = await axios.get(`/api/auth/verify-email/${token}`);
+      const data = response.data;
 
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          setStatus('success');
-          setMessage(data.message || 'Email verified successfully!');
-          
-          // Redirigir al login después de 3 segundos
-          setTimeout(() => {
-            navigate('/olivia');
-          }, 3000);
-        } else {
-          setStatus('error');
-          setMessage(data.message || 'Verification failed. Invalid or expired token.');
-        }
-      } catch (error) {
-        console.error('Verification error:', error);
+      if (data.success) {
+        setStatus('success');
+        setMessage(data.message || 'Email verified successfully!');
+        
+        // Redirigir al login después de 3 segundos
+        setTimeout(() => {
+          navigate('/olivia');
+        }, 3000);
+      } else {
         setStatus('error');
-        setMessage('An error occurred during verification. Please try again.');
+        setMessage(data.message || 'Verification failed. Invalid or expired token.');
       }
-    };
-
-    if (token) {
-      verifyAccount();
-    } else {
+    } catch (error) {
+      console.error('Verification error:', error);
       setStatus('error');
-      setMessage('No verification token provided.');
+      setMessage(error.response?.data?.message || 'An error occurred during verification. Please try again.');
     }
-  }, [token, navigate]);
+  };
+
+  if (token) {
+    verifyAccount();
+  } else {
+    setStatus('error');
+    setMessage('No verification token provided.');
+  }
+}, [token, navigate]);
 
   return (
     <div className="verify-email-page">

@@ -9,6 +9,8 @@ import authRoutes from './routes/auth.js';
 import contactRoutes from './routes/contact.js';
 import artworkRoutes from './routes/artworks.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
+import helmet from 'helmet';
+import { doubleCsrf } from 'csrf-csrf';
 
 dotenv.config();
 
@@ -32,16 +34,62 @@ const connectDB = async () => {
 connectDB();
 
 // Middleware
+// Helmet - Security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "blob:"],
+      scriptSrc: ["'self'"],
+      connectSrc: ["'self'"]
+    }
+  },
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
   exposedHeaders: ['set-cookie']
 }));
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// CSRF Protection - Configuración
+const {
+  generateCsrfToken,
+  doubleCsrfProtection,
+} = doubleCsrf({
+  getSecret: () => process.env.CSRF_SECRET,
+  cookieName: 'x-csrf-token',
+  cookieOptions: {
+    sameSite: 'strict',
+    path: '/',
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true
+  },
+  size: 64,
+  ignoredMethods: ['GET', 'HEAD', 'OPTIONS'],
+  getSessionIdentifier: (req) => {
+    // Usar el usuario autenticado si existe, sino usar IP
+    return req.user?.id || req.ip || 'anonymous';
+  }
+});
+
+// Endpoint para obtener CSRF token - ANTES del middleware
+app.get('/api/csrf-token', (req, res) => {
+  const token = generateCsrfToken(req, res);  // ← CORRECTO
+  res.json({ csrfToken: token });
+});
+
+// Middleware global CSRF - DESPUÉS del endpoint
+app.use(doubleCsrfProtection);
 
 // Servir archivos estáticos de uploads
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
@@ -52,8 +100,8 @@ app.get('/api', (req, res) => {
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
+  res.json({
+    status: 'OK',
     timestamp: new Date().toISOString(),
     mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
   });
@@ -69,10 +117,10 @@ app.use('/api/artworks', artworkRoutes);
 app.use((err, req, res, next) => {
   const status = err.status || err.statusCode || 500;
   const message = err.message || 'Internal server error';
-  
+
   console.error('Error:', err);
-  
-  res.status(status).json({ 
+
+  res.status(status).json({
     success: false,
     message,
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
@@ -81,9 +129,9 @@ app.use((err, req, res, next) => {
 
 // 404 handler
 app.use((req, res) => {
-  res.status(404).json({ 
+  res.status(404).json({
     success: false,
-    message: 'Route not found' 
+    message: 'Route not found'
   });
 });
 

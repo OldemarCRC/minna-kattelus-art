@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import axios from '../utils/axios';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -28,18 +29,10 @@ const Login = () => {
 
     dispatch({ type: "LOGIN_START" });
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-        credentials: "include",
-      });
+      const response = await axios.post('/api/auth/login', credentials);
+      const data = response.data;
 
-      const data = await response.json();
-
-      if (response.ok && data.success) {
+      if (data.success) {
         const userDetails = data.data;
 
         if (!userDetails.isVerified) {
@@ -58,7 +51,7 @@ const Login = () => {
         throw new Error(data.message || "Please verify your email before logging in.");
       }
     } catch (err) {
-      const errorMessage = err.message || "Login failed.";
+      const errorMessage = err.response?.data?.message || err.message || "Login failed.";
       window.alert(errorMessage);
       dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
     }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserRegister.css';
+import axios from '../utils/axios';
 
 const UserRegister = () => {
   const navigate = useNavigate();
@@ -41,50 +42,38 @@ const UserRegister = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setMessage({ type: '', text: '' });
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setMessage({ type: '', text: '' });
 
-    const { username, fullName, email, role, phone, createdBy } = formData;
-    const payload = { username, fullName, email, role, phone, createdBy };
+  const { username, fullName, email, role, phone, createdBy } = formData;
+  const payload = { username, fullName, email, role, phone, createdBy };
 
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(payload)
-      });
+  try {
+    const response = await axios.post('/api/auth/register', payload);
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Registration failed');
-      }
+    setMessage({
+      type: 'success',
+      text: 'User registered successfully! User will receive an email to verify their account.'
+    });
 
-      setMessage({
-        type: 'success',
-        text: 'User registered successfully! User will receive an email to verify their account.'
-      });
+    setFormData(initialFormData);
 
-      setFormData(initialFormData);
+    setTimeout(() => {
+      navigate('/dashboard');
+    }, 2000);
 
-      setTimeout(() => {
-        navigate('/dashboard');
-      }, 2000);
-
-    } catch (error) {
-      console.error('Registration error:', error);
-      setMessage({
-        type: 'error',
-        text: error.message || 'Registration failed. Please try again.'
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  } catch (error) {
+    console.error('Registration error:', error);
+    setMessage({
+      type: 'error',
+      text: error.response?.data?.message || error.message || 'Registration failed. Please try again.'
+    });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const handleCancel = () => {
     navigate('/dashboard');

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Contact.css';
 import { useTranslation } from 'react-i18next';
+import axios from '../utils/axios';
 
 
 const Contact = () => {
@@ -107,25 +108,18 @@ const Contact = () => {
     try {
       console.log('Sending request to backend...');
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject || undefined,
-          message: formData.message,
-          phone_optional: formData.phone_optional,
-          company_name: formData.company_name,
-          mailing_address: formData.mailing_address
-        })
+      const response = await axios.post('/api/contact', {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        phone_optional: formData.phone_optional,
+        company_name: formData.company_name,
+        mailing_address: formData.mailing_address
       });
 
       console.log('Response status:', response.status);
 
-      const data = await response.json();
+      const data = response.data;
 
       console.log('Response data:', data);
 

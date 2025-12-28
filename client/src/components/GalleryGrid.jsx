@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import axios from '../utils/axios';
 import './GalleryGrid.css';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const CATEGORIES = ['TEMAS', 'PAISAJES', 'ABSTRACTO', 'RETRATOS', 'NATURALEZA'];
 
@@ -25,7 +23,7 @@ const GalleryGrid = () => {
 
   const fetchArtworks = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/artworks`);
+      const response = await axios.get('/api/artworks');
       setArtworks(response.data.data);
       setLoading(false);
     } catch (error) {
@@ -94,7 +92,7 @@ const GalleryGrid = () => {
             >
               <div className="gallery-image">
                 <img
-                  src={`${API_URL}/uploads/artworks/${artwork.image}`}
+                  src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/uploads/artworks/${artwork.image}`}
                   alt={artwork.title[currentLang] || artwork.title.en}
                   loading="lazy"
                 />
@@ -125,7 +123,7 @@ const GalleryGrid = () => {
             <div className="modal-grid">
               <div className="modal-image">
                 <img
-                  src={`${API_URL}/uploads/artworks/${selectedArtwork.image}`}
+                  src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/uploads/artworks/${selectedArtwork.image}`}
                   alt={selectedArtwork.title[i18n.language] || selectedArtwork.title.en}
                 />
               </div>

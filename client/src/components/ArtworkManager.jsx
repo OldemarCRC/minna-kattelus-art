@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import axios from '../utils/axios';
 import './ArtworkManager.css';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const CATEGORIES = ['TEMAS', 'PAISAJES', 'ABSTRACTO', 'RETRATOS', 'NATURALEZA'];
 
@@ -39,7 +37,7 @@ const ArtworkManager = () => {
 
   const fetchArtworks = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/artworks`);
+      const response = await axios.get('/api/artworks');
       setArtworks(response.data.data);
       setLoading(false);
     } catch (err) {
@@ -115,10 +113,10 @@ const ArtworkManager = () => {
       };
 
       if (editingId) {
-        await axios.put(`${API_URL}/api/artworks/${editingId}`, formDataToSend, config);
+        await axios.put(`/api/artworks/${editingId}`, formDataToSend, config);
         setSuccess('Artwork updated successfully');
       } else {
-        await axios.post(`${API_URL}/api/artworks`, formDataToSend, config);
+        await axios.post('/api/artworks', formDataToSend, config);
         setSuccess('Artwork created successfully');
       }
 
@@ -156,7 +154,7 @@ const ArtworkManager = () => {
     }
 
     try {
-      await axios.delete(`${API_URL}/api/artworks/${id}`, { withCredentials: true });
+      await axios.delete(`/api/artworks/${id}`);
       setSuccess('Artwork deleted successfully');
       fetchArtworks();
     } catch (err) {
