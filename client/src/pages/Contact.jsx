@@ -89,21 +89,6 @@ const Contact = () => {
     setIsSubmitting(true);
     setMessage({ type: '', text: '' });
 
-    /*     setTimeout(() => {
-          console.log('Form submitted:', formData);
-          setIsSubmitting(false);
-          setSubmitSuccess(true);
-          setFormData({
-            name: '',
-            email: '',
-            subject: '',
-            message: ''
-          });
-    
-          setTimeout(() => {
-            setSubmitSuccess(false);
-          }, 5000);
-        }, 1500); */
 
     try {
       console.log('Sending request to backend...');
@@ -118,17 +103,17 @@ const Contact = () => {
       });
 
       console.log('Response status:', response.status);
-
       const data = response.data;
-
       console.log('Response data:', data);
 
-      if (response.ok && data.success) {
+      // Axios solo llega aquí si status es 2xx
+      if (data.success) {
         console.log('Message sent successfully');
         setMessage({
           type: 'success',
-          text: data.message || t('contact.form.successMessage')
+          text: t('contact.form.successMessage')
         });
+
         // Limpiar formulario
         setFormData({
           name: '',
@@ -139,14 +124,12 @@ const Contact = () => {
           company_name: '',
           mailing_address: ''
         });
-      } else {
-        throw new Error(data.message || 'Failed to send message');
       }
     } catch (error) {
       console.error('Contact form error:', error);
       setMessage({
         type: 'error',
-        text: error.message || t('contact.errorMessage')
+        text: error.response?.data?.message || error.message || t('contact.errorMessage')
       });
     } finally {
       setIsSubmitting(false);
@@ -186,9 +169,9 @@ const Contact = () => {
             <div className="contact-form-section">
               <h2>{t('contact.form.title')}</h2>
 
-              {submitSuccess && (
-                <div className="success-message">
-                  {t('contact.form.successMessage')}
+              {message.text && (
+                <div className={`message-alert ${message.type === 'success' ? 'success-message' : 'error-message'}`}>
+                  {message.text}
                 </div>
               )}
 
@@ -260,49 +243,37 @@ const Contact = () => {
                 </div>
 
                 {/* HONEYPOT 1 - Campo oculto para atrapar bots */}
-                <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
-                  <label htmlFor="phone_optional">Phone (optional - leave blank if you prefer email contact)</label>
-                  <input
-                    type="tel"
-                    id="phone_optional"
-                    name="phone_optional"
-                    value={formData.phone_optional}
-                    onChange={handleChange}
-                    tabIndex="-1"
-                    autoComplete="off"
-                    placeholder="Optional"
-                  />
-                </div>
+                <input
+                  type="text"
+                  name="phone_optional"
+                  value={formData.phone_optional}
+                  onChange={handleChange}
+                  tabIndex="-1"
+                  autoComplete="off"
+                  style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}
+                />
 
                 {/* HONEYPOT 2 - Campo oculto para atrapar bots */}
-                <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
-                  <label htmlFor="company_name">Company Name (optional)</label>
-                  <input
-                    type="text"
-                    id="company_name"
-                    name="company_name"
-                    value={formData.company_name}
-                    onChange={handleChange}
-                    tabIndex="-1"
-                    autoComplete="off"
-                    placeholder="Optional"
-                  />
-                </div>
+                <input
+                  type="text"
+                  name="company_name"
+                  value={formData.company_name}
+                  onChange={handleChange}
+                  tabIndex="-1"
+                  autoComplete="off"
+                  style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}
+                />
 
                 {/* HONEYPOT 3 - Campo oculto para atrapar bots */}
-                <div style={{ position: 'absolute', left: '-5000px' }} aria-hidden="true">
-                  <label htmlFor="mailing_address">Mailing Address (optional)</label>
-                  <input
-                    type="text"
-                    id="mailing_address"
-                    name="mailing_address"
-                    value={formData.mailing_address}
-                    onChange={handleChange}
-                    tabIndex="-1"
-                    autoComplete="off"
-                    placeholder="Optional"
-                  />
-                </div>
+                <input
+                  type="text"
+                  name="mailing_address"
+                  value={formData.mailing_address}
+                  onChange={handleChange}
+                  tabIndex="-1"
+                  autoComplete="off"
+                  style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}
+                />
 
                 <button
                   type="submit"

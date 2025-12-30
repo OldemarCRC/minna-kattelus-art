@@ -6,7 +6,7 @@ import { sendContactFormEmail } from '../utils/mailer.js';
 // @access  Public
 export const sendContactMessage = async (req, res, next) => {
   try {
-    const { name, email, subject, message, phone_optional } = req.body;
+    const { name, email, subject, message, phone_optional, company_name, mailing_address } = req.body;
     
     // HONEYPOTS: Si alguno o todos los campos "phone_optional", "company_name" o "mailing_address" están llenos = BOT
     if (phone_optional || company_name || mailing_address) {
