@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from '../utils/axios';
 import './ChangePasswordModal.css';
+import { validatePasswordStrength } from '../utils/passwordValidator';
 
 const ChangePasswordModal = ({ isOpen, onClose, user }) => {
   const [formData, setFormData] = useState({
@@ -13,12 +14,23 @@ const ChangePasswordModal = ({ isOpen, onClose, user }) => {
   const [loading, setLoading] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const [passwordRequirements, setPasswordRequirements] = useState({
+    isValid: false,
+    errors: [],
+    strength: 'weak'
+  });
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
+    // Validar nueva contraseña en tiempo real
+    if (name === 'newPassword') {
+      const validation = validatePasswordStrength(value);
+      setPasswordRequirements(validation);
+    }
     setError('');
   };
 
@@ -159,6 +171,27 @@ const ChangePasswordModal = ({ isOpen, onClose, user }) => {
             </div>
             <small className="password-hint">Minimum 6 characters</small>
           </div>
+
+          {/* Password Requirements */}
+          {formData.newPassword && (
+            <div className="password-requirements">
+              <p className="requirements-title">Password must contain:</p>
+              <ul className="requirements-list">
+                <li className={formData.newPassword.length >= 8 ? 'met' : ''}>
+                  {formData.newPassword.length >= 8 ? '✓' : '○'} At least 8 characters
+                </li>
+                <li className={/[A-Z]/.test(formData.newPassword) ? 'met' : ''}>
+                  {/[A-Z]/.test(formData.newPassword) ? '✓' : '○'} One uppercase letter
+                </li>
+                <li className={/[a-z]/.test(formData.newPassword) ? 'met' : ''}>
+                  {/[a-z]/.test(formData.newPassword) ? '✓' : '○'} One lowercase letter
+                </li>
+                <li className={/[0-9]/.test(formData.newPassword) ? 'met' : ''}>
+                  {/[0-9]/.test(formData.newPassword) ? '✓' : '○'} One number
+                </li>
+              </ul>
+            </div>
+          )}
 
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm New Password</label>

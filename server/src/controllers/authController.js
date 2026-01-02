@@ -9,6 +9,7 @@ import {
   sendFailLoginNotification,
   sendPasswordChangeNotification
 } from '../utils/mailer.js';
+import { validatePasswordStrength, generateStrongPassword } from '../utils/passwordValidator.js';
 
 // Helper: Generar JWT
 const generateToken = (user) => {
@@ -24,9 +25,6 @@ const generateToken = (user) => {
   );
 };
 
-// @desc    Register new user
-// @route   POST /api/auth/register
-// @access  Private (admin only)
 export const registerUser = async (req, res, next) => {
   try {
     const { username, fullName, email, role, phone, createdBy } = req.body;
@@ -50,7 +48,8 @@ export const registerUser = async (req, res, next) => {
     }
 
     // Generar contraseña temporal
-    const tempPassword = crypto.randomBytes(8).toString('hex');
+    
+    const tempPassword = generateStrongPassword(12);
 
     // Hash de la contraseña
     const salt = await bcrypt.genSalt(10);
@@ -106,30 +105,25 @@ export const registerUser = async (req, res, next) => {
   }
 };
 
-// @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
 export const loginUser = async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
-    // Validar campos
     if (!username || !password) {
       throw createError(400, 'Please provide username and password');
     }
 
-    // Obtener IP real del usuario
+
     const userIp = req.headers['x-forwarded-for'] ||
       req.connection.remoteAddress ||
       req.socket.remoteAddress ||
       req.ip;
     const loginDate = new Date().toLocaleString();
 
-    // Buscar usuario
+
     const user = await User.findOne({ username }).select('+password');
 
     if (!user) {
-      // Intentar obtener email del usuario para notificación
       const userByEmail = await User.findOne({ email: username });
       if (userByEmail) {
         try {
@@ -147,11 +141,9 @@ export const loginUser = async (req, res, next) => {
       throw createError(401, 'Invalid credentials');
     }
 
-    // Verificar contraseña
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      // Enviar notificación de intento fallido
       try {
         await sendFailLoginNotification(
           user.email,
@@ -166,12 +158,10 @@ export const loginUser = async (req, res, next) => {
       throw createError(401, 'Invalid credentials');
     }
 
-    // Verificar si está activo
     if (!user.isActive) {
       throw createError(403, 'Account is deactivated');
     }
 
-    // Verificar si el email está verificado
     if (!user.isVerified) {
       throw createError(403, 'Please verify your email before logging in');
     }
@@ -179,7 +169,6 @@ export const loginUser = async (req, res, next) => {
     // Generar JWT token
     const token = generateToken(user);
 
-    // Configurar cookie segura
     const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -192,7 +181,6 @@ export const loginUser = async (req, res, next) => {
     console.log('Cookie set for user:', user.username);
     console.log('Cookie options:', cookieOptions);
 
-    // Enviar notificación de login exitoso
     try {
       await sendLoginNotification(
         user.email,
@@ -203,7 +191,6 @@ export const loginUser = async (req, res, next) => {
       );
     } catch (emailError) {
       console.error('Login notification error:', emailError);
-      // No fallar el login si el email falla
     }
 
     res.status(200).json({
@@ -224,9 +211,7 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-// @desc    Verify email
-// @route   GET /api/auth/verify-email/:token
-// @access  Public
+
 export const verifyEmail = async (req, res, next) => {
   try {
     const { token } = req.params;
@@ -235,8 +220,7 @@ export const verifyEmail = async (req, res, next) => {
     let user = await User.findOne({ verificationToken: token });
 
     if (!user) {
-      // Si no encuentra, puede ser que ya esté verificado
-      // Retornar mensaje amigable en lugar de error
+
       return res.status(200).json({
         success: true,
         message: 'This verification link has already been used or your account is already verified. You can now log in.',
@@ -260,13 +244,11 @@ export const verifyEmail = async (req, res, next) => {
   }
 };
 
-// @desc    Change password
-// @route   PUT /api/auth/change-password
-// @access  Private
+
 export const changePassword = async (req, res, next) => {
   try {
     const { currentPassword, newPassword } = req.body;
-    const userId = req.user.id; // Del middleware de autenticación
+    const userId = req.user.id;
 
     // Validar campos
     if (!currentPassword || !newPassword) {
@@ -274,8 +256,9 @@ export const changePassword = async (req, res, next) => {
     }
 
     // Validar longitud de nueva contraseña
-    if (newPassword.length < 6) {
-      throw createError(400, 'New password must be at least 6 characters');
+    const passwordValidation = validatePasswordStrength(newPassword);
+    if (!passwordValidation.isValid) {
+      throw createError(400, passwordValidation.errors.join('. '));
     }
 
     // Buscar usuario
@@ -327,9 +310,7 @@ export const changePassword = async (req, res, next) => {
   }
 };
 
-// @desc    Get all users
-// @route   GET /api/auth/users
-// @access  Private (admin only)
+
 export const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find()
@@ -347,9 +328,7 @@ export const getAllUsers = async (req, res, next) => {
   }
 };
 
-// @desc    Delete user
-// @route   DELETE /api/auth/users/:id
-// @access  Private (admin only)
+
 export const deleteUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
