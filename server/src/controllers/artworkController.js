@@ -2,13 +2,12 @@ import Artwork from '../models/Artwork.js';
 import path from 'path';
 import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
+import { sanitizeInput } from '../utils/sanitizer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// @desc    Get all artworks (public)
-// @route   GET /api/artworks
-// @access  Public
+
 export const getArtworks = async (req, res) => {
   try {
     const { category, featured, available, limit } = req.query;
@@ -40,9 +39,7 @@ export const getArtworks = async (req, res) => {
   }
 };
 
-// @desc    Get single artwork
-// @route   GET /api/artworks/:id
-// @access  Public
+
 export const getArtwork = async (req, res) => {
   try {
     const artwork = await Artwork.findById(req.params.id);
@@ -67,22 +64,42 @@ export const getArtwork = async (req, res) => {
   }
 };
 
-// @desc    Create new artwork
-// @route   POST /api/artworks
-// @access  Private (Admin/Editor)
+
 export const createArtwork = async (req, res) => {
   try {
-    const artworkData = {
-      ...req.body,
+    // Extraer y sanitizar campos
+    const {
+      title,
+      description,
+      artist,
+      technique,
+      category,
+      dimensions,
+      price,
+      year,
+      available
+    } = req.body;
+
+    // SANITIZAR campos de texto
+    const sanitizedData = {
+      title: sanitizeInput(title),
+      description: sanitizeInput(description),
+      artist: sanitizeInput(artist),
+      technique: sanitizeInput(technique),
+      category: sanitizeInput(category),
+      dimensions: sanitizeInput(dimensions),
+      price: price, 
+      year: year, 
+      available: available, 
       createdBy: req.user._id
     };
 
-    // Si se subió una imagen
+    // Agregar imagen si existe
     if (req.file) {
-      artworkData.image = req.file.filename;
+      sanitizedData.image = req.file.filename;
     }
 
-    const artwork = await Artwork.create(artworkData);
+    const artwork = await Artwork.create(sanitizedData);
 
     res.status(201).json({
       success: true,
@@ -110,9 +127,7 @@ export const createArtwork = async (req, res) => {
   }
 };
 
-// @desc    Update artwork
-// @route   PUT /api/artworks/:id
-// @access  Private (Admin/Editor)
+
 export const updateArtwork = async (req, res) => {
   try {
     let artwork = await Artwork.findById(req.params.id);
@@ -125,7 +140,32 @@ export const updateArtwork = async (req, res) => {
     }
 
     const oldImage = artwork.image;
-    const updateData = { ...req.body };
+
+    // Extraer y sanitizar campos
+    const {
+      title,
+      description,
+      artist,
+      technique,
+      category,
+      dimensions,
+      price,
+      year,
+      available
+    } = req.body;
+
+    // SANITIZAR campos de texto
+    const updateData = {
+      title: sanitizeInput(title),
+      description: sanitizeInput(description),
+      artist: sanitizeInput(artist),
+      technique: sanitizeInput(technique),
+      category: sanitizeInput(category),
+      dimensions: sanitizeInput(dimensions),
+      price: price,
+      year: year,
+      available: available
+    };
 
     // Si se subió nueva imagen
     if (req.file) {
@@ -174,9 +214,7 @@ export const updateArtwork = async (req, res) => {
   }
 };
 
-// @desc    Delete artwork
-// @route   DELETE /api/artworks/:id
-// @access  Private (Admin)
+
 export const deleteArtwork = async (req, res) => {
   try {
     const artwork = await Artwork.findById(req.params.id);
@@ -214,9 +252,7 @@ export const deleteArtwork = async (req, res) => {
   }
 };
 
-// @desc    Update artwork display order
-// @route   PATCH /api/artworks/reorder
-// @access  Private (Admin/Editor)
+
 export const reorderArtworks = async (req, res) => {
   try {
     const { artworks } = req.body; // Array de { id, displayOrder }

@@ -10,6 +10,7 @@ import {
   sendPasswordChangeNotification
 } from '../utils/mailer.js';
 import { validatePasswordStrength, generateStrongPassword } from '../utils/passwordValidator.js';
+import { sanitizeInput } from '../utils/sanitizer.js';
 
 // Helper: Generar JWT
 const generateToken = (user) => {
@@ -29,26 +30,32 @@ export const registerUser = async (req, res, next) => {
   try {
     const { username, fullName, email, role, phone, createdBy } = req.body;
 
-    // Validar campos requeridos (createdBy es opcional para primer usuario)
-    if (!username || !fullName || !email || !role) {
+    // SANITIZAR INPUTS
+    const sanitizedUsername = sanitizeInput(username);
+    const sanitizedFullName = sanitizeInput(fullName);
+    const sanitizedEmail = sanitizeInput(email);
+    const sanitizedPhone = sanitizeInput(phone);
+    const sanitizedCreatedBy = sanitizeInput(createdBy);
+
+    // Validar campos requeridos
+    if (!sanitizedUsername || !sanitizedFullName || !sanitizedEmail || !role) {
       throw createError(400, 'Please provide all required fields');
     }
 
-    // Verificar si el usuario ya existe
+    // Verificar si el usuario ya existe (usar valores sanitizados)
     const existingUser = await User.findOne({
-      $or: [{ email }, { username }]
+      $or: [{ email: sanitizedEmail }, { username: sanitizedUsername }]
     });
 
     if (existingUser) {
       throw createError(400,
-        existingUser.email === email
+        existingUser.email === sanitizedEmail
           ? 'Email already registered'
           : 'Username already taken'
       );
     }
 
     // Generar contraseña temporal
-
     const tempPassword = generateStrongPassword(12);
 
     // Hash de la contraseña
@@ -58,15 +65,15 @@ export const registerUser = async (req, res, next) => {
     // Generar token de verificación
     const verificationToken = crypto.randomBytes(32).toString('hex');
 
-    // Crear usuario
+    // Crear usuario (usar valores sanitizados)
     const user = await User.create({
-      username,
-      fullName,
-      email,
+      username: sanitizedUsername,
+      fullName: sanitizedFullName,
+      email: sanitizedEmail,
       password: hashedPassword,
       role,
-      phone: phone || '',
-      createdBy: createdBy || 'system',
+      phone: sanitizedPhone || '',
+      createdBy: sanitizedCreatedBy || 'system',
       verificationToken,
       isVerified: false
     });
@@ -77,16 +84,15 @@ export const registerUser = async (req, res, next) => {
     // Enviar email de verificación
     try {
       await sendVerificationEmail(
-        fullName,
-        email,
+        sanitizedFullName,
+        sanitizedEmail,
         verificationUrl,
         tempPassword,
-        username
+        sanitizedUsername
       );
-      console.log(`Verification email sent to ${email}`);
+      console.log(`Verification email sent to ${sanitizedEmail}`);
     } catch (emailError) {
       console.error('Email sending failed:', emailError);
-      // No fallar el registro si el email falla
     }
 
     res.status(201).json({
@@ -108,9 +114,10 @@ export const registerUser = async (req, res, next) => {
 export const loginUser = async (req, res, next) => {
   try {
     const { username, password, email } = req.body;
+
+    // HONEYPOT: Si email está lleno = BOT
     if (email) {
       console.log('Bot detected in login! Honeypot filled');
-      // Simular delay de login normal
       await new Promise(resolve => setTimeout(resolve, 1000));
       return res.status(401).json({
         success: false,
@@ -120,7 +127,10 @@ export const loginUser = async (req, res, next) => {
 
     console.log('Honeypot check passed - processing legitimate login');
 
-    if (!username || !password) {
+    // SANITIZAR INPUTS
+    const sanitizedUsername = sanitizeInput(username);
+
+    if (!sanitizedUsername || !password) {
       throw createError(400, 'Please provide username and password');
     }
 
@@ -130,17 +140,18 @@ export const loginUser = async (req, res, next) => {
       req.ip;
     const loginDate = new Date().toLocaleString();
 
-
-    const user = await User.findOne({ username }).select('+password');
+    // Buscar usuario con username sanitizado
+    const user = await User.findOne({ username: sanitizedUsername }).select('+password');
 
     if (!user) {
-      const userByEmail = await User.findOne({ email: username });
+      // Intentar buscar por email en caso de error del usuario
+      const userByEmail = await User.findOne({ email: sanitizedUsername });
       if (userByEmail) {
         try {
           await sendFailLoginNotification(
             userByEmail.email,
             userByEmail.fullName,
-            username,
+            sanitizedUsername,
             loginDate,
             userIp
           );
@@ -158,7 +169,7 @@ export const loginUser = async (req, res, next) => {
         await sendFailLoginNotification(
           user.email,
           user.fullName,
-          username,
+          sanitizedUsername,
           loginDate,
           userIp
         );
@@ -183,7 +194,7 @@ export const loginUser = async (req, res, next) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-      maxAge: 24 * 60 * 60 * 1000, // 24 horas
+      maxAge: 24 * 60 * 60 * 1000,
       path: '/'
     };
 
@@ -195,7 +206,7 @@ export const loginUser = async (req, res, next) => {
       await sendLoginNotification(
         user.email,
         user.fullName,
-        username,
+        sanitizedUsername,
         loginDate,
         userIp
       );
@@ -301,8 +312,8 @@ export const changePassword = async (req, res, next) => {
     try {
       await sendPasswordChangeNotification(
         user.email,
-        user.fullName,
-        user.username,
+        user.sanitizedFullName,
+        user.sanitizedUsername,
         changeDate,
         userIp
       );

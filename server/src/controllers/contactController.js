@@ -1,5 +1,6 @@
 import { createError } from '../utils/error.js';
 import { sendContactFormEmail } from '../utils/mailer.js';
+import { sanitizeInput } from '../utils/sanitizer.js';
 
 // @desc    Send contact form message
 // @route   POST /api/contact
@@ -7,7 +8,7 @@ import { sendContactFormEmail } from '../utils/mailer.js';
 export const sendContactMessage = async (req, res, next) => {
   try {
     const { name, email, subject, message, phone_optional, company_name, mailing_address } = req.body;
-    
+
     // HONEYPOTS: Si alguno o todos los campos "phone_optional", "company_name" o "mailing_address" están llenos = BOT
     if (phone_optional || company_name || mailing_address) {
       console.log('Bot detected! Multiple honeypots filled');
@@ -18,8 +19,15 @@ export const sendContactMessage = async (req, res, next) => {
       });
     }
 
+    const sanitizedName = sanitizeInput(name);
+    const sanitizedEmail = sanitizeInput(email);
+    const sanitizedMessage = sanitizeInput(message);
+
     console.log('Honeypot check passed - processing legitimate message');
 
+    if (!sanitizedName || !sanitizedEmail || !sanitizedMessage) {
+      throw createError(400, 'Please provide name, email, and message');
+    }
     // Validar campos requeridos
     if (!name || !email || !message) {
       throw createError(400, 'Please provide name, email, and message');
@@ -27,16 +35,16 @@ export const sendContactMessage = async (req, res, next) => {
 
     // Validar formato de email
     const emailRegex = /^\S+@\S+\.\S+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(sanitizedEmail)) {
       throw createError(400, 'Please provide a valid email address');
     }
 
     // Validar longitud del mensaje
-    if (message.length < 10) {
+    if (sanitizedMessage.length < 10) {
       throw createError(400, 'Message must be at least 10 characters long');
     }
 
-    if (message.length > 2000) {
+    if (sanitizedMessage.length > 2000) {
       throw createError(400, 'Message must not exceed 2000 characters');
     }
 
@@ -46,10 +54,10 @@ export const sendContactMessage = async (req, res, next) => {
       req.socket.remoteAddress ||
       req.ip;
 
-    console.log(`Contact form submission from ${name} (${email}) - IP: ${userIp}`);
+    console.log(`Contact form submission from ${sanitizedName} (${sanitizedEmail}) - IP: ${userIp}`);
 
     // Enviar email
-    await sendContactFormEmail(name, email, subject, message);
+    await sendContactFormEmail(sanitizedName, sanitizedEmail, subject, sanitizedMessage);
 
     console.log(`Contact email sent successfully to ${process.env.CONTACT_EMAIL}`);
 
