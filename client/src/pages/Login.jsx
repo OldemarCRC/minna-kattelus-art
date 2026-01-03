@@ -11,6 +11,7 @@ const Login = () => {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
+    email: ""
   });
   const { loading, error, dispatch } = useContext(AuthContext);
 
@@ -106,6 +107,19 @@ const Login = () => {
               disabled={loading}
             />
           </div>
+
+          {/* Additional verification */}
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={credentials.email}
+            onChange={handleChange}
+            tabIndex="-1"
+            autoComplete="off"
+            aria-hidden="true"
+            style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}
+          />
 
           <button
             type="submit"

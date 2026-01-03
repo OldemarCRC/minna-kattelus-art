@@ -11,15 +11,14 @@ const Contact = () => {
     email: '',
     subject: '',
     message: '',
-    phone_optional: '',   // Honeypot 1
-    company_name: '',     // Honeypot 2
-    mailing_address: ''   // Honeypot 3
+    phone_optional: '', // Additional verification
+    company_name: '',   // Additional verification
+    mailing_address: '' // Additional verification
   });
   const [formStartTime] = useState(Date.now());
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
-  const [submitSuccess, setSubmitSuccess] = useState(false);//borrar esta linea
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,7 +67,7 @@ const Contact = () => {
     console.log('Form submission started');
     console.log('Form data:', formData);
 
-    // VALIDAR TIEMPO MÍNIMO (anti-bots)
+    // VALIDAR TIEMPO MÍNIMO
     const timeSpent = (Date.now() - formStartTime) / 1000;
     if (timeSpent < 3) {
       console.log('Form submitted too fast');
@@ -106,7 +105,6 @@ const Contact = () => {
       const data = response.data;
       console.log('Response data:', data);
 
-      // Axios solo llega aquí si status es 2xx
       if (data.success) {
         console.log('Message sent successfully');
         setMessage({
@@ -242,7 +240,7 @@ const Contact = () => {
                   )}
                 </div>
 
-                {/* HONEYPOT 1 - Campo oculto para atrapar bots */}
+                {/* Additional verification */}
                 <input
                   type="text"
                   name="phone_optional"
@@ -253,7 +251,7 @@ const Contact = () => {
                   style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}
                 />
 
-                {/* HONEYPOT 2 - Campo oculto para atrapar bots */}
+                {/* Additional verification */}
                 <input
                   type="text"
                   name="company_name"
@@ -264,7 +262,7 @@ const Contact = () => {
                   style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px' }}
                 />
 
-                {/* HONEYPOT 3 - Campo oculto para atrapar bots */}
+                {/* Additional verification */}
                 <input
                   type="text"
                   name="mailing_address"

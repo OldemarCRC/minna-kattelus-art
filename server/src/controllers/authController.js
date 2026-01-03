@@ -48,7 +48,7 @@ export const registerUser = async (req, res, next) => {
     }
 
     // Generar contraseña temporal
-    
+
     const tempPassword = generateStrongPassword(12);
 
     // Hash de la contraseña
@@ -107,12 +107,22 @@ export const registerUser = async (req, res, next) => {
 
 export const loginUser = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
+    if (email) {
+      console.log('Bot detected in login! Honeypot filled');
+      // Simular delay de login normal
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid username or password'
+      });
+    }
+
+    console.log('Honeypot check passed - processing legitimate login');
 
     if (!username || !password) {
       throw createError(400, 'Please provide username and password');
     }
-
 
     const userIp = req.headers['x-forwarded-for'] ||
       req.connection.remoteAddress ||
