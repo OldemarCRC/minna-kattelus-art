@@ -4,6 +4,7 @@ import axios from '../utils/axios';
 import './ArtworkManager.css';
 
 const CATEGORIES = ['TEMAS', 'PAISAJES', 'ABSTRACTO', 'RETRATOS', 'NATURALEZA'];
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const ArtworkManager = () => {
   const { t } = useTranslation();

@@ -56,9 +56,6 @@ const ChartPlaceholder = ({ title, data }) => {
                 ))}
             </div>
             <p className="chart-info">{t('dashboard.chartSimulated')}</p>
-            <section className="dashboard-section">
-                <ArtworkManager />
-            </section>
         </div>
 
     );
@@ -122,222 +119,7 @@ const ImageUploadField = ({ label, imageUrlPreview, handleFileChange }) => {
     );
 };
 
-// Formulario de Gestión de Obras
-const ArtworkForm = ({ t }) => {
-    const initialFormState = {
-        title: '',
-        description: '',
-        category: '',
-        price: '',
-        dimensions: '',
-        status: 'available',
-        stock: 1,
-        isAvailable: true,
-        imageFile: null,
-        imageUrlPreview: null,
-    };
 
-    const [formData, setFormData] = useState(initialFormState);
-    const [isEditing, setIsEditing] = useState(false);
-
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value,
-        }));
-    };
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setFormData(prev => ({
-                ...prev,
-                imageFile: file,
-                imageUrlPreview: URL.createObjectURL(file),
-            }));
-        }
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Artwork data to save/update:', formData);
-        console.log(isEditing ? 'Artwork updated successfully (simulation).' : 'New artwork saved successfully (simulation).');
-    };
-
-    const handleDelete = () => {
-        console.log('Simulating artwork deletion. A real confirmation modal would be required.');
-        setFormData(initialFormState);
-        setIsEditing(false);
-        console.log('Artwork deleted successfully (simulation).');
-    };
-
-    const handleNewArtwork = () => {
-        setFormData(initialFormState);
-        setIsEditing(false);
-    };
-
-    const statusClasses = isEditing ? 'status-tag editing' : 'status-tag new';
-
-    return (
-        <div className="artwork-form">
-            <h3 className="form-main-title">
-                {t('admin.formTitle')}
-            </h3>
-
-            <div className="form-header-actions">
-                <p className={statusClasses}>
-                    {isEditing ? t('form.modeEditing') : t('form.modeNew')}
-                </p>
-                <button
-                    type="button"
-                    onClick={handleNewArtwork}
-                    className="btn-new-artwork"
-                >
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    {t('form.newButton')}
-                </button>
-            </div>
-
-            <form onSubmit={handleSubmit}>
-
-                {/* Título y Categoría */}
-                <div className="form-grid-2">
-                    <InputField
-                        label={t('form.titleLabel')}
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        placeholder={t('form.titlePlaceholder')}
-                        required
-                    />
-                    <div>
-                        <label htmlFor="category" className="form-label">{t('form.categoryLabel')}</label>
-                        <select
-                            id="category"
-                            name="category"
-                            value={formData.category}
-                            onChange={handleChange}
-                            className="form-select"
-                        >
-                            <option value="">{t('form.categoryPlaceholder')}</option>
-                            <option value="landscape">{t('form.categoryLandscape')}</option>
-                            <option value="abstract">{t('form.categoryAbstract')}</option>
-                            <option value="portrait">{t('form.categoryPortrait')}</option>
-                            <option value="nature">{t('form.categoryNature')}</option>
-                        </select>
-                    </div>
-                </div>
-
-                {/* Descripción */}
-                <div>
-                    <label htmlFor="description" className="form-label">{t('form.descriptionLabel')}</label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        rows="3"
-                        value={formData.description}
-                        onChange={handleChange}
-                        placeholder={t('form.descriptionPlaceholder')}
-                        className="form-textarea"
-                    ></textarea>
-                </div>
-
-                {/* Precio, Dimensiones y Stock */}
-                <div className="form-grid-3">
-                    <InputField
-                        label={t('form.priceLabel')}
-                        name="price"
-                        type="number"
-                        value={formData.price}
-                        onChange={handleChange}
-                        required
-                        step="0.01"
-                        icon="€"
-                    />
-                    <InputField
-                        label={t('form.dimensionsLabel')}
-                        name="dimensions"
-                        value={formData.dimensions}
-                        onChange={handleChange}
-                        placeholder={t('form.dimensionsPlaceholder')}
-                    />
-                    <InputField
-                        label={t('form.stockLabel')}
-                        name="stock"
-                        type="number"
-                        value={formData.stock}
-                        onChange={handleChange}
-                        min="1"
-                    />
-                </div>
-
-                {/* Estado y Checkbox */}
-                <div className="form-status-bar">
-                    <div className="checkbox-wrapper">
-                        <input
-                            id="isAvailable"
-                            name="isAvailable"
-                            type="checkbox"
-                            checked={formData.isAvailable}
-                            onChange={handleChange}
-                        />
-                        <label htmlFor="isAvailable">
-                            {t('form.availableLabel')}
-                        </label>
-                    </div>
-
-                    <div>
-                        <label htmlFor="status" className="sr-only">{t('form.statusLabel')}</label>
-                        <select
-                            id="status"
-                            name="status"
-                            value={formData.status}
-                            onChange={handleChange}
-                            className="form-select"
-                        >
-                            <option value="available">{t('form.statusAvailable')}</option>
-                            <option value="sold">{t('form.statusSold')}</option>
-                            <option value="transit">{t('form.statusTransit')}</option>
-                            <option value="pending_ship">{t('form.statusPending')}</option>
-                        </select>
-                    </div>
-                </div>
-
-                {/* Subida de Imagen */}
-                <ImageUploadField
-                    label={t('form.imageLabel')}
-                    imageUrlPreview={formData.imageUrlPreview}
-                    handleFileChange={handleFileChange}
-                />
-
-                {/* Botones de Acción */}
-                <div className="form-action-buttons">
-                    <button type="submit" className="btn-save btn-base">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
-                        </svg>
-                        {t('form.saveButton')}
-                    </button>
-                    {isEditing && (
-                        <button
-                            type="button"
-                            onClick={handleDelete}
-                            className="btn-delete btn-base"
-                        >
-                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                            </svg>
-                            {t('form.deleteButton')}
-                        </button>
-                    )}
-                </div>
-            </form>
-        </div>
-    );
-};
 
 const Dashboard = () => {
     const { t } = useTranslation();
@@ -469,11 +251,11 @@ const Dashboard = () => {
                             data={mockChartData}
                         />
                     </div>
-
-                    <section id="artworks">
-                        <ArtworkForm t={t} />
-                    </section>
                 </div>
+
+                <section id="artworks" className="dashboard-section">
+                    <ArtworkManager />
+                </section>
             </main>
         </div>
     );

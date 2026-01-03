@@ -67,31 +67,45 @@ export const getArtwork = async (req, res) => {
 
 export const createArtwork = async (req, res) => {
   try {
-    // Extraer y sanitizar campos
-    const {
-      title,
-      description,
-      artist,
-      technique,
-      category,
-      dimensions,
-      price,
-      year,
-      available
-    } = req.body;
+    // Parsear campos JSON
+    const title = JSON.parse(req.body.title);
+    const description = JSON.parse(req.body.description);
+    const technique = JSON.parse(req.body.technique);
+    const dimensions = JSON.parse(req.body.dimensions);
 
-    // SANITIZAR campos de texto
+    // SANITIZAR campos multiidioma
     const sanitizedData = {
-      title: sanitizeInput(title),
-      description: sanitizeInput(description),
-      artist: sanitizeInput(artist),
-      technique: sanitizeInput(technique),
-      category: sanitizeInput(category),
-      dimensions: sanitizeInput(dimensions),
-      price: price, 
-      year: year, 
-      available: available, 
-      createdBy: req.user._id
+      title: {
+        en: sanitizeInput(title.en),
+        es: sanitizeInput(title.es),
+        fi: sanitizeInput(title.fi),
+        sv: sanitizeInput(title.sv)
+      },
+      description: {
+        en: sanitizeInput(description.en),
+        es: sanitizeInput(description.es),
+        fi: sanitizeInput(description.fi),
+        sv: sanitizeInput(description.sv)
+      },
+      technique: {
+        en: sanitizeInput(technique.en),
+        es: sanitizeInput(technique.es),
+        fi: sanitizeInput(technique.fi),
+        sv: sanitizeInput(technique.sv)
+      },
+      category: req.body.category,
+      year: parseInt(req.body.year),
+      dimensions: {
+        width: parseFloat(dimensions.width),
+        height: parseFloat(dimensions.height),
+        unit: dimensions.unit || 'cm'
+      },
+      price: parseFloat(req.body.price),
+      currency: req.body.currency || 'EUR',
+      available: req.body.available === 'true',
+      featured: req.body.featured === 'true',
+      displayOrder: parseInt(req.body.displayOrder) || 0,
+      createdBy: req.user.id
     };
 
     // Agregar imagen si existe
@@ -103,7 +117,7 @@ export const createArtwork = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'Obra de arte creada exitosamente',
+      message: 'Artwork created successfully',
       data: artwork
     });
   } catch (error) {
@@ -121,7 +135,7 @@ export const createArtwork = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: 'Error al crear la obra de arte',
+      message: 'Error creating artwork',
       error: error.message
     });
   }
@@ -135,36 +149,50 @@ export const updateArtwork = async (req, res) => {
     if (!artwork) {
       return res.status(404).json({
         success: false,
-        message: 'Obra de arte no encontrada'
+        message: 'Artwork not found'
       });
     }
 
     const oldImage = artwork.image;
 
-    // Extraer y sanitizar campos
-    const {
-      title,
-      description,
-      artist,
-      technique,
-      category,
-      dimensions,
-      price,
-      year,
-      available
-    } = req.body;
+    // Parsear campos JSON
+    const title = JSON.parse(req.body.title);
+    const description = JSON.parse(req.body.description);
+    const technique = JSON.parse(req.body.technique);
+    const dimensions = JSON.parse(req.body.dimensions);
 
-    // SANITIZAR campos de texto
+    // SANITIZAR campos multiidioma
     const updateData = {
-      title: sanitizeInput(title),
-      description: sanitizeInput(description),
-      artist: sanitizeInput(artist),
-      technique: sanitizeInput(technique),
-      category: sanitizeInput(category),
-      dimensions: sanitizeInput(dimensions),
-      price: price,
-      year: year,
-      available: available
+      title: {
+        en: sanitizeInput(title.en),
+        es: sanitizeInput(title.es),
+        fi: sanitizeInput(title.fi),
+        sv: sanitizeInput(title.sv)
+      },
+      description: {
+        en: sanitizeInput(description.en),
+        es: sanitizeInput(description.es),
+        fi: sanitizeInput(description.fi),
+        sv: sanitizeInput(description.sv)
+      },
+      technique: {
+        en: sanitizeInput(technique.en),
+        es: sanitizeInput(technique.es),
+        fi: sanitizeInput(technique.fi),
+        sv: sanitizeInput(technique.sv)
+      },
+      category: req.body.category,
+      year: parseInt(req.body.year),
+      dimensions: {
+        width: parseFloat(dimensions.width),
+        height: parseFloat(dimensions.height),
+        unit: dimensions.unit || 'cm'
+      },
+      price: parseFloat(req.body.price),
+      currency: req.body.currency || 'EUR',
+      available: req.body.available === 'true',
+      featured: req.body.featured === 'true',
+      displayOrder: parseInt(req.body.displayOrder) || 0
     };
 
     // Si se subió nueva imagen
@@ -190,7 +218,7 @@ export const updateArtwork = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Obra de arte actualizada exitosamente',
+      message: 'Artwork updated successfully',
       data: artwork
     });
   } catch (error) {
@@ -208,7 +236,7 @@ export const updateArtwork = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: 'Error al actualizar la obra de arte',
+      message: 'Error updating artwork',
       error: error.message
     });
   }
@@ -222,7 +250,7 @@ export const deleteArtwork = async (req, res) => {
     if (!artwork) {
       return res.status(404).json({
         success: false,
-        message: 'Obra de arte no encontrada'
+        message: 'Artwork not found'
       });
     }
 
@@ -240,13 +268,13 @@ export const deleteArtwork = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Obra de arte eliminada exitosamente'
+      message: 'Artwork deleted successfully'
     });
   } catch (error) {
     console.error('Error deleting artwork:', error);
     res.status(500).json({
       success: false,
-      message: 'Error al eliminar la obra de arte',
+      message: 'Error deleting artwork',
       error: error.message
     });
   }
@@ -265,13 +293,13 @@ export const reorderArtworks = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Orden actualizado exitosamente'
+      message: 'Display order updated successfully'
     });
   } catch (error) {
     console.error('Error reordering artworks:', error);
     res.status(500).json({
       success: false,
-      message: 'Error al actualizar el orden',
+      message: 'Error updating display order',
       error: error.message
     });
   }

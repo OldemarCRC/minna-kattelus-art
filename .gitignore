@@ -54,4 +54,6 @@ coverage/
 .nyc_output/
 
 # Documentación (no subir a repositorio)
-docs/
+
+docs/*
+!docs/OHJEET-TIEDOSTONIMET.md
