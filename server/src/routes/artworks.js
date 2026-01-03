@@ -5,7 +5,8 @@ import {
   createArtwork,
   updateArtwork,
   deleteArtwork,
-  reorderArtworks
+  reorderArtworks,
+  getFeaturedArtworks
 } from '../controllers/artworkController.js';
 import { protect, authorize } from '../middleware/auth.js';
 import upload from '../middleware/upload.js';
@@ -14,6 +15,7 @@ import { uploadArtworkLimiter, publicArtworkLimiter } from '../middleware/rateLi
 const router = express.Router();
 
 // Rutas públicas
+router.get('/featured', getFeaturedArtworks);
 router.get('/', publicArtworkLimiter, getArtworks);
 router.get('/:id', publicArtworkLimiter, getArtwork);
 

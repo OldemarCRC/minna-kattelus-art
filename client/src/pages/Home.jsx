@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import './Home.css';
 import { useTranslation } from 'react-i18next';
+import axios from '../utils/axios';
 
 const Home = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language;
 
   const heroImages = [
     'hero/home_hero_1.jpg',
@@ -17,29 +19,24 @@ const Home = () => {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const featuredWorks = [
-  {
-    id: 1,
-    title: 'Joki',
-    medium: 'Acrílico sobre lienzo',
-    year: '2024',
-    image: `${import.meta.env.VITE_API_URL}/uploads/artworks/joki.jpg`
-  },
-  {
-    id: 2,
-    title: 'Kesä-puu',
-    medium: 'Acrílico sobre lienzo',
-    year: '2024',
-    image: `${import.meta.env.VITE_API_URL}/uploads/artworks/kesa-puu.jpg`
-  },
-  {
-    id: 3,
-    title: 'Koivu-talvi',
-    medium: 'Acrílico sobre lienzo',
-    year: '2024',
-    image: `${import.meta.env.VITE_API_URL}/uploads/artworks/koivu-talvi.jpg`
-  }
-];
+  const [featuredWorks, setFeaturedWorks] = useState([]);
+  const [loadingFeatured, setLoadingFeatured] = useState(true);
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+  useEffect(() => {
+    const fetchFeaturedWorks = async () => {
+      try {
+        const response = await axios.get('/api/artworks/featured');
+        setFeaturedWorks(response.data.data);
+      } catch (error) {
+        console.error('Error fetching featured works:', error);
+      } finally {
+        setLoadingFeatured(false);
+      }
+    };
+
+    fetchFeaturedWorks();
+  }, []);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -91,17 +88,29 @@ const Home = () => {
           </p>
 
           <div className="works-grid">
-            {featuredWorks.map((work) => (
-              <div key={work.id} className="work-card">
-                <div className="work-image-container">
-                  <img src={work.image} alt={work.title} className="work-image" />
+            {loadingFeatured ? (
+              <p>{t('common.loading')}</p>
+            ) : featuredWorks.length > 0 ? (
+              featuredWorks.map((work) => (
+                <div key={work._id} className="work-card">
+                  <div className="work-image-container">
+                    <img
+                      src={`${API_URL}/uploads/artworks/${work.image}`}
+                      alt={work.title[currentLang] || work.title.en}
+                      className="work-image"
+                    />
+                  </div>
+                  <div className="work-info">
+                    <h3 className="work-title">{work.title[currentLang] || work.title.en}</h3>
+                    <p className="work-medium">
+                      {work.technique[currentLang] || work.technique.en}, {work.year}
+                    </p>
+                  </div>
                 </div>
-                <div className="work-info">
-                  <h3 className="work-title">{work.title}</h3>
-                  <p className="work-medium">{work.medium}, {work.year}</p>
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p>{t('home.featured.noWorks')}</p>
+            )}
           </div>
 
           <div className="view-all-container">

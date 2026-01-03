@@ -304,3 +304,29 @@ export const reorderArtworks = async (req, res) => {
     });
   }
 };
+
+
+export const getFeaturedArtworks = async (req, res) => {
+  try {
+    const featuredArtworks = await Artwork.find({ 
+      featured: true,
+      available: true 
+    })
+    .sort({ displayOrder: 1, createdAt: -1 })
+    .limit(6)
+    .select('-__v');
+
+    res.status(200).json({
+      success: true,
+      count: featuredArtworks.length,
+      data: featuredArtworks
+    });
+  } catch (error) {
+    console.error('Error fetching featured artworks:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching featured artworks',
+      error: error.message
+    });
+  }
+};
