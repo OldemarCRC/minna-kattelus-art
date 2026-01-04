@@ -13,13 +13,14 @@ import { validatePasswordStrength, generateStrongPassword } from '../utils/passw
 import { sanitizeInput } from '../utils/sanitizer.js';
 
 // Helper: Generar JWT
-const generateToken = (user) => {
+const generateToken = (user, sessionToken) => {
   return jwt.sign(
     {
       id: user._id,
       username: user.username,
       role: user.role,
-      email: user.email
+      email: user.email,
+      sessionToken: sessionToken
     },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE || '24h' }
@@ -187,8 +188,17 @@ export const loginUser = async (req, res, next) => {
       throw createError(403, 'Please verify your email before logging in');
     }
 
-    // Generar JWT token
-    const token = generateToken(user);
+    // Generar sessionToken único
+
+    const sessionToken = crypto.randomBytes(32).toString('hex');
+    user.sessionToken = sessionToken;
+    user.isOnline = true;
+    user.lastLogin = new Date();
+    user.lastActivity = new Date();
+    await user.save({ validateBeforeSave: false });
+
+    //Generar JWT token
+    const token = generateToken(user, sessionToken);
 
     const cookieOptions = {
       httpOnly: true,
@@ -363,6 +373,35 @@ export const deleteUser = async (req, res, next) => {
     res.status(200).json({
       success: true,
       message: 'User deleted successfully'
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logoutUser = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    // Actualizar usuario
+    await User.findByIdAndUpdate(userId, {
+      sessionToken: null,
+      isOnline: false,
+      lastActivity: new Date()
+    });
+
+    // Limpiar cookie
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      path: '/'
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Logout successful'
     });
 
   } catch (error) {

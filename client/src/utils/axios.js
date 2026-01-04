@@ -64,4 +64,30 @@ axiosInstance.interceptors.response.use(
   }
 );
 
+// Interceptor de respuesta para manejar errores de sesión
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      const message = error.response?.data?.message || '';
+      
+      // Sesión cerrada por login en otro lugar
+      if (message.includes('session has been closed')) {
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('token');
+        alert('Your session has been closed because you logged in from another location');
+        window.location.href = '/';
+      }
+      // Token expirado o inválido
+      else if (message.includes('expired') || message.includes('Invalid token')) {
+        sessionStorage.removeItem('user');
+        sessionStorage.removeItem('token');
+        window.location.href = '/';
+      }
+    }
+    
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;

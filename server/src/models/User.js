@@ -52,6 +52,22 @@ const userSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true
+  },
+  sessionToken: {
+    type: String,
+    default: null
+  },
+  isOnline: {
+    type: Boolean,
+    default: false
+  },
+  lastLogin: {
+    type: Date,
+    default: null
+  },
+  lastActivity: {
+    type: Date,
+    default: null
   }
 }, {
   timestamps: true

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { createError } from '../utils/error.js';
+import User from '../models/User.js';
 
 // Verificar token JWT
 export const protect = async (req, res, next) => {
@@ -10,12 +11,10 @@ export const protect = async (req, res, next) => {
   try {
     let token;
 
-    // 1. Obtener token de cookie
     if (req.cookies && req.cookies.token) {
       token = req.cookies.token;
       console.log('Token encontrado en cookie');
     }
-    // 2. O del header Authorization
     else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
       console.log('Token encontrado en header Authorization');
@@ -28,12 +27,30 @@ export const protect = async (req, res, next) => {
 
     console.log('Token a verificar:', token.substring(0, 20) + '...');
 
-    // Verificar token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log('Token verificado correctamente');
     console.log('Usuario decodificado:', decoded.username, '| Role:', decoded.role);
 
-    // Agregar datos del usuario a req
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      console.log('[PROTECT] Usuario no encontrado en BD');
+      throw createError(401, 'User no longer exists');
+    }
+
+    if (user.sessionToken !== decoded.sessionToken) {
+      console.log('[PROTECT] SessionToken no coincide - sesión inválida');
+      throw createError(401, 'Your session has been closed because you logged in from another location');
+    }
+
+    console.log('[PROTECT] SessionToken válido');
+
+    if (!req.path.includes('/logout')) {
+      user.lastActivity = new Date();
+      await user.save({ validateBeforeSave: false });
+      console.log('[PROTECT] Última actividad actualizada');
+    }
+
     req.user = {
       id: decoded.id,
       username: decoded.username,

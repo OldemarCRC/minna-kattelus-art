@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Dashboard.css';
 import ArtworkManager from '../components/ArtworkManager';
+import axios from '../utils/axios';
 
 // Datos simulados
 const mockStats = {
@@ -129,11 +130,20 @@ const Dashboard = () => {
     const userStr = sessionStorage.getItem('user');
     const currentUser = userStr ? JSON.parse(userStr) : null;
 
-    const handleLogout = () => {
-        console.log('Logging out...');
-        sessionStorage.removeItem('user');
-        sessionStorage.removeItem('token');
-        window.location.href = '/';
+    const handleLogout = async () => {
+        try {
+            console.log('Logging out...');
+            await axios.post('/api/auth/logout');
+            sessionStorage.removeItem('user');
+            sessionStorage.removeItem('token');
+            window.location.href = '/';
+        } catch (error) {
+            console.error('Logout error:', error);
+            // Logout local aunque falle el servidor
+            sessionStorage.removeItem('user');
+            sessionStorage.removeItem('token');
+            window.location.href = '/';
+        }
     };
 
     return (

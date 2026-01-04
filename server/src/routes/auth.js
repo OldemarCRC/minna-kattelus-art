@@ -5,7 +5,8 @@ import {
   verifyEmail,
   changePassword,
   getAllUsers,
-  deleteUser
+  deleteUser,
+  logoutUser
 } from '../controllers/authController.js';
 import { protect, authorize } from '../middleware/auth.js';
 import { 
@@ -26,5 +27,6 @@ router.post('/register', protect, authorize('admin'), registerLimiter, registerU
 router.put('/change-password', protect, passwordChangeLimiter, changePassword);
 router.get('/users', protect, authorize('admin'), getAllUsers);
 router.delete('/users/:id', protect, authorize('admin'), deleteUser);
+router.post('/logout', protect, logoutUser);
 
 export default router;
