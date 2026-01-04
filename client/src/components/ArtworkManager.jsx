@@ -14,7 +14,9 @@ const ArtworkManager = () => {
   const [success, setSuccess] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
-  
+  const userStr = sessionStorage.getItem('user');
+  const currentUser = userStr ? JSON.parse(userStr) : null;
+  const isAdmin = currentUser?.role === 'admin';
   const [formData, setFormData] = useState({
     title: { en: '', es: '', fi: '', sv: '' },
     description: { en: '', es: '', fi: '', sv: '' },
@@ -28,7 +30,7 @@ const ArtworkManager = () => {
     featured: false,
     displayOrder: 0
   });
-  
+
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
 
@@ -50,7 +52,7 @@ const ArtworkManager = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
+
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
       setFormData(prev => ({
@@ -87,12 +89,12 @@ const ArtworkManager = () => {
 
     try {
       const formDataToSend = new FormData();
-      
+
       // Agregar imagen si existe
       if (imageFile) {
         formDataToSend.append('image', imageFile);
       }
-      
+
       // Agregar todos los campos
       formDataToSend.append('title', JSON.stringify(formData.title));
       formDataToSend.append('description', JSON.stringify(formData.description));
@@ -191,7 +193,7 @@ const ArtworkManager = () => {
     <div className="artwork-manager">
       <div className="manager-header">
         <h2>Artwork Management</h2>
-        <button 
+        <button
           className="btn-primary"
           onClick={() => {
             resetForm();
@@ -416,8 +418,8 @@ const ArtworkManager = () => {
               <button type="submit" className="btn-primary">
                 {editingId ? 'Update Artwork' : 'Create Artwork'}
               </button>
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="btn-secondary"
                 onClick={() => {
                   resetForm();
@@ -438,8 +440,8 @@ const ArtworkManager = () => {
           {artworks.map(artwork => (
             <div key={artwork._id} className="artwork-card">
               <div className="artwork-image">
-                <img 
-                  src={`${API_URL}/uploads/artworks/${artwork.image}`} 
+                <img
+                  src={`${API_URL}/uploads/artworks/${artwork.image}`}
                   alt={artwork.title.en}
                 />
                 {artwork.featured && <span className="badge-featured">Featured</span>}
@@ -457,18 +459,17 @@ const ArtworkManager = () => {
                 <p className="year">{artwork.year}</p>
               </div>
               <div className="artwork-actions">
-                <button 
+                <button
                   className="btn-edit"
                   onClick={() => handleEdit(artwork)}
                 >
                   Edit
                 </button>
-                <button 
-                  className="btn-delete"
-                  onClick={() => handleDelete(artwork._id)}
-                >
-                  Delete
-                </button>
+                {isAdmin && (
+                  <button onClick={() => handleDelete(artwork._id)} className="btn-delete">
+                    Delete
+                  </button>
+                )}
               </div>
             </div>
           ))}
