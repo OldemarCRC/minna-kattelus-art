@@ -8,6 +8,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 2rem;  /* ← AGREGAR esta línea */
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid #e8e8e8;
@@ -179,6 +180,15 @@
   cursor: pointer;
   transition: background-color 0.3s;
   font-weight: 500;
+  width: auto;
+  flex-shrink: 0;
+  white-space: nowrap; 
+}
+
+.btn-new-artwork {
+  max-width: fit-content;  /* Solo el ancho del contenido */
+  min-width: auto;
+  padding: 0.75rem 1.25rem;  /* Menos padding si es necesario */
 }
 
 .btn-primary:hover {

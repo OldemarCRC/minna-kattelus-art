@@ -194,7 +194,7 @@ const ArtworkManager = () => {
       <div className="manager-header">
         <h2>Artwork Management</h2>
         <button
-          className="btn-primary"
+          className="btn-primary btn-new-artwork"
           onClick={() => {
             resetForm();
             setShowForm(!showForm);
