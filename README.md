@@ -1,37 +1,211 @@
-Título del Proyecto y Banner
+# Minna Kattelus Art Gallery
 
-Descripción General.
+## Description
+- Brief project description
+- Purpose (portfolio + e-commerce for Finnish artist)
+- Main features
 
-Características Principales (Features).
+## Key Features
+- Art portfolio showcase
+- User authentication system
+- Administrative dashboard
+- Contact form
+- Gallery with category filters
+- Artwork management system (CRUD)
+- Multilingual support (EN/ES/FI/SV)
+- Responsive design with Scandinavian aesthetics
 
-Tecnologías Utilizadas (Stack completo).
+## Tech Stack
 
-Implementación de Seguridad y Anti-Spam
+### Frontend
+- React + Vite
+- React Router
+- Axios
+- CSS3 (Scandinavian minimalist design)
+- i18n for multilingual support
 
-Frontend (Defensa de Interfaz):
+### Backend
+- Node.js + Express
+- MongoDB + Mongoose
+- JWT for authentication
+- Multer for file uploads
+- Nodemailer for email notifications
 
-Técnica de Honeypot: Implementación de campos trampa ocultos para el usuario pero visibles para bots, evitando el procesamiento de formularios automatizados.
+### DevOps
+- Git + GitHub
+- Oracle Cloud Infrastructure (OCI)
+- npm/concurrently
 
-Validación de Cliente: Uso de atributos de HTML5 y JavaScript para asegurar la integridad de los datos antes del envío.
+## Security Implementation
 
-Protección de UI: Prevención de ataques básicos de inyección a través de formularios.
+### Backend Security
+- **Helmet.js**: HTTP security headers
+- **CSRF Protection**: Protection against Cross-Site Request Forgery
+- **Rate Limiting**: Request limits per IP
+- **Password Hashing**: Bcrypt for passwords
+- **JWT with httpOnly cookies**: Secure tokens
+- **Email Verification**: Account verification via email
+- **Input Validation**: Data validation in controllers
+- **MongoDB Injection Protection**: Query sanitization
 
-Backend / Integraciones (Protección de Datos):
+### Frontend Security
+- **Honeypots**: Anti-bot traps in public forms
+- **CSRF Token Management**: Automatic tokens in requests
+- **Centralized Axios**: Single instance with interceptors
+- **Form Validation**: Client-side validation before submission
+- **Minimum Form Time**: Anti-bot timing protection
 
-Sanitización de Inputs: Limpieza de datos en el servidor para prevenir XSS y otras vulnerabilidades.
+### Security Features
+- Password change with email notification
+- Role-based system (admin/editor/viewer)
+- Authentication and authorization middleware
+- Access attempt logging
+- Administrative route protection
 
-Manejo de API Keys: Uso de variables de entorno para proteger servicios de terceros.
+## Project Structure
+```
+minna-kattelus-art/
+├── client/                 # React Frontend
+│   ├── src/
+│   │   ├── components/    # Reusable components
+│   │   ├── pages/         # Main pages
+│   │   ├── context/       # Context API (Auth, Language)
+│   │   ├── locales/       # Translation files
+│   │   ├── styles/        # Global styles
+│   │   └── utils/         # Utilities (centralized axios)
+│   └── public/
+└── server/                # Node.js Backend
+    ├── src/
+    │   ├── config/        # DB configuration
+    │   ├── controllers/   # Business logic
+    │   ├── middleware/    # Authentication, rate limiting
+    │   ├── models/        # MongoDB models
+    │   ├── routes/        # API routes
+    │   └── utils/         # Utilities (mailer, errors)
+    └── uploads/           # Uploaded files
+```
 
-Rate Limiting: Control de frecuencia de envíos para evitar denegación de servicio en formularios.
+Installation
+Prerequisites
 
-Instalación y Configuración Local
+Node.js v18+
+MongoDB
+Git
 
-Estructura de Archivos.
+Installation Steps
 
-Despliegue.
+Clone repository
+Install dependencies (root, client, server)
+Configure environment variables
+Initialize database
+Run in development mode
 
-Contribución.
+Configuration
+Environment Variables - Backend (.env)
 
-Créditos y Autoría.
+List of required variables
+Explanation of each
 
-Licencia
+Environment Variables - Frontend (.env)
+
+List of required variables
+Explanation of each
+
+Design and UX
+
+Color palette (Nordic-inspired)
+Typography (Cormorant Garamond)
+Scandinavian minimalist design principles
+
+Responsive Design
+
+Breakpoints used
+Device support
+
+Internationalization (i18n)
+
+Supported languages
+How to add new languages
+Translation file structure
+
+Database
+Models
+
+User
+Artwork
+(others if applicable)
+
+Schemas
+
+Brief description of each model
+
+API Endpoints
+Authentication
+
+POST /api/auth/register
+POST /api/auth/login
+PUT /api/auth/change-password
+GET /api/auth/verify-email/:token
+
+Artworks
+
+GET /api/artworks
+POST /api/artworks
+PUT /api/artworks/:id
+DELETE /api/artworks/:id
+
+Contact
+
+POST /api/contact
+
+Testing
+
+(To be implemented)
+Security testing performed
+
+Deployment
+Development
+
+Instructions for running locally
+
+Production on OCI
+
+Server configuration
+SSL/HTTPS with Let's Encrypt
+Production environment variables
+Backup strategy
+
+Contributing
+
+Contribution guidelines
+Code of conduct
+
+License
+
+License type
+
+Author
+
+Oldemar (developer)
+Minna Kattelus (artist)
+
+Contact
+
+Email
+GitHub
+Website
+
+Acknowledgments
+
+Libraries used
+Resources
+
+Changelog
+
+Versions and major changes
+
+Roadmap / Future Improvements
+
+Planned features
+Pending security enhancements
+Optimizations
