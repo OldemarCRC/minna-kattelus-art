@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import './Dashboard.css';
 import ArtworkManager from '../components/ArtworkManager';
 import axios from '../utils/axios';
+import { stopInactivityDetector } from '../utils/inactivityDetector';
 
 // Datos simulados
 const mockStats = {
@@ -130,21 +131,38 @@ const Dashboard = () => {
     const userStr = sessionStorage.getItem('user');
     const currentUser = userStr ? JSON.parse(userStr) : null;
 
-    const handleLogout = async () => {
-        try {
-            console.log('Logging out...');
-            await axios.post('/api/auth/logout');
-            sessionStorage.removeItem('user');
-            sessionStorage.removeItem('token');
-            window.location.href = '/';
-        } catch (error) {
-            console.error('Logout error:', error);
-            // Logout local aunque falle el servidor
-            sessionStorage.removeItem('user');
-            sessionStorage.removeItem('token');
-            window.location.href = '/';
-        }
-    };
+
+
+const handleLogout = async () => {
+  try {
+    console.log('Logging out...');
+    console.log('Sending logout request to backend...');
+    
+    // AGREGAR: Detener detector ANTES de hacer logout
+    stopInactivityDetector();
+    
+    const response = await axios.post('/api/auth/logout');
+    
+    console.log('Logout response received:', response.data);
+    
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    
+    console.log('Redirecting to home...');
+    window.location.href = '/';
+  } catch (error) {
+    console.error('Logout error:', error);
+    console.error('Error details:', error.response?.data);
+    console.error('Error status:', error.response?.status);
+    
+    // AGREGAR: Detener detector también en caso de error
+    stopInactivityDetector();
+    
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    window.location.href = '/';
+  }
+};
 
     return (
         <div className="dashboard-container">

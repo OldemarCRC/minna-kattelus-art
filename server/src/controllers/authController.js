@@ -383,7 +383,8 @@ export const deleteUser = async (req, res, next) => {
 export const logoutUser = async (req, res, next) => {
   try {
     const userId = req.user.id;
-
+    const username = req.user.username;
+    console.log(`[LOGOUT] Usuario cerrando sesión: ${username} (${userId})`);
     // Actualizar usuario
     await User.findByIdAndUpdate(userId, {
       sessionToken: null,
@@ -399,9 +400,30 @@ export const logoutUser = async (req, res, next) => {
       path: '/'
     });
 
+    console.log(`[LOGOUT] ✅ Sesión cerrada exitosamente: ${username}`);
+
     res.status(200).json({
       success: true,
       message: 'Logout successful'
+    });
+
+  } catch (error) {
+    console.error(`[LOGOUT] ❌ Error:`, error);
+    next(error);
+  }
+};
+
+export const heartbeat = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    // Solo actualizar lastActivity
+    await User.findByIdAndUpdate(userId, {
+      lastActivity: new Date()
+    });
+
+    res.status(200).json({
+      success: true
     });
 
   } catch (error) {

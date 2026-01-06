@@ -18,18 +18,18 @@ const ArtworkManager = () => {
   const currentUser = userStr ? JSON.parse(userStr) : null;
   const isAdmin = currentUser?.role === 'admin';
   const [formData, setFormData] = useState({
-    title: { en: '', es: '', fi: '', sv: '' },
-    description: { en: '', es: '', fi: '', sv: '' },
-    technique: { en: '', es: '', fi: '', sv: '' },
-    category: '',
-    year: new Date().getFullYear(),
-    dimensions: { width: '', height: '', unit: 'cm' },
-    price: '',
-    currency: 'EUR',
-    available: true,
-    featured: false,
-    displayOrder: 0
-  });
+  title: { en: '', es: '', fi: '', sv: '' },
+  description: { en: '', es: '', fi: '', sv: '' },
+  technique: { en: '', es: '', fi: '', sv: '' },
+  category: '',
+  year: new Date().getFullYear(),
+  dimensions: { width: 0, height: 0, unit: 'cm' },
+  price: 0,
+  currency: 'EUR',
+  available: true,
+  featured: false,
+  displayOrder: 0
+});
 
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');

@@ -11,6 +11,7 @@ import artworkRoutes from './routes/artworks.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import helmet from 'helmet';
 import { doubleCsrf } from 'csrf-csrf';
+import { cleanupInactiveSessions } from './utils/sessionCleanup.js';
 
 dotenv.config();
 
@@ -32,6 +33,11 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+setInterval(cleanupInactiveSessions, 10 * 60 * 1000);
+console.log('Session cleanup job iniciado (cada 10 minutos)');
+
+cleanupInactiveSessions();
 
 // Middleware
 // Helmet - Security headers

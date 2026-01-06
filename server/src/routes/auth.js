@@ -6,7 +6,8 @@ import {
   changePassword,
   getAllUsers,
   deleteUser,
-  logoutUser
+  logoutUser,
+  heartbeat
 } from '../controllers/authController.js';
 import { protect, authorize } from '../middleware/auth.js';
 import { 
@@ -28,5 +29,6 @@ router.put('/change-password', protect, passwordChangeLimiter, changePassword);
 router.get('/users', protect, authorize('admin'), getAllUsers);
 router.delete('/users/:id', protect, authorize('admin'), deleteUser);
 router.post('/logout', protect, logoutUser);
+router.post('/heartbeat', protect, heartbeat);
 
 export default router;
