@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './Home.css';
 import { useTranslation } from 'react-i18next';
 import axios from '../utils/axios';
+import ArtworkModal from '../components/ArtworkModal';
 
 const Home = () => {
   const { t, i18n } = useTranslation();
@@ -21,6 +22,7 @@ const Home = () => {
 
   const [featuredWorks, setFeaturedWorks] = useState([]);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
+  const [selectedArtwork, setSelectedArtwork] = useState(null);
   const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
@@ -92,7 +94,12 @@ const Home = () => {
               <p>{t('common.loading')}</p>
             ) : featuredWorks.length > 0 ? (
               featuredWorks.map((work) => (
-                <div key={work._id} className="work-card">
+                <div
+                  key={work._id}
+                  className="work-card"
+                  onClick={() => setSelectedArtwork(work)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div className="work-image-container">
                     <img
                       src={`${API_URL}/uploads/artworks/${work.image}`}
@@ -154,6 +161,14 @@ const Home = () => {
           </Link>
         </div>
       </section>
+
+      {selectedArtwork && (
+        <ArtworkModal
+          artwork={selectedArtwork}
+          onClose={() => setSelectedArtwork(null)}
+        />
+      )}
+
     </div>
   );
 };

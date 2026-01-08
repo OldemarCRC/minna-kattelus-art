@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import './Contact.css';
 import { useTranslation } from 'react-i18next';
 import axios from '../utils/axios';
@@ -6,6 +7,7 @@ import axios from '../utils/axios';
 
 const Contact = () => {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -95,6 +97,7 @@ const Contact = () => {
       const response = await axios.post('/api/contact', {
         name: formData.name,
         email: formData.email,
+        subject: formData.subject,
         message: formData.message,
         phone_optional: formData.phone_optional,
         company_name: formData.company_name,
@@ -146,6 +149,17 @@ const Contact = () => {
       emailLink.href = '/contact';
     }
   }, []);
+
+  useEffect(() => {
+    // Pre-llenar subject si viene de artwork
+    const artworkName = searchParams.get('artwork');
+    if (artworkName) {
+      setFormData(prev => ({
+        ...prev,
+        subject: `Inquiry about: ${decodeURIComponent(artworkName)}`
+      }));
+    }
+  }, [searchParams]);
 
   return (
     <div className="contact-page">

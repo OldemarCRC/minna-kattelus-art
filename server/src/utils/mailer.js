@@ -235,7 +235,10 @@ export const sendDBConnectionFailureNotification = async (date, ipAddress) => {
 
 // Enviar mensaje del formulario de contacto
 export const sendContactFormEmail = async (name, email, subject, message) => {
-  const emailSubject = subject || "New Contact Form Message - Minna Kattelus Art Gallery";
+  const emailSubject = subject 
+    ? `Contact Form: ${subject} - Minna Kattelus Art Gallery`
+    : "New Contact Form Message - Minna Kattelus Art Gallery";
+    
   const htmlContent = `
     <div style="font-family: 'Cormorant Garamond', serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #2D4A3E;">
       <h1 style="color: #2D4A3E; font-size: 28px; margin-bottom: 20px;">New Contact Message</h1>

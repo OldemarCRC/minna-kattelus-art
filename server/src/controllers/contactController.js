@@ -9,6 +9,7 @@ export const sendContactMessage = async (req, res, next) => {
   try {
     const { name, email, subject, message, phone_optional, company_name, mailing_address } = req.body;
 
+    console.log('Subject received from frontend:', subject);
     // HONEYPOTS: Si alguno o todos los campos "phone_optional", "company_name" o "mailing_address" están llenos = BOT
     if (phone_optional || company_name || mailing_address) {
       console.log('Bot detected! Multiple honeypots filled');

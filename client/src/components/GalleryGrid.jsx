@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from '../utils/axios';
+import ArtworkModal from './ArtworkModal';
 import './GalleryGrid.css';
+
 
 const CATEGORIES = ['TEMAS', 'PAISAJES', 'ABSTRACTO', 'RETRATOS', 'NATURALEZA'];
 
@@ -114,72 +116,10 @@ const GalleryGrid = () => {
 
       {/* Modal */}
       {selectedArtwork && (
-        <div className="artwork-modal" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-modal" onClick={closeModal}>
-              ✕
-            </button>
-            
-            <div className="modal-grid">
-              <div className="modal-image">
-                <img
-                  src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/uploads/artworks/${selectedArtwork.image}`}
-                  alt={selectedArtwork.title[i18n.language] || selectedArtwork.title.en}
-                />
-              </div>
-              
-              <div className="modal-info">
-                <h2>{selectedArtwork.title[i18n.language] || selectedArtwork.title.en}</h2>
-                <p className="artwork-year">{selectedArtwork.year}</p>
-                
-                <div className="artwork-details">
-                  <p className="artwork-description">
-                    {selectedArtwork.description[i18n.language] || selectedArtwork.description.en}
-                  </p>
-                  
-                  <div className="detail-row">
-                    <span className="detail-label">{t('gallery.technique')}:</span>
-                    <span>{selectedArtwork.technique[i18n.language] || selectedArtwork.technique.en}</span>
-                  </div>
-                  
-                  <div className="detail-row">
-                    <span className="detail-label">{t('gallery.dimensions')}:</span>
-                    <span>
-                      {selectedArtwork.dimensions.width} × {selectedArtwork.dimensions.height} {selectedArtwork.dimensions.unit}
-                    </span>
-                  </div>
-                  
-                  <div className="detail-row">
-                    <span className="detail-label">{t('gallery.category')}:</span>
-                    <span>{t(`gallery.categories.${selectedArtwork.category.toLowerCase()}`)}</span>
-                  </div>
-                  
-                  {selectedArtwork.available && (
-                    <div className="artwork-price">
-                      <span className="price-label">{t('gallery.price')}:</span>
-                      <span className="price-amount">
-                        {selectedArtwork.currency === 'EUR' ? '€' : '$'}
-                        {selectedArtwork.price.toLocaleString()}
-                      </span>
-                    </div>
-                  )}
-                  
-                  {!selectedArtwork.available && (
-                    <div className="sold-badge">
-                      {t('gallery.sold')}
-                    </div>
-                  )}
-                  
-                  {selectedArtwork.available && (
-                    <button className="contact-btn">
-                      {t('gallery.inquire')}
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ArtworkModal
+          artwork={selectedArtwork}
+          onClose={closeModal}
+        />
       )}
     </div>
   );
