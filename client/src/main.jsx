@@ -50,8 +50,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthContextProvider>  {/* ← AGREGAR ESTA LÍNEA */}
+    <AuthContextProvider>
       <RouterProvider router={router} />
-    </AuthContextProvider>  {/* ← AGREGAR ESTA LÍNEA */}
+    </AuthContextProvider>
   </React.StrictMode>,
 );
