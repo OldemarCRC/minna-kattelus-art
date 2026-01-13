@@ -1,419 +1,419 @@
 # Minna Kattelus Art Gallery
 
-## 📖 Description
-- Brief project description
-- Purpose (portfolio + e-commerce for Finnish artist)
-- Main features
+> Professional art gallery and e-commerce platform for Finnish artist Minna Kattelus
 
-## ✨ Key Features
-- Art portfolio showcase
-- User authentication system
-- Administrative dashboard
-- Contact form
-- Gallery with category filters
-- Artwork management system (CRUD)
-- Multilingual support (EN/ES/FI/SV)
-- Responsive design with Scandinavian aesthetics
+[![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
+[![Express](https://img.shields.io/badge/Express-4.x-green)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-6.x-green)](https://www.mongodb.com/)
+[![License](https://img.shields.io/badge/license-Proprietary-red)](LICENSE)
+
+---
+
+## 📸 Screenshots
+
+> TODO: Add screenshots when migration is complete
+> - Homepage with featured works
+> - Gallery with filters
+> - Artwork detail modal
+> - Admin dashboard
+
+---
+
+## 🔄 Migration Notice
+
+**This project was migrated from React (Vite) to Next.js 14**
+
+### Why We Migrated
+- ✅ **SEO Requirements** - Art galleries need search engine visibility
+- ✅ **Image Optimization** - Built-in Next.js optimization for art images
+- ✅ **Internationalization** - Native support for 4 languages (EN/ES/FI/SV)
+- ✅ **Performance** - Server-side rendering for better UX
+- ✅ **Production Ready** - Better architecture for scaling
+
+### Lesson Learned
+> 💡 **For future projects:** Evaluate framework requirements (SEO, i18n, images) at the start to avoid mid-project migrations. Choose Next.js upfront for public-facing, image-heavy, multilingual applications.
+
+---
+
+## ✨ Features
+
+### Current Features
+- 🎨 Art portfolio showcase with professional gallery
+- 🔐 User authentication with advanced session management
+- 👨‍💼 Admin dashboard for artwork management (CRUD)
+- 🖼️ Artwork detail modals with dynamic call-to-action
+- 📧 Contact form with anti-bot protection
+- 🌍 Multilingual support (English, Spanish, Finnish, Swedish)
+- 📱 Responsive Scandinavian minimalist design
+- 🔍 SEO optimized with server-side rendering
+
+### E-commerce Features (In Development)
+- [ ] Shopping cart system
+- [ ] Multi-step checkout process
+- [ ] Stripe payment integration
+- [ ] Order management
+- [ ] Shipping calculations
+- [ ] Email notifications
+- [ ] Coupon/discount system
+- [ ] Sales analytics dashboard
+
+---
 
 ## 🛠️ Tech Stack
 
+**Architecture:** Next.js 14 + Express.js + MongoDB
+
 ### Frontend
-- React + Vite
-- React Router
-- Axios
-- CSS3 (Scandinavian minimalist design)
-- i18n for multilingual support
+- **Next.js 14** - App Router, SSR, Image Optimization
+- **React 18+** - UI components
+- **next-intl** - Internationalization with automatic routing
+- **Axios** - HTTP client with CSRF/auth interceptors
+- **CSS3** - Scandinavian minimalist design
 
 ### Backend
-- Node.js + Express
-- MongoDB + Mongoose
-- JWT for authentication
-- Multer for file uploads
-- Nodemailer for email notifications
+- **Express.js** - REST API
+- **MongoDB + Mongoose** - Database
+- **JWT** - Authentication with httpOnly cookies
+- **Nodemailer** - Email notifications
+- **Helmet.js** - Security headers
+- **Node-cron** - Background jobs (session cleanup)
 
-### DevOps
-- Git + GitHub
-- Oracle Cloud Infrastructure (OCI)
-- npm/concurrently
+### Security
+- Unique session management (one active session per user)
+- Heartbeat system (5-min intervals)
+- Auto-logout (15 min inactivity)
+- CSRF protection (double-submit cookie pattern)
+- Honeypot anti-bot traps
+- XSS sanitization
+- Rate limiting
 
-## 🔐 Security Implementation
+---
 
-### Advanced Security Features
-- **Unique Session Management**: One active session per user
-- **Session Cleanup Job**: Automatic cleanup of inactive sessions (every 10 min)
-- **Heartbeat System**: Frontend activity sync with backend (every 5 min)
-- **Auto-logout**: Automatic logout after 15 minutes of inactivity
-- **Session Invalidation**: Previous sessions closed on new login
-- **Detailed Security Logs**: Login, logout, and session tracking
+## 📋 Prerequisites
 
-### Backend Security
-- **Helmet.js**: HTTP security headers
-- **CSRF Protection**: Protection against Cross-Site Request Forgery
-- **Rate Limiting**: Request limits per IP (contact form, authentication)
-- **Password Hashing**: Bcrypt for passwords
-- **JWT with httpOnly cookies**: Secure tokens with sessionToken validation
-- **Email Verification**: Account verification via email
-- **Input Validation & XSS Sanitization**: Data validation and sanitization in controllers
-- **MongoDB Injection Protection**: Query sanitization
+Before you begin, ensure you have:
 
-### Frontend Security
-- **Honeypots**: Anti-bot traps in public forms (login, contact)
-- **CSRF Token Management**: Automatic tokens in requests
-- **Centralized Axios**: Single instance with interceptors
-- **Form Validation**: Client-side validation before submission
-- **Minimum Form Time**: Anti-bot timing protection (3 seconds minimum)
-- **Inactivity Detection**: Monitors user activity and triggers auto-logout
+- **Node.js** v18.17.0 or higher
+- **MongoDB** v5.0+ (local or MongoDB Atlas)
+- **Git** latest version
+- **npm** (comes with Node.js)
 
-### Security Features
-- Password change with email notification
-- Role-based system (admin/editor/viewer)
-- Authentication and authorization middleware
-- Session tracking with lastActivity timestamps
-- Administrative route protection
-- One session per user enforcement
-- Automatic session cleanup for abandoned sessions
+---
 
-### Pending Security Features (Roadmap)
-- Security logs for failed login attempts
-- Account lockout after multiple failed attempts
-- Two-Factor Authentication (2FA) - Optional
+## 🚀 Installation
 
-## 🛒 E-commerce System
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-username/minna-kattelus-art.git
+cd minna-kattelus-art
+```
 
-### Current Features
-- **Artwork Display**: Featured works on homepage
-- **Dynamic Modals**: Detailed artwork view with specifications
-- **Availability Status**: Visual indicators for sold/available pieces
-- **Contact Integration**: Pre-filled contact form for artwork inquiries
-- **Dynamic CTA Buttons**: 
-  - "Add to Cart" for available artworks
-  - "Contact for Availability" for sold pieces
+### 2. Checkout migration branch
+```bash
+git checkout migration/nextjs
+```
 
-### Planned E-commerce Features
+### 3. Install dependencies
 
-#### Phase 1: Foundation (In Progress)
-- [ ] Shopping Cart System
-  - Add/remove artworks
-  - Persistent cart (localStorage + DB sync)
-  - Cart counter badge in navbar
-  - Cart page with summary
-- [ ] Shop Page
-  - Grid of available artworks
-  - Advanced filters (category, price range, size)
-  - Search functionality
-- [ ] Wishlist/Favorites
-  - Save favorite artworks
-  - Wishlist page
-  - Badge counter
+**Root:**
+```bash
+npm install
+```
 
-#### Phase 2: Checkout & Payments
-- [ ] Multi-step Checkout Process
-  - Contact information
-  - Shipping address
-  - Shipping method selection
-  - Payment method
-  - Order review and confirmation
-- [ ] Payment Integration
-  - Stripe payment processing
-  - PayPal integration (optional)
-  - Secure payment webhooks
-- [ ] Order Management System
-  - Order model with status tracking
-  - Unique order numbers
-  - Order states (pending, paid, shipped, delivered, cancelled)
+**Frontend (Next.js):**
+```bash
+cd client-next
+npm install
+```
 
-#### Phase 3: Shipping & Logistics
-- [ ] Shipping System
-  - Multiple shipping options
-  - Region-based cost calculation
-  - Shipping carrier integration (DHL, FedEx)
-  - Tracking number management
-- [ ] Inventory Management
-  - Stock tracking
-  - Temporary cart reservation
-  - Low stock notifications
+**Backend (Express):**
+```bash
+cd ../server
+npm install
+```
 
-#### Phase 4: Communication
-- [ ] Email Notifications
-  - Order confirmation
-  - Payment confirmation
-  - Shipping updates
-  - Delivery notification
-- [ ] In-app Notifications
-  - Real-time notifications
-  - Notification history
-  - Unread badge counter
+### 4. Configure environment variables
 
-#### Phase 5: Advanced Features
-- [ ] Coupon/Discount System
-  - Percentage and fixed-amount discounts
-  - Free shipping coupons
-  - Expiration dates
-  - Single-use and multi-use codes
-- [ ] Tax Management
-  - Region-based tax rates
-  - Automatic tax calculation
-- [ ] Gift Cards
-  - Purchase and redeem gift cards
-  - Unique code generation
-  - Balance tracking
-- [ ] Review System
-  - Post-purchase reviews
-  - Star ratings
-  - Admin moderation
+**Backend** (`server/.env`):
+```env
+NODE_ENV=development
+PORT=3000
+MONGODB_URI=mongodb://localhost:27017/minna-kattelus-art
+JWT_SECRET=your-super-secret-key-change-this
+JWT_EXPIRE=30d
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=your-app-password
+CLIENT_URL=http://192.168.10.45:5001
+```
 
-#### Phase 6: Analytics & Management
-- [ ] Sales Dashboard
-  - Sales graphs (daily/weekly/monthly/yearly)
-  - Top-selling artworks
-  - Revenue tracking
-  - Pending/completed orders overview
-- [ ] Order Management (Admin)
-  - Complete order list with filters
-  - Status updates
-  - Invoice generation (PDF)
-  - Refund processing
-- [ ] Purchase History (User)
-  - Order tracking
-  - Invoice downloads
-  - Refund requests
+**Frontend** (`client-next/.env.local`):
+```env
+NEXT_PUBLIC_API_URL=http://192.168.10.45:3000
+NEXT_PUBLIC_CLIENT_URL=http://192.168.10.45:5001
+```
 
-#### Phase 7: Additional Features
-- [ ] Return/Refund System
-  - Return request workflow
-  - Approval process
-  - Automatic refunds
-- [ ] Performance Optimization
-  - Image compression with Sharp
-  - CDN integration
-  - Product caching
-  - Lazy loading
+### 5. Start MongoDB
+```bash
+mongod
+```
+
+### 6. Run the application
+
+**Option A - Run all at once (from root):**
+```bash
+npm run dev
+```
+
+**Option B - Run separately:**
+
+Terminal 1 (Backend):
+```bash
+cd server
+npm run dev
+```
+
+Terminal 2 (Frontend):
+```bash
+cd client-next
+npm run dev
+```
+
+### 7. Access the application
+- **Frontend:** http://192.168.10.45:5001
+- **Backend API:** http://192.168.10.45:3000
+
+---
+
+## 💻 Usage
+
+### Admin Access
+> TODO: Document how to create first admin user
+
+### Available Scripts
+
+**Root:**
+```bash
+npm run dev          # Run frontend + backend concurrently
+```
+
+**Frontend:**
+```bash
+npm run dev          # Development mode (port 5001)
+npm run build        # Production build
+npm run start        # Production server
+npm run lint         # ESLint check
+```
+
+**Backend:**
+```bash
+npm run dev          # Development with nodemon
+npm start            # Production mode
+```
+
+### Example: Creating a New Artwork
+> TODO: Add code example or curl command
+
+---
 
 ## 📂 Project Structure
+
 ```
 minna-kattelus-art/
-├── client/                 # React Frontend
+├── client-next/              # Next.js 14 Frontend
 │   ├── src/
-│   │   ├── components/    # Reusable components
-│   │   ├── pages/         # Main pages
-│   │   ├── context/       # Context API (Auth, Language)
-│   │   ├── locales/       # Translation files
-│   │   ├── styles/        # Global styles
-│   │   └── utils/         # Utilities (centralized axios)
-│   └── public/
-└── server/                # Node.js Backend
-    ├── src/
-    │   ├── config/        # DB configuration
-    │   ├── controllers/   # Business logic
-    │   ├── middleware/    # Authentication, rate limiting
-    │   ├── models/        # MongoDB models
-    │   ├── routes/        # API routes
-    │   └── utils/         # Utilities (mailer, errors)
-    └── uploads/           # Uploaded files
+│   │   ├── app/
+│   │   │   └── [locale]/     # Internationalized routes
+│   │   │       ├── page.jsx  # Home
+│   │   │       ├── gallery/
+│   │   │       ├── shop/
+│   │   │       ├── about-me/
+│   │   │       ├── contact/
+│   │   │       ├── dashboard/
+│   │   │       └── (auth)/   # Login, Register
+│   │   ├── components/       # React components
+│   │   ├── lib/              # Utils (axios, inactivityDetector)
+│   │   └── styles/           # CSS files
+│   ├── messages/             # i18n translations
+│   └── public/               # Static assets
+│
+├── server/                   # Express.js Backend
+│   └── src/
+│       ├── controllers/      # Business logic
+│       ├── middleware/       # Auth, CSRF, rate limiting
+│       ├── models/           # MongoDB models
+│       ├── routes/           # API routes
+│       └── utils/            # Helpers
+│
+└── docs/                     # Project documentation
+    ├── PROJECT_STATUS.md
+    └── MIGRATION_CHECKLIST.md
 ```
 
-🚀 Installation
-Prerequisites
+---
 
-Node.js v18+
-MongoDB
-Git
+## 🔐 Security Features
 
-Installation Steps
+- **Unique Session Management**: One active session per user with sessionToken
+- **Heartbeat System**: Frontend pings backend every 5 minutes
+- **Auto-logout**: 15 minutes of inactivity triggers automatic logout
+- **Session Cleanup**: Backend cron job cleans stale sessions every 10 minutes
+- **CSRF Protection**: Double-submit cookie pattern on all mutations
+- **Honeypots**: 3 hidden fields in public forms to trap bots
+- **XSS Sanitization**: All user inputs sanitized while preserving multilingual structure
+- **Rate Limiting**: IP-based limits on contact form and authentication endpoints
 
-Clone repository
-Install dependencies (root, client, server)
-Configure environment variables
-Initialize database
-Run in development mode
+---
 
-⚙️ Configuration
-Environment Variables - Backend (.env)
+## 🌐 Internationalization
 
-List of required variables
-Explanation of each
+Supported languages with automatic routing:
+- 🇬🇧 English (`/en/*`)
+- 🇪🇸 Spanish (`/es/*`)
+- 🇫🇮 Finnish (`/fi/*`)
+- 🇸🇪 Swedish (`/sv/*`)
 
-Environment Variables - Frontend (.env)
+All artwork content (title, description, technique) stored in multilingual format.
 
-List of required variables
-Explanation of each
+---
 
-🎨 Design and UX
-
-Color palette (Nordic-inspired)
-Typography (Cormorant Garamond)
-Scandinavian minimalist design principles
-
-📱 Responsive Design
-
-Breakpoints used
-Device support
-
-🌐 Internationalization (i18n)
-
-Supported languages
-How to add new languages
-Translation file structure
-
-## 🗄️ Database
-
-### Current Models
-
-#### User
-- Authentication and profile information
-- Fields: sessionToken, isOnline, lastLogin, lastActivity
-- Roles: admin, editor, viewer
-
-#### Artwork
-- Artwork information with multilingual support
-- Fields: title, description, technique (EN/ES/FI/SV)
-- Categories, dimensions, pricing
-- Availability and featured status
-- Display order for gallery
-
-### Planned Models (E-commerce)
-
-#### Order
-- Customer orders with items and status
-- Order states: pending, paid, processing, shipped, delivered, cancelled, refunded
-- Payment and shipping information
-- Total calculations (subtotal, tax, shipping, discounts)
-
-#### OrderItem
-- Individual items within an order
-- Link to Artwork
-- Quantity, price snapshot at purchase time
-
-#### Cart
-- Persistent shopping cart
-- User reference
-- Cart items with quantities
-
-#### ShippingAddress
-- User delivery addresses
-- Multiple addresses per user
-- Default address flag
-
-#### Payment
-- Payment transaction records
-- Payment provider details (Stripe, PayPal)
-- Payment states: pending, completed, failed, refunded
-
-#### Coupon
-- Discount codes
-- Types: percentage, fixed amount, free shipping
-- Expiration dates and usage limits
-
-#### Review (Future)
-- Artwork reviews post-purchase
-- Rating system (1-5 stars)
-- Moderation status
-
-Schemas
-
-Brief description of each model
-
-## 🔌 API Endpoints
+## 📡 API Endpoints
 
 ### Authentication
-- POST /api/auth/register
-- POST /api/auth/login
-- POST /api/auth/logout
-- POST /api/auth/heartbeat (session activity tracking)
-- PUT /api/auth/change-password
-- GET /api/auth/verify-email/:token
+- `POST /api/auth/register` - Create account
+- `POST /api/auth/login` - Login and create session
+- `POST /api/auth/logout` - Logout and clear session
+- `POST /api/auth/heartbeat` - Update lastActivity (session keep-alive)
+- `PUT /api/auth/change-password` - Change password
+- `GET /api/auth/verify-email/:token` - Verify email
 
 ### Artworks
-- GET /api/artworks (all artworks)
-- GET /api/artworks/featured (featured artworks)
-- GET /api/artworks/:id (single artwork)
-- POST /api/artworks (admin/editor)
-- PUT /api/artworks/:id (admin/editor)
-- DELETE /api/artworks/:id (admin only)
-- PUT /api/artworks/display-order (update order)
+- `GET /api/artworks` - Get all artworks
+- `GET /api/artworks/featured` - Get featured artworks
+- `GET /api/artworks/:id` - Get single artwork
+- `POST /api/artworks` - Create artwork (admin/editor)
+- `PUT /api/artworks/:id` - Update artwork (admin/editor)
+- `DELETE /api/artworks/:id` - Delete artwork (admin only)
 
 ### Contact
-- POST /api/contact (with rate limiting and honeypots)
+- `POST /api/contact` - Send contact message (rate limited)
 
-### E-commerce (Planned)
-- Cart: GET, POST, PUT, DELETE /api/cart
-- Orders: GET, POST /api/orders
-- Payments: POST /api/payments/stripe, POST /api/payments/webhook
-- Coupons: POST /api/coupons/validate
+> TODO: Document e-commerce endpoints when implemented
 
-🧪 Testing
+---
 
-(To be implemented)
-Security testing performed
+## 🧪 Testing
 
-📦 Deployment
-Development
+### Manual Testing Checklist
+- [ ] Login/logout flow
+- [ ] Session management (heartbeat, auto-logout)
+- [ ] Multi-browser session invalidation
+- [ ] CSRF protection on mutations
+- [ ] Honeypots blocking bot submissions
+- [ ] Contact form with query parameters
+- [ ] Artwork modal with dynamic CTAs
+- [ ] Language switching
+- [ ] Protected routes (dashboard)
 
-Instructions for running locally
+### Browser Compatibility
+- ✅ Chrome (latest)
+- ✅ Firefox (latest)
+- ✅ Edge (latest)
+- ✅ Opera (latest)
+- ⏳ Safari (pending)
 
-Production on OCI
+> TODO: Implement automated tests (Jest, Playwright)
 
-Server configuration
-SSL/HTTPS with Let's Encrypt
-Production environment variables
-Backup strategy
+---
 
-🤝 Contributing
+## 📦 Deployment
 
-Contribution guidelines
-Code of conduct
+### Development
+```bash
+# Backend runs on http://192.168.10.45:3000
+# Frontend runs on http://192.168.10.45:5001
+```
 
-📄 License
+### Production (Oracle Cloud Infrastructure)
+> TODO: Complete deployment documentation
+> - Server setup (Ubuntu 22.04)
+> - Nginx reverse proxy
+> - SSL with Let's Encrypt
+> - PM2 process manager
+> - MongoDB backup strategy
 
-License type
+---
 
-👤 Author
+## 🤝 Contributing
 
-Oldemar (developer)
-Minna Kattelus (artist)
+This is a private project for Minna Kattelus. Contributions are welcome through pull requests.
 
-📞 Contact
+### Commit Convention
+```
+feat: Add new feature
+fix: Fix bug
+docs: Update documentation
+style: Code formatting
+refactor: Code refactoring
+test: Add/update tests
+chore: Maintenance
+```
 
-Email
-GitHub
-Website
+---
 
-🙏 Acknowledgments
+## 📄 License
 
-Libraries used
-Resources
+Proprietary - All rights reserved © Minna Kattelus
 
-📝 Changelog
+---
 
-Versions and major changes
+## 👥 Authors
 
-## 🔮 Roadmap / Future Improvements
+**Developer:** Oldemar  
+**Artist:** Minna Kattelus (Finnish artist and art teacher)
 
-### Security (Pending)
-- [ ] Security logs for failed login attempts and suspicious activity
-- [ ] Account lockout mechanism after X failed attempts
-- [ ] Two-Factor Authentication (2FA) with TOTP
+---
 
-### E-commerce (In Progress)
-- [x] Artwork detail modal with dynamic CTAs
-- [x] Contact form integration with artwork inquiries
-- [ ] Complete shopping cart system (Phase 1)
-- [ ] Full checkout flow with Stripe integration (Phase 2)
-- [ ] Order management system (Phase 2)
-- [ ] Shipping and logistics (Phase 3)
-- [ ] Email notifications (Phase 4)
-- [ ] Advanced features (coupons, taxes, reviews) (Phase 5-6)
-- [ ] Sales analytics dashboard (Phase 6)
+## 📞 Contact
 
-### UI/UX Improvements
-- [ ] Dynamic hero images from database
-- [ ] Responsive mobile menu (hamburger)
-- [ ] Image optimization with Sharp (compression, WebP format)
-- [ ] Lazy loading for gallery images
-- [ ] CDN integration for static assets
+- **Website:** [To be added]
+- **Email:** [To be added]
+- **Instagram:** [To be added]
 
-### Performance
-- [ ] Redis caching for frequently accessed data
-- [ ] Database query optimization
-- [ ] Image CDN
-- [ ] Progressive Web App (PWA) features
+---
+
+## 🗺️ Roadmap
+
+### Completed ✅
+- [x] Next.js 14 migration setup
+- [x] Advanced session management
+- [x] CSRF and security implementations
+- [x] Artwork modal with dynamic CTAs
+- [x] Contact form integration
+- [x] Multilingual support
+
+### In Progress 🚧
+- [ ] Complete Next.js page migrations
+- [ ] i18n configuration with next-intl
+- [ ] Test all security features in Next.js
+
+### Upcoming 📅
+- [ ] Shopping cart system
+- [ ] Stripe payment integration
+- [ ] Order management
+- [ ] Shipping calculations
+- [ ] Email notifications
+- [ ] Sales analytics dashboard
+
+---
+
+## 📚 Documentation
+
+- [Project Status](docs/PROJECT_STATUS.md) - Current progress and task tracking
+- [Migration Checklist](docs/MIGRATION_CHECKLIST.md) - Detailed migration steps
+- README.md - This file (project overview)
+
+---
+
+**Last Updated:** January 13, 2025  
+**Current Version:** 2.0.0-migration  
+**Branch:** migration/nextjs
