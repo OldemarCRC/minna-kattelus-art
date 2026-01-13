@@ -1,0 +1,289 @@
+{
+  "nav": {
+    "home": "HOME",
+    "gallery": "GALLERY",
+    "shop": "SHOP",
+    "about": "ABOUT ME",
+    "contact": "CONTACT"
+  },
+  "home": {
+    "hero": {
+      "title": "Art that Captures\nthe Nordic Essence",
+      "subtitle": "Exploring light, landscape and emotions through contemporary painting",
+      "viewGallery": "View Gallery",
+      "learnMore": "Learn More"
+    },
+    "featured": {
+      "title": "Featured Works",
+      "subtitle": "A selection of my most recent works",
+      "viewAll": "View Full Gallery"
+    },
+    "about": {
+      "title": "About Me",
+      "text1": "I am Minna Kattelus, a Finnish artist and visual arts teacher. My work explores the relationship between Nordic light and human emotions, creating landscapes and paintings that capture the tranquil and contemplative essence of the North.",
+      "text2": "Through painting, I seek to capture ephemeral moments of beauty and contemplation, inviting the viewer to pause and reconnect with what surrounds us.",
+      "button": "Learn More"
+    },
+    "cta": {
+      "title": "Acquire an Original Work",
+      "subtitle": "Each piece is unique and comes with a certificate of authenticity. Secure shipping throughout Europe.",
+      "button": "Explore Shop"
+    }
+  },
+  "gallery": {
+    "title": "Gallery",
+    "description": "A collection of my works exploring light, color and emotion of Nordic nature",
+    "filters": {
+      "all": "ALL",
+      "landscapes": "LANDSCAPES",
+      "abstract": "ABSTRACT",
+      "portraits": "PORTRAITS",
+      "nature": "NATURE"
+    },
+    "loading": "Loading gallery...",
+    "noArtworks": "No artworks found in this category",
+    "technique": "Technique",
+    "dimensions": "Dimensions",
+    "category": "Category",
+    "price": "Price",
+    "sold": "Sold",
+    "inquire": "Inquire About This Piece",
+    "categories": {
+      "temas": "Themes",
+      "paisajes": "Landscapes",
+      "abstracto": "Abstract",
+      "retratos": "Portraits",
+      "naturaleza": "Nature"
+    }
+  },
+  "shop": {
+    "title": "Shop",
+    "description": "Original works available for acquisition. Each piece is unique and comes with a certificate of authenticity.",
+    "sort": {
+      "label": "Sort by:",
+      "featured": "Featured",
+      "newest": "Most recent",
+      "priceLow": "Price: low to high",
+      "priceHigh": "Price: high to low"
+    },
+    "results": "{{count}} work available",
+    "results_plural": "{{count}} works available",
+    "badges": {
+      "sold": "SOLD",
+      "featured": "FEATURED"
+    },
+    "buttons": {
+      "viewDetails": "View Details",
+      "addToCart": "Add to Cart",
+      "notAvailable": "Not Available"
+    },
+    "info": {
+      "original": {
+        "title": "Original Works",
+        "text": "Each piece is a unique original work, hand-painted by Minna Kattelus."
+      },
+      "certificate": {
+        "title": "Certificate of Authenticity",
+        "text": "All works include a signed certificate guaranteeing their authenticity."
+      },
+      "shipping": {
+        "title": "Secure Shipping",
+        "text": "Professional packaging and insured shipping throughout Europe."
+      },
+      "consultation": {
+        "title": "Personalized Consultations",
+        "text": "Interested in a work? Contact us for more information or studio visit."
+      }
+    },
+    "cta": {
+      "title": "Can't find what you're looking for?",
+      "text": "I accept custom commissions. Contact me to discuss your vision and create a unique work for your space.",
+      "button": "Request Commission"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Finnish Artist and Visual Arts Teacher",
+    "intro": "I am Minna Kattelus, a Finnish artist whose work centers on exploring Nordic light and human emotions through contemporary painting.",
+    "journey": {
+      "title": "My Artistic Journey",
+      "p1": "Born and raised in Finland, my connection with nature and the Finnish landscape was undeniable from a young age. During my childhood, I spent hours observing how the changing light transformed the forests and lakes around me. That early fascination with light and color became the foundation of my artistic practice.",
+      "p2": "After completing my studies at the Vaasa Academy of Fine Arts, I immersed myself in exploring different techniques and media. It was during my Master's in Fine Arts at the University of Helsinki where I found my unique voice: a fusion of Nordic landscape, emotional abstraction and a color palette inspired by Finnish seasons.",
+      "p3": "My artistic practice combines traditional techniques with contemporary approaches, working primarily with acrylic and oil on canvas. I firmly believe in the transformative power of art and its ability to connect what surrounds us with our deepest emotions."
+    },
+    "teaching": {
+      "title": "Teaching and Vocation",
+      "p1": "In addition to my artistic practice, I am a teacher at a vocational center where I share the principle of painting through emotion in a creative landscape. Teaching has enriched me as an artist by being able to transform and share art with my students, fostering creativity and personal expression.",
+      "p2": "I firmly believe in the transformative power of art and its ability to connect people with their deepest emotions. In my classes, I encourage students to find their own artistic voice and experiment without fear of mistakes.",
+      "p3": "Teaching allows me to give back what art has given me: a way of seeing the world with greater sensitivity and a tool to express the inexpressible."
+    },
+    "education": {
+      "title": "Education",
+      "mfa": "MFA in Fine Arts",
+      "mfaInstitution": "University of Helsinki",
+      "bfa": "BFA in Painting",
+      "bfaInstitution": "Vaasa Academy of Fine Arts"
+    },
+    "exhibitions": {
+      "title": "Recent Exhibitions",
+      "solo": "Solo",
+      "group": "Group"
+    },
+    "techniques": {
+      "title": "Techniques",
+      "acrylic": "Acrylic on canvas",
+      "oil": "Oil on canvas",
+      "layering": "Layered painting",
+      "mixed": "Mixed media"
+    },
+    "philosophy": {
+      "title": "My Artistic Philosophy",
+      "quote": "Art is not just about what you see, but what you feel. Each brushstroke is an emotion, each color is a memory, and each work is a window into the soul of the Nordic landscape.",
+      "text": "My work seeks to capture the essence of Finnish landscapes and the emotions they evoke. I don't seek to create literal representations, but emotional interpretations that invite the viewer to their own contemplation. Light, atmosphere and color are my tools to build bridges between the outer world and our inner world."
+    },
+    "cta": {
+      "title": "Interested in my work?",
+      "text": "I would love to connect with you. Whether to acquire a work, commission a custom piece, or simply chat about art.",
+      "viewWorks": "View Available Works",
+      "contact": "Contact"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Interested in a work or have any questions? I would love to hear from you.",
+    "form": {
+      "title": "Send a Message",
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "required": "*",
+      "placeholders": {
+        "name": "Your name",
+        "email": "your@email.com",
+        "subject": "Message subject",
+        "message": "Write your message here..."
+      },
+      "errors": {
+        "nameRequired": "Name is required",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Email is not valid",
+        "messageRequired": "Message is required",
+        "messageShort": "Message must be at least 10 characters"
+      },
+      "submit": "Send Message",
+      "submitting": "Sending...",
+      "successMessage": "✓ Message sent successfully! I'll get back to you soon.",
+      "errorMessage": "✕ Failed to send message. Please try again."
+    },
+    "info": {
+      "title": "Contact Information",
+      "email": "Email",
+      "instagram": "Instagram",
+      "location": "Location",
+      "locationValue": "Helsinki, Finland",
+      "responseTime": {
+        "title": "Response Time",
+        "text": "I usually respond within 24-48 hours. If your inquiry is urgent, please indicate it in the subject line."
+      },
+      "studioVisit": {
+        "title": "Studio Visits",
+        "text": "If you're in Helsinki and would like to visit my studio to see the works in person, contact me to schedule an appointment. Visits are by appointment only."
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": {
+        "question": "Do you do custom commissions?",
+        "answer": "Yes, I accept custom commissions. Contact me with your ideas and I'll provide a quote and estimated timeline."
+      },
+      "q2": {
+        "question": "Do you ship internationally?",
+        "answer": "I currently ship throughout Europe. For shipments outside Europe, contact me to discuss options and costs."
+      },
+      "q3": {
+        "question": "Do works include a certificate?",
+        "answer": "All my original works include a signed and numbered certificate of authenticity."
+      },
+      "q4": {
+        "question": "Do you offer prints?",
+        "answer": "I currently only sell original works. If you're interested in limited edition prints, contact me for more information."
+      }
+    }
+  },
+  "footer": {
+    "about": "Finnish artist and visual arts teacher specializing in contemporary painting inspired by Nordic light and landscape.",
+    "links": "Links",
+    "contact": "Contact",
+    "follow": "Follow Me",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "year": "{{year}}",
+    "medium": "Medium",
+    "size": "Size"
+  },
+  "error404": {
+    "title": "Oops! It Seems the Muse Took This Page.",
+    "message": "The URL you tried to access does not exist, or the masterpiece you were looking for is on another wall. Art can sometimes be chaotic.",
+    "homeButton": "Return to Main Gallery",
+    "imageAlt": "Artist painting with a chaos of paint. Error 404"
+  },
+  "admin": {
+    "loginTitle": "Administration",
+    "loginSubtitle": "Exclusive access for artwork management",
+    "userLabel": "Username",
+    "passwordLabel": "Password",
+    "loginButton": "Sign In",
+    "loginError": "Invalid credentials. Please try again.",
+    "apiError": "Server connection error.",
+    "dashboardTitle": "Administration Dashboard",
+    "statsVisitors": "Total Visitors",
+    "statsVisitorsMonth": "Visitors (Last Month)",
+    "statsVisitorsDay": "Visitors Today",
+    "statsPaintingsAvailable": "Artworks Available",
+    "statsPaintingsSoldMonth": "Sold This Month",
+    "statsPaintingsTransit": "In Transit",
+    "statsPaintingsPendingShip": "Pending Shipment",
+    "chartTitle": "Monthly Visits",
+    "formTitle": "Artwork Management",
+    "sectionVisits": "Visit Statistics",
+    "sectionArtworks": "Artwork Statistics"
+  },
+  "form": {
+    "newButton": "New Artwork",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Nordic Winter",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Contemporary painting inspired by Finnish landscapes...",
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Select category",
+    "categoryLandscape": "Landscape",
+    "categoryAbstract": "Abstract",
+    "categoryPortrait": "Portrait",
+    "categoryNature": "Nature",
+    "priceLabel": "Price",
+    "dimensionsLabel": "Dimensions",
+    "dimensionsPlaceholder": "80 x 100 cm",
+    "statusLabel": "Status",
+    "statusAvailable": "Available",
+    "statusSold": "Sold",
+    "statusTransit": "In Transit",
+    "statusPending": "Pending Shipment",
+    "stockLabel": "Stock",
+    "availableLabel": "Available for Sale",
+    "imageLabel": "Artwork Image",
+    "saveButton": "Save Artwork",
+    "deleteButton": "Delete",
+    "modeEditing": "Edit Mode",
+    "modeNew": "New Entry Mode"
+  },
+  "dashboard": {
+    "logout": "Sign Out",
+    "overview": "Overview",
+    "uploadFile": "Upload a file",
+    "dragDrop": "or drag and drop",
+    "fileHint": "PNG, JPG, GIF up to 10MB",
+    "chartSimulated": "Simulated chart"
+  }
+}
