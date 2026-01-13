@@ -143,14 +143,16 @@ JWT_SECRET=your-super-secret-key-change-this
 JWT_EXPIRE=30d
 EMAIL_USER=your-email@gmail.com
 EMAIL_PASSWORD=your-app-password
-CLIENT_URL=http://192.168.10.45:5001
+CLIENT_URL=http://localhost:5001
 ```
+> **Note:** For network access from other devices, replace `localhost` with your machine's local IP (e.g., `http://192.168.x.x:5001`)
 
 **Frontend** (`client-next/.env.local`):
 ```env
-NEXT_PUBLIC_API_URL=http://192.168.10.45:3000
-NEXT_PUBLIC_CLIENT_URL=http://192.168.10.45:5001
+NEXT_PUBLIC_API_URL=http://localhost:3000
+NEXT_PUBLIC_CLIENT_URL=http://localhost:5001
 ```
+> **Note:** For network access from other devices, replace `localhost` with your machine's local IP (e.g., `http://192.168.x.x:3000`)
 
 ### 5. Start MongoDB
 ```bash
@@ -179,8 +181,10 @@ npm run dev
 ```
 
 ### 7. Access the application
-- **Frontend:** http://192.168.10.45:5001
-- **Backend API:** http://192.168.10.45:3000
+- **Frontend:** http://localhost:5001
+- **Backend API:** http://localhost:3000
+
+> **Network Access:** To access from other devices on your local network, replace `localhost` with your machine's local IP address (e.g., `http://192.168.x.x:5001`). You may need to configure your router to assign a static IP to your development machine.
 
 ---
 
@@ -329,8 +333,8 @@ All artwork content (title, description, technique) stored in multilingual forma
 
 ### Development
 ```bash
-# Backend runs on http://192.168.10.45:3000
-# Frontend runs on http://192.168.10.45:5001
+# Backend runs on http://localhost:3000
+# Frontend runs on http://localhost:5001
 ```
 
 ### Production (Oracle Cloud Infrastructure)
@@ -368,7 +372,7 @@ Proprietary - All rights reserved © Minna Kattelus
 
 ## 👥 Authors
 
-**Developer:** Oldemar  
+**Developer:** José Oldemar Chaves Urbina
 **Artist:** Minna Kattelus (Finnish artist and art teacher)
 
 ---
