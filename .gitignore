@@ -1,59 +1,81 @@
-# Dependencies
-node_modules/
-*/node_modules/
+# === DEPENDENCIES ===
+# Covers root and all subfolders (client, client-next, server)
+**/node_modules/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# Build outputs
-client/dist/
-client/build/
-server/dist/
-server/build/
+# === NEXT.JS (client-next) ===
+client-next/.next/
+client-next/out/
+client-next/next-env.d.ts
+.vercel
 
-# Logs
+# === BUILD OUTPUTS ===
+# Vite, React legacy, and Server builds
+**/dist/
+**/dist-ssr/
+**/build/
+*.tsbuildinfo
+
+# === UPLOADS & DATABASE (server) ===
+# Ignore all uploads but keep the directory structure via .gitkeep
+server/uploads/artworks/*
+!server/uploads/artworks/.gitkeep
+server/uploads/profiles/*
+!server/uploads/profiles/.gitkeep
+server/uploads/temp/*
+!server/uploads/temp/.gitkeep
+server/temp/
+*.db
+*.sqlite
+*.sqlite3
+
+# === ENVIRONMENT VARIABLES (SECURITY) ===
+# Sensitive files - DO NOT COMMIT
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
+*.env
+*.pem
+
+# === LOGS ===
+**/logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 lerna-debug.log*
-logs/
 
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-*.env
-
-# IDE / Editor
-.vscode/
+# === IDE / OS / TEMP ===
+.vscode/*
+!.vscode/extensions.json
 .idea/
-*.swp
-*.swo
-*~
-.DS_Store
-Thumbs.db
-
-# OS
 .DS_Store
 .DS_Store?
 ._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
+Thumbs.db
 Desktop.ini
-
-# Temporary files
+*.swp
+*.swo
+*.suo
 *.tmp
 *.temp
 .cache/
 .parcel-cache/
 
-# Coverage
-coverage/
-*.lcov
+# === TESTING ===
+**/coverage/
 .nyc_output/
 
-# Documentación (no subir a repositorio)
-
+# === DOCUMENTATION ===
+# Ignore all docs except for the specific instructions file
 docs/*
 !docs/OHJEET-TIEDOSTONIMET.md
