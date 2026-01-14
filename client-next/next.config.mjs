@@ -1,23 +1,48 @@
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 import createNextIntlPlugin from 'next-intl/plugin';
 
-const withNextIntl = createNextIntlPlugin('./src/i18n/request.js');
+// Reconstruimos __dirname para que funcione en módulos ES (.mjs)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const withNextIntl = createNextIntlPlugin();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Image optimization configuration
-  images: {
-    domains: ['localhost', '192.168.10.45'],
-    // Add your production domain when deployed
-    // domains: ['localhost', '192.168.10.45', 'minnakattelus.com'],
+  // 1. Forzamos a Turbopack a usar client-next como raíz
+  // Esto elimina el aviso de los múltiples package-lock.json
+  turbopack: {
+    root: __dirname,
   },
 
-  // Disable strict mode in development for better debugging
-  reactStrictMode: true,
+  // 2. Permitir que Next.js acceda a carpetas fuera de 'src' si es necesario
+  experimental: {
+    externalDir: true,
+  },
 
-  // Environment variables available to the browser
-  // (NEXT_PUBLIC_ prefix is already available, this is for custom config)
-  env: {
-    CUSTOM_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  // 3. Configuración de imágenes (corrigiendo el warning de 'domains')
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5000', // El puerto de tu servidor backend de Express
+        pathname: '/uploads/**',
+      },
+    ],
+  },
+
+  // 4. Evitar errores si intentas usar librerías de Node en el cliente
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
   },
 };
 

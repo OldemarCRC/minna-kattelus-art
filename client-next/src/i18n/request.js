@@ -1,5 +1,5 @@
 import { getRequestConfig } from 'next-intl/server';
-import { locales } from './index';
+import { locales, defaultLocale } from './index';
 
 export default getRequestConfig(async ({ requestLocale }) => {
   // Primero esperamos la promesa
@@ -7,7 +7,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   // Si por alguna razón sigue siendo undefined, usamos el default
   if (!locale || !locales.includes(locale)) {
-    locale = 'en'; 
+    locale = defaultLocale;
   }
 
   return {
