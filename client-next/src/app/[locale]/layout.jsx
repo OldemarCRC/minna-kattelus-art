@@ -12,6 +12,14 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+export const metadata = {
+  title: {
+    template: '%s | Minna Kattelus Art Gallery',
+    default: 'Minna Kattelus - Art Gallery', 
+  },
+  description: 'Contemporary Finnish Art by Minna Kattelus',
+};
+
 export default async function LocaleLayout({ children, params }) {
   // Await params in Next.js 15+
   const { locale } = await params;
@@ -25,7 +33,7 @@ export default async function LocaleLayout({ children, params }) {
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html lang={locale} >
       <body>
         <NextIntlClientProvider messages={messages}>
           <Navbar />

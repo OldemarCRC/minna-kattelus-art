@@ -2,6 +2,10 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import '@/styles/About.css';
 
+export const metadata = {
+  title: 'About Me',
+};
+
 export default function AboutPage() {
   const t = useTranslations();
 
@@ -51,6 +55,8 @@ export default function AboutPage() {
     t('about.techniques.layering'),
     t('about.techniques.mixed')
   ];
+
+
 
   return (
     <div className="about-page">

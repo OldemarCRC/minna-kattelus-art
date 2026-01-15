@@ -4,13 +4,13 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import '@/styles/Contact.css';
 import { useState, useEffect } from 'react';
-// CAMBIO: Usar hooks de Next.js en lugar de react-router-dom
 import { useSearchParams } from 'next/navigation';
-import axios from '@/lib/axios'; // Asegúrate de que la ruta sea correcta con @
+import axios from '@/lib/axios';
 
-const Contact = () => {
+export default function Contact(){
+
     const t = useTranslations();
-    const searchParams = useSearchParams(); // En Next.js no devuelve un array, solo el objeto
+    const searchParams = useSearchParams();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -244,6 +244,4 @@ const Contact = () => {
             </section>
         </div>
     );
-};
-
-export default Contact;
+}
