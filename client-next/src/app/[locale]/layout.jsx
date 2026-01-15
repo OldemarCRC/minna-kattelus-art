@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 import '@/app/globals.css';
-import '@/styles/Home.css';
+
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -21,8 +21,7 @@ export default async function LocaleLayout({ children, params }) {
     notFound();
   }
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
+
   const messages = await getMessages();
 
   return (
@@ -30,8 +29,9 @@ export default async function LocaleLayout({ children, params }) {
       <body>
         <NextIntlClientProvider messages={messages}>
           <Navbar />
-          
-          {children}
+          <main>
+            {children}
+          </main>
           <Footer />
         </NextIntlClientProvider>
       </body>

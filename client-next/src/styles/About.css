@@ -1,0 +1,376 @@
+.about-page {
+  margin-top: 80px;
+}
+
+/* Hero Section */
+.about-hero {
+  background-color: var(--color-background);
+  padding: var(--spacing-xl) 0;
+}
+
+.about-hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.about-hero-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.about-hero-text h1 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.about-subtitle {
+  font-size: 1.5rem;
+  color: var(--color-secondary);
+  font-weight: 400;
+  margin-bottom: var(--spacing-md);
+}
+
+.about-intro {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--color-text-light);
+}
+
+/* Biography Section */
+.about-biography {
+  background-color: var(--color-white);
+}
+
+.biography-content h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.bio-text {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.bio-text p {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+/* Teaching Section */
+.about-teaching {
+  background-color: var(--color-background);
+}
+
+.teaching-content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+.teaching-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.teaching-text h2 {
+  margin-bottom: var(--spacing-md);
+}
+
+.teaching-text p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text);
+}
+
+/* Education Section */
+.about-education {
+  background-color: var(--color-white);
+}
+
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.education-card {
+  background-color: var(--color-background);
+  padding: var(--spacing-lg);
+  text-align: center;
+  transition: var(--transition);
+}
+
+.education-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.education-card h3 {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.education-card .institution {
+  font-size: 1.1rem;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-xs);
+}
+
+.education-card .year {
+  font-size: 1rem;
+  color: var(--color-secondary);
+  font-weight: 500;
+}
+
+/* Exhibitions Section */
+.about-exhibitions {
+  background-color: var(--color-background);
+}
+
+.exhibitions-list {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.exhibition-item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg) 0;
+  border-bottom: 1px solid rgba(45, 74, 62, 0.1);
+}
+
+.exhibition-item:last-child {
+  border-bottom: none;
+}
+
+.exhibition-year {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--color-primary);
+  font-weight: 500;
+  text-align: center;
+}
+
+.exhibition-details h3 {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.exhibition-venue {
+  font-size: 1.1rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-sm);
+}
+
+.exhibition-type {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Techniques Section */
+.about-techniques {
+  background-color: var(--color-white);
+}
+
+.techniques-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.technique-card {
+  background-color: var(--color-background);
+  padding: var(--spacing-lg);
+  text-align: center;
+  transition: var(--transition);
+}
+
+.technique-card:hover {
+  transform: translateY(-3px);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.technique-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.technique-card p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.technique-card:hover p {
+  color: var(--color-white);
+}
+
+/* Philosophy Section */
+.about-philosophy {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.philosophy-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.philosophy-content h2 {
+  color: var(--color-white);
+  margin-bottom: var(--spacing-lg);
+}
+
+.philosophy-quote {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.8;
+  margin: 0 0 var(--spacing-lg);
+  padding: 0 var(--spacing-lg);
+  color: rgba(255, 255, 255, 0.95);
+  position: relative;
+}
+
+.philosophy-quote::before {
+  content: '"';
+  font-size: 4rem;
+  position: absolute;
+  left: -20px;
+  top: -20px;
+  color: var(--color-secondary);
+  font-family: Georgia, serif;
+}
+
+.philosophy-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* CTA Section */
+.about-cta {
+  background-color: var(--color-background);
+  text-align: center;
+}
+
+.about-cta .cta-content h2 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.about-cta .cta-content p {
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+  .about-hero-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .about-hero-image {
+    order: -1;
+  }
+  
+  .teaching-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+  
+  .education-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .exhibition-item {
+    grid-template-columns: 80px 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .exhibition-year {
+    font-size: 1.5rem;
+  }
+  
+  .techniques-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    padding: var(--spacing-lg) 0;
+  }
+  
+  .about-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .about-intro {
+    font-size: 1.1rem;
+  }
+  
+  .bio-text p,
+  .teaching-text p {
+    font-size: 1rem;
+  }
+  
+  .exhibition-item {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+    text-align: center;
+  }
+  
+  .exhibition-year {
+    text-align: center;
+  }
+  
+  .philosophy-quote {
+    font-size: 1.2rem;
+    padding: 0;
+  }
+  
+  .philosophy-quote::before {
+    display: none;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .cta-buttons button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
