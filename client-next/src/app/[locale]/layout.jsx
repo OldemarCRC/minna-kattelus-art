@@ -4,9 +4,10 @@ import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+// 1. IMPORTA TU CONTEXTO AQUÍ
+import { AuthContextProvider } from '@/context/AuthContext'; 
 
 import '@/app/globals.css';
-
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -21,26 +22,26 @@ export const metadata = {
 };
 
 export default async function LocaleLayout({ children, params }) {
-  // Await params in Next.js 15+
   const { locale } = await params;
 
-  // Ensure that the incoming `locale` is valid
   if (!locales.includes(locale)) {
     notFound();
   }
 
-
   const messages = await getMessages();
 
   return (
-    <html lang={locale} >
+    <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <Navbar />
-          <main>
-            {children}
-          </main>
-          <Footer />
+          {/* 2. ENVUELVE TODO CON EL PROVIDER DE AUTENTICACIÓN */}
+          <AuthContextProvider>
+            <Navbar />
+            <main>
+              {children}
+            </main>
+            <Footer />
+          </AuthContextProvider>
         </NextIntlClientProvider>
       </body>
     </html>

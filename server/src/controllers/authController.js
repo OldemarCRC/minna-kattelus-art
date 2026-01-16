@@ -27,9 +27,45 @@ const generateToken = (user, sessionToken) => {
   );
 };
 
+// 🔒 Helper: Detectar y validar la URL del cliente autorizada
+const getValidatedClientUrl = (req) => {
+  // Obtener las URLs autorizadas desde .env
+  const authorizedUrls = process.env.CLIENT_URLS 
+    ? process.env.CLIENT_URLS.split(',').map(url => url.trim())
+    : [process.env.CLIENT_URL]; // Fallback a CLIENT_URL si existe
+
+  // Obtener el origen de la petición
+  const origin = req.get('origin') || req.get('referer') || '';
+  
+  console.log('🔍 Origin detectado:', origin);
+  console.log('✅ URLs autorizadas:', authorizedUrls);
+  
+  // Buscar cuál URL autorizada coincide con el origen
+  const matchedUrl = authorizedUrls.find(url => {
+    // Extraer el host y puerto de la URL autorizada
+    const urlParts = url.replace(/^https?:\/\//, '').split('/')[0];
+    return origin.includes(urlParts);
+  });
+  
+  if (!matchedUrl) {
+    console.error('❌ Origen no autorizado:', origin);
+    return null; // No es una URL autorizada
+  }
+  
+  console.log('✅ URL validada:', matchedUrl);
+  return matchedUrl;
+};
+
 export const registerUser = async (req, res, next) => {
   try {
-    const { username, fullName, email, role, phone, createdBy } = req.body;
+    const { username, fullName, email, role, phone, createdBy, locale } = req.body;
+
+    // 🔒 VALIDAR QUE LA PETICIÓN VENGA DE UN ORIGEN AUTORIZADO
+    const clientUrl = getValidatedClientUrl(req);
+    
+    if (!clientUrl) {
+      throw createError(403, 'Unauthorized origin. Registration request rejected.');
+    }
 
     // SANITIZAR INPUTS
     const sanitizedUsername = sanitizeInput(username);
@@ -79,8 +115,11 @@ export const registerUser = async (req, res, next) => {
       isVerified: false
     });
 
-    // URL de verificación
-    const verificationUrl = `${process.env.CLIENT_URL}/verify-email/${verificationToken}`;
+    // 🌐 Obtener locale desde el body o usar 'en' por defecto
+    const userLocale = locale || 'en';
+
+    // 🎯 URL de verificación con la URL validada y el locale correcto
+    const verificationUrl = `${clientUrl}/${userLocale}/verify-email/${verificationToken}`;
 
     // Enviar email de verificación
     try {
@@ -91,9 +130,11 @@ export const registerUser = async (req, res, next) => {
         tempPassword,
         sanitizedUsername
       );
-      console.log(`Verification email sent to ${sanitizedEmail}`);
+      console.log(`✅ Usuario registrado: ${sanitizedEmail}`);
+      console.log(`📧 Email de verificación enviado a: ${sanitizedEmail}`);
+      console.log(`🔗 URL de verificación: ${verificationUrl}`);
     } catch (emailError) {
-      console.error('Email sending failed:', emailError);
+      console.error('❌ Error al enviar email:', emailError);
     }
 
     res.status(201).json({
@@ -118,7 +159,7 @@ export const loginUser = async (req, res, next) => {
 
     // HONEYPOT: Si email está lleno = BOT
     if (email) {
-      console.log('Bot detected in login! Honeypot filled');
+      console.log('🤖 Bot detectado en login! Honeypot lleno');
       await new Promise(resolve => setTimeout(resolve, 1000));
       return res.status(401).json({
         success: false,
@@ -126,7 +167,7 @@ export const loginUser = async (req, res, next) => {
       });
     }
 
-    console.log('Honeypot check passed - processing legitimate login');
+    console.log('✅ Honeypot check passed - procesando login legítimo');
 
     // SANITIZAR INPUTS
     const sanitizedUsername = sanitizeInput(username);
@@ -189,7 +230,6 @@ export const loginUser = async (req, res, next) => {
     }
 
     // Generar sessionToken único
-
     const sessionToken = crypto.randomBytes(32).toString('hex');
     user.sessionToken = sessionToken;
     user.isOnline = true;
@@ -197,7 +237,7 @@ export const loginUser = async (req, res, next) => {
     user.lastActivity = new Date();
     await user.save({ validateBeforeSave: false });
 
-    //Generar JWT token
+    // Generar JWT token
     const token = generateToken(user, sessionToken);
 
     const cookieOptions = {
@@ -209,8 +249,8 @@ export const loginUser = async (req, res, next) => {
     };
 
     res.cookie('token', token, cookieOptions);
-    console.log('Cookie set for user:', user.username);
-    console.log('Cookie options:', cookieOptions);
+    console.log('🍪 Cookie set for user:', user.username);
+    console.log('🍪 Cookie options:', cookieOptions);
 
     try {
       await sendLoginNotification(
@@ -242,7 +282,6 @@ export const loginUser = async (req, res, next) => {
   }
 };
 
-
 export const verifyEmail = async (req, res, next) => {
   try {
     const { token } = req.params;
@@ -251,7 +290,6 @@ export const verifyEmail = async (req, res, next) => {
     let user = await User.findOne({ verificationToken: token });
 
     if (!user) {
-
       return res.status(200).json({
         success: true,
         message: 'This verification link has already been used or your account is already verified. You can now log in.',
@@ -264,6 +302,8 @@ export const verifyEmail = async (req, res, next) => {
     user.verificationToken = null;
     await user.save();
 
+    console.log(`✅ Email verificado: ${user.email}`);
+
     res.status(200).json({
       success: true,
       message: 'Email verified successfully! You can now log in.',
@@ -274,7 +314,6 @@ export const verifyEmail = async (req, res, next) => {
     next(error);
   }
 };
-
 
 export const changePassword = async (req, res, next) => {
   try {
@@ -322,14 +361,16 @@ export const changePassword = async (req, res, next) => {
     try {
       await sendPasswordChangeNotification(
         user.email,
-        user.sanitizedFullName,
-        user.sanitizedUsername,
+        user.fullName,
+        user.username,
         changeDate,
         userIp
       );
     } catch (emailError) {
       console.error('Password change notification error:', emailError);
     }
+
+    console.log(`🔐 Contraseña cambiada: ${user.username}`);
 
     res.status(200).json({
       success: true,
@@ -340,7 +381,6 @@ export const changePassword = async (req, res, next) => {
     next(error);
   }
 };
-
 
 export const getAllUsers = async (req, res, next) => {
   try {
@@ -359,7 +399,6 @@ export const getAllUsers = async (req, res, next) => {
   }
 };
 
-
 export const deleteUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
@@ -369,6 +408,8 @@ export const deleteUser = async (req, res, next) => {
     }
 
     await user.deleteOne();
+
+    console.log(`🗑️ Usuario eliminado: ${user.username}`);
 
     res.status(200).json({
       success: true,
@@ -385,6 +426,7 @@ export const logoutUser = async (req, res, next) => {
     const userId = req.user.id;
     const username = req.user.username;
     console.log(`[LOGOUT] Usuario cerrando sesión: ${username} (${userId})`);
+
     // Actualizar usuario
     await User.findByIdAndUpdate(userId, {
       sessionToken: null,
