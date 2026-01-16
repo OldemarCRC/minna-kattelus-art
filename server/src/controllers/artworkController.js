@@ -70,6 +70,7 @@ export const createArtwork = async (req, res) => {
     // Parsear campos JSON
     const title = JSON.parse(req.body.title);
     const description = JSON.parse(req.body.description);
+    const category = JSON.parse(req.body.category);
     const technique = JSON.parse(req.body.technique);
     const dimensions = JSON.parse(req.body.dimensions);
 
@@ -93,7 +94,12 @@ export const createArtwork = async (req, res) => {
         fi: sanitizeInput(technique.fi),
         sv: sanitizeInput(technique.sv)
       },
-      category: req.body.category,
+      category: {
+        en: sanitizeInput(category.en),
+        es: sanitizeInput(category.es),
+        fi: sanitizeInput(category.fi),
+        sv: sanitizeInput(category.sv)
+      },
       year: parseInt(req.body.year),
       dimensions: {
         width: parseFloat(dimensions.width),
@@ -158,6 +164,7 @@ export const updateArtwork = async (req, res) => {
     // Parsear campos JSON
     const title = JSON.parse(req.body.title);
     const description = JSON.parse(req.body.description);
+    const category = JSON.parse(req.body.category);
     const technique = JSON.parse(req.body.technique);
     const dimensions = JSON.parse(req.body.dimensions);
 
@@ -181,7 +188,12 @@ export const updateArtwork = async (req, res) => {
         fi: sanitizeInput(technique.fi),
         sv: sanitizeInput(technique.sv)
       },
-      category: req.body.category,
+      category: {
+        en: sanitizeInput(category.en),
+        es: sanitizeInput(category.es),
+        fi: sanitizeInput(category.fi),
+        sv: sanitizeInput(category.sv)
+      },
       year: parseInt(req.body.year),
       dimensions: {
         width: parseFloat(dimensions.width),

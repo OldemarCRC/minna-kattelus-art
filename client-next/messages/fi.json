@@ -285,5 +285,16 @@
     "dragDrop": "tai vedä ja pudota",
     "fileHint": "PNG, JPG, GIF max 10MB",
     "chartSimulated": "Simuloitu kaavio"
-  }
+  }, 
+
+  "artworkModal": {
+  "featured": "Esitelty",
+  "sold": "Myyty",
+  "technique": "Tekniikka",
+  "year": "Vuosi",
+  "dimensions": "Mitat",
+  "price": "Hinta",
+  "addToCart": "Lisää Ostoskoriin",
+  "contactForAvailability": "Kysy Saatavuutta"
+}
 }

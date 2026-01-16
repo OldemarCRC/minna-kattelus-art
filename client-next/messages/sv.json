@@ -285,5 +285,15 @@
     "dragDrop": "eller dra och släpp",
     "fileHint": "PNG, JPG, GIF upp till 10MB",
     "chartSimulated": "Simulerat diagram"
+  },
+  "artworkModal": {
+    "featured": "Utvald",
+    "sold": "Såld",
+    "technique": "Teknik",
+    "year": "År",
+    "dimensions": "Dimensioner",
+    "price": "Pris",
+    "addToCart": "Lägg till i Varukorg",
+    "contactForAvailability": "Fråga om Tillgänglighet"
   }
 }

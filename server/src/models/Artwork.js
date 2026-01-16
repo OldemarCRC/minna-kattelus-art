@@ -15,9 +15,10 @@ const artworkSchema = new mongoose.Schema(
       sv: { type: String, required: true }
     },
     category: {
-      type: String,
-      enum: ['TEMAS', 'PAISAJES', 'ABSTRACTO', 'RETRATOS', 'NATURALEZA'],
-      required: true
+      en: { type: String, required: true },
+      es: { type: String, required: true },
+      fi: { type: String, required: true },
+      sv: { type: String, required: true }
     },
     image: {
       type: String,

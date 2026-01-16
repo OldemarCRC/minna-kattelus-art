@@ -1,11 +1,12 @@
 'use client';
 
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import '@/styles/ArtworkModal.css';
 
 const ArtworkModal = ({ artwork, onClose }) => {
   const currentLang = useLocale();
+  const t = useTranslations();
   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
@@ -33,41 +34,41 @@ const ArtworkModal = ({ artwork, onClose }) => {
     <div className="artwork-modal-overlay" onClick={handleOverlayClick}>
       <div className="artwork-modal">
         <button className="modal-close" onClick={onClose}>×</button>
-        
+
         <div className="modal-content">
           {/* Image */}
           <div className="modal-image">
-            <img 
-              src={`${API_URL}/uploads/artworks/${artwork.image}`} 
+            <img
+              src={`${API_URL}/uploads/artworks/${artwork.image}`}
               alt={artwork.title[currentLang] || artwork.title.en}
             />
-            {artwork.featured && <span className="badge-featured-modal">Featured</span>}
-            {!artwork.available && <span className="badge-sold-modal">Sold</span>}
+            {artwork.featured && <span className="badge-featured-modal">{t('artworkModal.featured')}</span>}
+            {!artwork.available && <span className="badge-sold-modal">{t('artworkModal.sold')}</span>}
           </div>
 
           {/* Information */}
           <div className="modal-info">
             <h2>{artwork.title[currentLang] || artwork.title.en}</h2>
-            
+
             <div className="modal-details">
-              <p className="category">{artwork.category}</p>
-              
+              <p className="category">{artwork.category[currentLang] || artwork.category.en}</p>
+
               <p className="description">
                 {artwork.description[currentLang] || artwork.description.en}
               </p>
 
               <div className="detail-row">
-                <span className="label">Technique:</span>
+                <span className="label">{t('artworkModal.technique')}:</span>
                 <span>{artwork.technique[currentLang] || artwork.technique.en}</span>
               </div>
 
               <div className="detail-row">
-                <span className="label">Year:</span>
+                <span className="label">{t('artworkModal.year')}:</span>
                 <span>{artwork.year}</span>
               </div>
 
               <div className="detail-row">
-                <span className="label">Dimensions:</span>
+                <span className="label">{t('artworkModal.dimensions')}:</span>
                 <span>
                   {artwork.dimensions.width} × {artwork.dimensions.height} {artwork.dimensions.unit}
                 </span>
@@ -75,7 +76,7 @@ const ArtworkModal = ({ artwork, onClose }) => {
 
               {artwork.available && (
                 <div className="detail-row price-row">
-                  <span className="label">Price:</span>
+                  <span className="label">{t('artworkModal.price')}:</span>
                   <span className="price">
                     {artwork.currency === 'EUR' ? '€' : '$'}{artwork.price}
                   </span>
@@ -87,11 +88,11 @@ const ArtworkModal = ({ artwork, onClose }) => {
             <div className="modal-actions">
               {artwork.available ? (
                 <button className="btn-add-cart" onClick={handleAddToCart}>
-                  Add to Cart - {artwork.currency === 'EUR' ? '€' : '$'}{artwork.price}
+                  {t('artworkModal.addToCart')} - {artwork.currency === 'EUR' ? '€' : '$'}{artwork.price}
                 </button>
               ) : (
                 <button className="btn-contact" onClick={handleContactForAvailability}>
-                  Contact for Availability
+                  {t('artworkModal.contactForAvailability')}
                 </button>
               )}
             </div>

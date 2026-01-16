@@ -1,35 +1,72 @@
+'use client';
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
-import axios from '../lib/axios';
+import { useLocale, useTranslations } from 'next-intl';
+import axios from '@/lib/axios';
 import '@/styles/ArtworkManager.css';
 
-const CATEGORIES = ['TEMAS', 'PAISAJES', 'ABSTRACTO', 'RETRATOS', 'NATURALEZA'];
+const CATEGORIES = {
+  THEMES: {
+    en: 'Themes',
+    es: 'Temas',
+    fi: 'Aiheet',
+    sv: 'Teman'
+  },
+  LANDSCAPES: {
+    en: 'Landscapes',
+    es: 'Paisajes',
+    fi: 'Maisemat',
+    sv: 'Landskap'
+  },
+  ABSTRACT: {
+    en: 'Abstract',
+    es: 'Abstracto',
+    fi: 'Abstrakti',
+    sv: 'Abstrakt'
+  },
+  PORTRAITS: {
+    en: 'Portraits',
+    es: 'Retratos',
+    fi: 'Muotokuvat',
+    sv: 'Porträtt'
+  },
+  NATURE: {
+    en: 'Nature',
+    es: 'Naturaleza',
+    fi: 'Luonto',
+    sv: 'Natur'
+  }
+};
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 const ArtworkManager = () => {
-  const { t } = useTranslations();
+  const locale = useLocale();
+  const t = useTranslations();
+  
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  
   const userStr = sessionStorage.getItem('user');
   const currentUser = userStr ? JSON.parse(userStr) : null;
   const isAdmin = currentUser?.role === 'admin';
+  
   const [formData, setFormData] = useState({
-  title: { en: '', es: '', fi: '', sv: '' },
-  description: { en: '', es: '', fi: '', sv: '' },
-  technique: { en: '', es: '', fi: '', sv: '' },
-  category: '',
-  year: new Date().getFullYear(),
-  dimensions: { width: 0, height: 0, unit: 'cm' },
-  price: 0,
-  currency: 'EUR',
-  available: true,
-  featured: false,
-  displayOrder: 0
-});
+    title: { en: '', es: '', fi: '', sv: '' },
+    description: { en: '', es: '', fi: '', sv: '' },
+    category: { en: '', es: '', fi: '', sv: '' },
+    technique: { en: '', es: '', fi: '', sv: '' },
+    year: new Date().getFullYear(),
+    dimensions: { width: '', height: '', unit: 'cm' },
+    price: '',
+    currency: 'EUR',
+    available: true,
+    featured: false,
+    displayOrder: 0
+  });
 
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
@@ -70,6 +107,29 @@ const ArtworkManager = () => {
     }
   };
 
+  // 🎯 Manejar cambio de categoría - Actualiza todos los idiomas a la vez
+  const handleCategoryChange = (e) => {
+    const selectedKey = e.target.value;
+    const selectedCategory = CATEGORIES[selectedKey];
+    
+    setFormData(prev => ({
+      ...prev,
+      category: selectedCategory
+    }));
+  };
+
+  // 🎯 Obtener la key de la categoría actual para el select
+  const getCurrentCategoryKey = () => {
+    if (!formData.category.en) return '';
+    
+    for (const [key, value] of Object.entries(CATEGORIES)) {
+      if (value.en === formData.category.en) {
+        return key;
+      }
+    }
+    return '';
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -95,13 +155,15 @@ const ArtworkManager = () => {
         formDataToSend.append('image', imageFile);
       }
 
-      // Agregar todos los campos
+      // 🎯 Serializar objetos a JSON
       formDataToSend.append('title', JSON.stringify(formData.title));
       formDataToSend.append('description', JSON.stringify(formData.description));
+      formDataToSend.append('category', JSON.stringify(formData.category));
       formDataToSend.append('technique', JSON.stringify(formData.technique));
-      formDataToSend.append('category', formData.category);
-      formDataToSend.append('year', formData.year);
       formDataToSend.append('dimensions', JSON.stringify(formData.dimensions));
+      
+      // Campos simples
+      formDataToSend.append('year', formData.year);
       formDataToSend.append('price', formData.price);
       formDataToSend.append('currency', formData.currency);
       formDataToSend.append('available', formData.available);
@@ -137,7 +199,7 @@ const ArtworkManager = () => {
       title: artwork.title,
       description: artwork.description,
       technique: artwork.technique,
-      category: artwork.category,
+      category: artwork.category, // 👈 Ya es objeto
       year: artwork.year,
       dimensions: artwork.dimensions,
       price: artwork.price,
@@ -171,7 +233,7 @@ const ArtworkManager = () => {
       title: { en: '', es: '', fi: '', sv: '' },
       description: { en: '', es: '', fi: '', sv: '' },
       technique: { en: '', es: '', fi: '', sv: '' },
-      category: '',
+      category: { en: '', es: '', fi: '', sv: '' },
       year: new Date().getFullYear(),
       dimensions: { width: '', height: '', unit: 'cm' },
       price: '',
@@ -284,22 +346,35 @@ const ArtworkManager = () => {
               </div>
             </div>
 
-            {/* Category & Year */}
+            {/* 🎯 Category - Select único que actualiza todos los idiomas */}
             <div className="form-row">
               <div className="form-group">
-                <label>Category</label>
+                <label>Category *</label>
                 <select
-                  name="category"
-                  value={formData.category}
-                  onChange={handleInputChange}
+                  value={getCurrentCategoryKey()}
+                  onChange={handleCategoryChange}
                   required
                 >
                   <option value="">Select category</option>
-                  {CATEGORIES.map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
+                  {Object.keys(CATEGORIES).map(key => (
+                    <option key={key} value={key}>
+                      {CATEGORIES[key].en}
+                    </option>
                   ))}
                 </select>
+                {/* Mostrar categoría en todos los idiomas (solo preview) */}
+                {formData.category.en && (
+                  <div className="category-preview">
+                    <small>
+                      EN: {formData.category.en} | 
+                      ES: {formData.category.es} | 
+                      FI: {formData.category.fi} | 
+                      SV: {formData.category.sv}
+                    </small>
+                  </div>
+                )}
               </div>
+              
               <div className="form-group">
                 <label>Year</label>
                 <input
@@ -442,14 +517,15 @@ const ArtworkManager = () => {
               <div className="artwork-image">
                 <img
                   src={`${API_URL}/uploads/artworks/${artwork.image}`}
-                  alt={artwork.title.en}
+                  alt={artwork.title[locale] || artwork.title.en}
                 />
                 {artwork.featured && <span className="badge-featured">Featured</span>}
                 {!artwork.available && <span className="badge-sold">Sold</span>}
               </div>
               <div className="artwork-info">
-                <h4>{artwork.title.en}</h4>
-                <p className="category">{artwork.category}</p>
+                <h4>{artwork.title[locale] || artwork.title.en}</h4>
+                {/* 🎯 Mostrar categoría traducida */}
+                <p className="category">{artwork.category[locale] || artwork.category.en}</p>
                 <p className="price">
                   {artwork.currency === 'EUR' ? '€' : '$'}{artwork.price}
                 </p>

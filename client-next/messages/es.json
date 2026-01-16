@@ -285,5 +285,15 @@
     "dragDrop": "o arrastrar y soltar",
     "fileHint": "PNG, JPG, GIF hasta 10MB",
     "chartSimulated": "Gráfica simulada"
+  },
+  "artworkModal": {
+    "featured": "Destacado",
+    "sold": "Vendido",
+    "technique": "Técnica",
+    "year": "Año",
+    "dimensions": "Dimensiones",
+    "price": "Precio",
+    "addToCart": "Añadir al Carrito",
+    "contactForAvailability": "Consultar Disponibilidad"
   }
 }
