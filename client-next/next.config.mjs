@@ -21,19 +21,25 @@ const nextConfig = {
     externalDir: true,
   },
 
-  // 3. Configuración de imágenes (corrigiendo el warning de 'domains')
+  // 3. Configuración de imágenes
   images: {
     remotePatterns: [
       {
         protocol: 'http',
         hostname: 'localhost',
-        port: '5000', // El puerto de tu servidor backend de Express
+        port: '5000',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'http',
+        hostname: '192.168.10.45',
+        port: '5000',
         pathname: '/uploads/**',
       },
     ],
   },
 
-  // 4. Evitar errores si intentas usar librerías de Node en el cliente
+  // 5. Evitar errores si intentas usar librerías de Node en el cliente
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {

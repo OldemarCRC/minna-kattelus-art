@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import axios from '@/lib/axios';
@@ -25,8 +24,6 @@ export default function Home() {
   const [featuredWorks, setFeaturedWorks] = useState([]);
   const [loadingFeatured, setLoadingFeatured] = useState(true);
   const [selectedArtwork, setSelectedArtwork] = useState(null);
-  
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
   useEffect(() => {
     const fetchFeaturedWorks = async () => {
@@ -105,7 +102,7 @@ export default function Home() {
                 >
                   <div className="work-image-container">
                     <img
-                      src={`${API_URL}/uploads/artworks/${work.image}`}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/artworks/${work.image}`}
                       alt={work.title[currentLang] || work.title.en}
                       className="work-image"
                     />
