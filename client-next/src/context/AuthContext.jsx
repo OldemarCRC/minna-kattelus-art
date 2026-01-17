@@ -3,7 +3,7 @@ import { createContext, useEffect, useReducer } from "react";
 
 const INITIAL_STATE = {
   user: null,
-  loading: false,
+  loading: true,
   error: null,
 };
 
@@ -29,6 +29,11 @@ const AuthReducer = (state, action) => {
         loading: false,
         error: action.payload,
       };
+    case "INIT_COMPLETE": // ← Nueva acción
+      return {
+        ...state,
+        loading: false,
+      };
     case "LOGOUT":
       sessionStorage.removeItem("user");
       return {
@@ -48,6 +53,8 @@ export const AuthContextProvider = ({ children }) => {
     const savedUser = sessionStorage.getItem("user");
     if (savedUser) {
       dispatch({ type: "LOGIN_SUCCESS", payload: JSON.parse(savedUser) });
+    } else {
+      dispatch({ type: "INIT_COMPLETE" });
     }
   }, []);
 
