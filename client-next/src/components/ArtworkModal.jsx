@@ -3,25 +3,24 @@
 import { useEffect } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { useCart } from '@/context/CartContext';
 import '@/styles/ArtworkModal.css';
 
 const ArtworkModal = ({ artwork, onClose }) => {
   const currentLang = useLocale();
   const t = useTranslations();
   const router = useRouter();
+  const { addItem, items } = useCart();
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
-  // Cerrar con ESC y limpiar listeners
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape') onClose();
     };
 
-    // Bloquear scroll del body cuando modal está abierto
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleEsc);
 
-    // Limpieza al desmontar
     return () => {
       window.removeEventListener('keydown', handleEsc);
       document.body.style.overflow = 'unset';
@@ -30,7 +29,6 @@ const ArtworkModal = ({ artwork, onClose }) => {
 
   if (!artwork) return null;
 
-  // Cerrar al hacer clic en el backdrop (fuera del modal)
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -38,16 +36,24 @@ const ArtworkModal = ({ artwork, onClose }) => {
   };
 
   const handleAddToCart = () => {
-    // TODO: Implement cart in next session
-    console.log('Add to cart:', artwork._id);
-    alert('Cart functionality coming soon!');
+    const cartItem = {
+      id: artwork._id,
+      title: artwork.title,
+      technique: artwork.technique,
+      image: artwork.image,
+      price: artwork.price,
+      currency: artwork.currency,
+      dimensions: artwork.dimensions
+    };
+    addItem(cartItem);
   };
 
   const handleContactForAvailability = () => {
-    // Redirect to contact page with pre-filled data
     const artworkTitle = encodeURIComponent(artwork.title[currentLang] || artwork.title.en);
     router.push(`/${currentLang}/contact?artwork=${artworkTitle}`);
   };
+
+  const isInCart = items.some(item => item.id === artwork._id);
 
   return (
     <div className="artwork-modal-overlay" onClick={handleBackdropClick}>
@@ -57,7 +63,6 @@ const ArtworkModal = ({ artwork, onClose }) => {
         </button>
 
         <div className="modal-content">
-          {/* Image */}
           <div className="modal-image">
             <img
               src={`${API_URL}/uploads/artworks/${artwork.image}`}
@@ -75,7 +80,6 @@ const ArtworkModal = ({ artwork, onClose }) => {
             )}
           </div>
 
-          {/* Information */}
           <div className="modal-info">
             <h2>{artwork.title[currentLang] || artwork.title.en}</h2>
 
@@ -117,14 +121,19 @@ const ArtworkModal = ({ artwork, onClose }) => {
               )}
             </div>
 
-            {/* Dynamic Button */}
             <div className="modal-actions">
               {artwork.available ? (
-                <button className="btn-add-cart" onClick={handleAddToCart}>
-                  {t('artworkModal.addToCart')} -{' '}
-                  {artwork.currency === 'EUR' ? '€' : '$'}
-                  {artwork.price.toLocaleString()}
-                </button>
+                isInCart ? (
+                  <button className="btn-in-cart" disabled>
+                    {t('artworkModal.inCart')}
+                  </button>
+                ) : (
+                  <button className="btn-add-cart" onClick={handleAddToCart}>
+                    {t('artworkModal.addToCart')} -{' '}
+                    {artwork.currency === 'EUR' ? '€' : '$'}
+                    {artwork.price.toLocaleString()}
+                  </button>
+                )
               ) : (
                 <button className="btn-contact" onClick={handleContactForAvailability}>
                   {t('artworkModal.contactForAvailability')}
