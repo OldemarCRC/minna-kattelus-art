@@ -10,10 +10,12 @@ const LanguageSwitcher = () => {
   const pathname = usePathname();
 
   const languages = [
-    { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'fi', name: 'Suomi', flag: '🇫🇮' },
+    { code: 'sv', name: 'Svenska', flag: '🇸🇪' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'so', name: 'Af-Soomaali', flag: '🇸🇴' },
     { code: 'es', name: 'Español', flag: '🇪🇸' },
-    { code: 'sv', name: 'Svenska', flag: '🇸🇪' }
+    
   ];
 
   const changeLanguage = (newLocale) => {

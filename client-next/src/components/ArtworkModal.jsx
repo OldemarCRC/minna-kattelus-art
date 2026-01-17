@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import '@/styles/ArtworkModal.css';
@@ -10,9 +11,27 @@ const ArtworkModal = ({ artwork, onClose }) => {
   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
+  // Cerrar con ESC y limpiar listeners
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+
+    // Bloquear scroll del body cuando modal está abierto
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleEsc);
+
+    // Limpieza al desmontar
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+      document.body.style.overflow = 'unset';
+    };
+  }, [onClose]);
+
   if (!artwork) return null;
 
-  const handleOverlayClick = (e) => {
+  // Cerrar al hacer clic en el backdrop (fuera del modal)
+  const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
@@ -31,9 +50,11 @@ const ArtworkModal = ({ artwork, onClose }) => {
   };
 
   return (
-    <div className="artwork-modal-overlay" onClick={handleOverlayClick}>
+    <div className="artwork-modal-overlay" onClick={handleBackdropClick}>
       <div className="artwork-modal">
-        <button className="modal-close" onClick={onClose}>×</button>
+        <button className="modal-close" onClick={onClose} aria-label="Close modal">
+          ×
+        </button>
 
         <div className="modal-content">
           {/* Image */}
@@ -42,8 +63,16 @@ const ArtworkModal = ({ artwork, onClose }) => {
               src={`${API_URL}/uploads/artworks/${artwork.image}`}
               alt={artwork.title[currentLang] || artwork.title.en}
             />
-            {artwork.featured && <span className="badge-featured-modal">{t('artworkModal.featured')}</span>}
-            {!artwork.available && <span className="badge-sold-modal">{t('artworkModal.sold')}</span>}
+            {artwork.featured && (
+              <span className="badge-featured-modal">
+                {t('artworkModal.featured')}
+              </span>
+            )}
+            {!artwork.available && (
+              <span className="badge-sold-modal">
+                {t('artworkModal.sold')}
+              </span>
+            )}
           </div>
 
           {/* Information */}
@@ -51,7 +80,9 @@ const ArtworkModal = ({ artwork, onClose }) => {
             <h2>{artwork.title[currentLang] || artwork.title.en}</h2>
 
             <div className="modal-details">
-              <p className="category">{artwork.category[currentLang] || artwork.category.en}</p>
+              <p className="category">
+                {artwork.category[currentLang] || artwork.category.en}
+              </p>
 
               <p className="description">
                 {artwork.description[currentLang] || artwork.description.en}
@@ -70,7 +101,8 @@ const ArtworkModal = ({ artwork, onClose }) => {
               <div className="detail-row">
                 <span className="label">{t('artworkModal.dimensions')}:</span>
                 <span>
-                  {artwork.dimensions.width} × {artwork.dimensions.height} {artwork.dimensions.unit}
+                  {artwork.dimensions.width} × {artwork.dimensions.height}{' '}
+                  {artwork.dimensions.unit}
                 </span>
               </div>
 
@@ -78,7 +110,8 @@ const ArtworkModal = ({ artwork, onClose }) => {
                 <div className="detail-row price-row">
                   <span className="label">{t('artworkModal.price')}:</span>
                   <span className="price">
-                    {artwork.currency === 'EUR' ? '€' : '$'}{artwork.price}
+                    {artwork.currency === 'EUR' ? '€' : '$'}
+                    {artwork.price.toLocaleString()}
                   </span>
                 </div>
               )}
@@ -88,7 +121,9 @@ const ArtworkModal = ({ artwork, onClose }) => {
             <div className="modal-actions">
               {artwork.available ? (
                 <button className="btn-add-cart" onClick={handleAddToCart}>
-                  {t('artworkModal.addToCart')} - {artwork.currency === 'EUR' ? '€' : '$'}{artwork.price}
+                  {t('artworkModal.addToCart')} -{' '}
+                  {artwork.currency === 'EUR' ? '€' : '$'}
+                  {artwork.price.toLocaleString()}
                 </button>
               ) : (
                 <button className="btn-contact" onClick={handleContactForAvailability}>

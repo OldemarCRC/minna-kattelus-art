@@ -9,31 +9,36 @@ const CATEGORIES = {
     en: 'Themes',
     es: 'Temas',
     fi: 'Aiheet',
-    sv: 'Teman'
+    sv: 'Teman',
+    so: 'Mawduucyada'
   },
   LANDSCAPES: {
     en: 'Landscapes',
     es: 'Paisajes',
     fi: 'Maisemat',
-    sv: 'Landskap'
+    sv: 'Landskap',
+    so: 'Landscapes'
   },
   ABSTRACT: {
     en: 'Abstract',
     es: 'Abstracto',
     fi: 'Abstrakti',
-    sv: 'Abstrakt'
+    sv: 'Abstrakt',
+    so: 'Abstract'
   },
   PORTRAITS: {
     en: 'Portraits',
     es: 'Retratos',
     fi: 'Muotokuvat',
-    sv: 'Porträtt'
+    sv: 'Porträtt',
+    so: 'Portraits'
   },
   NATURE: {
     en: 'Nature',
     es: 'Naturaleza',
     fi: 'Luonto',
-    sv: 'Natur'
+    sv: 'Natur',
+    so: 'Dabeecadda'
   }
 };
 
@@ -55,10 +60,10 @@ const ArtworkManager = () => {
   const isAdmin = currentUser?.role === 'admin';
   
   const [formData, setFormData] = useState({
-    title: { en: '', es: '', fi: '', sv: '' },
-    description: { en: '', es: '', fi: '', sv: '' },
-    category: { en: '', es: '', fi: '', sv: '' },
-    technique: { en: '', es: '', fi: '', sv: '' },
+    title: { en: '', es: '', fi: '', sv: '', so: '' },
+    description: { en: '', es: '', fi: '', sv: '', so: '' },
+    category: { en: '', es: '', fi: '', sv: '', so: '' },
+    technique: { en: '', es: '', fi: '', sv: '', so: '' },
     year: new Date().getFullYear(),
     dimensions: { width: '', height: '', unit: 'cm' },
     price: '',
@@ -107,7 +112,7 @@ const ArtworkManager = () => {
     }
   };
 
-  // 🎯 Manejar cambio de categoría - Actualiza todos los idiomas a la vez
+
   const handleCategoryChange = (e) => {
     const selectedKey = e.target.value;
     const selectedCategory = CATEGORIES[selectedKey];
@@ -118,7 +123,7 @@ const ArtworkManager = () => {
     }));
   };
 
-  // 🎯 Obtener la key de la categoría actual para el select
+
   const getCurrentCategoryKey = () => {
     if (!formData.category.en) return '';
     
@@ -155,7 +160,6 @@ const ArtworkManager = () => {
         formDataToSend.append('image', imageFile);
       }
 
-      // 🎯 Serializar objetos a JSON
       formDataToSend.append('title', JSON.stringify(formData.title));
       formDataToSend.append('description', JSON.stringify(formData.description));
       formDataToSend.append('category', JSON.stringify(formData.category));
@@ -199,7 +203,7 @@ const ArtworkManager = () => {
       title: artwork.title,
       description: artwork.description,
       technique: artwork.technique,
-      category: artwork.category, // 👈 Ya es objeto
+      category: artwork.category,
       year: artwork.year,
       dimensions: artwork.dimensions,
       price: artwork.price,
@@ -230,10 +234,10 @@ const ArtworkManager = () => {
 
   const resetForm = () => {
     setFormData({
-      title: { en: '', es: '', fi: '', sv: '' },
-      description: { en: '', es: '', fi: '', sv: '' },
-      technique: { en: '', es: '', fi: '', sv: '' },
-      category: { en: '', es: '', fi: '', sv: '' },
+      title: { en: '', es: '', fi: '', sv: '', so: '' },
+      description: { en: '', es: '', fi: '', sv: '', so: '' },
+      technique: { en: '', es: '', fi: '', sv: '', so: '' },
+      category: { en: '', es: '', fi: '', sv: '', so: '' },
       year: new Date().getFullYear(),
       dimensions: { width: '', height: '', unit: 'cm' },
       price: '',
@@ -293,7 +297,7 @@ const ArtworkManager = () => {
             <div className="form-section">
               <h4>Title (All Languages)</h4>
               <div className="language-fields">
-                {['en', 'es', 'fi', 'sv'].map(lang => (
+                {['en', 'es', 'fi', 'sv', 'so'].map(lang => (
                   <div key={`title-${lang}`} className="form-group">
                     <label>{lang.toUpperCase()}</label>
                     <input
@@ -312,7 +316,7 @@ const ArtworkManager = () => {
             <div className="form-section">
               <h4>Description (All Languages)</h4>
               <div className="language-fields">
-                {['en', 'es', 'fi', 'sv'].map(lang => (
+                {['en', 'es', 'fi', 'sv', 'so'].map(lang => (
                   <div key={`desc-${lang}`} className="form-group">
                     <label>{lang.toUpperCase()}</label>
                     <textarea
@@ -331,7 +335,7 @@ const ArtworkManager = () => {
             <div className="form-section">
               <h4>Technique (All Languages)</h4>
               <div className="language-fields">
-                {['en', 'es', 'fi', 'sv'].map(lang => (
+                {['en', 'es', 'fi', 'sv', 'so'].map(lang => (
                   <div key={`tech-${lang}`} className="form-group">
                     <label>{lang.toUpperCase()}</label>
                     <input
@@ -346,7 +350,6 @@ const ArtworkManager = () => {
               </div>
             </div>
 
-            {/* 🎯 Category - Select único que actualiza todos los idiomas */}
             <div className="form-row">
               <div className="form-group">
                 <label>Category *</label>
@@ -369,7 +372,8 @@ const ArtworkManager = () => {
                       EN: {formData.category.en} | 
                       ES: {formData.category.es} | 
                       FI: {formData.category.fi} | 
-                      SV: {formData.category.sv}
+                      SV: {formData.category.sv} |
+                      SO: {formData.category.so}
                     </small>
                   </div>
                 )}
@@ -524,7 +528,6 @@ const ArtworkManager = () => {
               </div>
               <div className="artwork-info">
                 <h4>{artwork.title[locale] || artwork.title.en}</h4>
-                {/* 🎯 Mostrar categoría traducida */}
                 <p className="category">{artwork.category[locale] || artwork.category.en}</p>
                 <p className="price">
                   {artwork.currency === 'EUR' ? '€' : '$'}{artwork.price}
