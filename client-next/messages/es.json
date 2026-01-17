@@ -32,7 +32,7 @@
   },
   "gallery": {
     "title": "Galería",
-    "description": "Una colección de mis obras que exploran la luz, el color y la emoción de la naturaleza nórdica",
+    "description": "Explora mi colección de arte nórdico contemporáneo",
     "filters": {
       "all": "TODAS",
       "landscapes": "PAISAJES",
@@ -304,6 +304,19 @@
     "dimensions": "Dimensiones",
     "price": "Precio",
     "addToCart": "Añadir al Carrito",
-    "contactForAvailability": "Consultar Disponibilidad"
+    "inCart": "En Carrito ✓",
+    "contactForAvailability": "Contactar por Disponibilidad",
+    "close": "Cerrar"
+  },
+  "cart": {
+    "title": "Carrito de Compras",
+    "empty": "Tu carrito está vacío",
+    "continueShopping": "Continuar Comprando",
+    "clearCart": "Vaciar Carrito",
+    "summary": "Resumen del Pedido",
+    "items": "Artículos",
+    "total": "Total",
+    "checkout": "Proceder al Pago",
+    "remove": "Eliminar artículo"
   }
 }

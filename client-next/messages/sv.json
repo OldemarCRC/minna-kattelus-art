@@ -32,7 +32,7 @@
   },
   "gallery": {
     "title": "Galleri",
-    "description": "En samling av mina verk som utforskar ljus, färg och känsla i den nordiska naturen",
+    "description": "Utforska min samling av samtida nordisk konst",
     "filters": {
       "all": "ALLA",
       "landscapes": "LANDSKAP",
@@ -304,6 +304,19 @@
     "dimensions": "Dimensioner",
     "price": "Pris",
     "addToCart": "Lägg till i Varukorg",
-    "contactForAvailability": "Fråga om Tillgänglighet"
+    "inCart": "I Varukorgen ✓",
+    "contactForAvailability": "Kontakta för Tillgänglighet",
+    "close": "Stäng"
+  },
+  "cart": {
+    "title": "Varukorg",
+    "empty": "Din varukorg är tom",
+    "continueShopping": "Fortsätt Handla",
+    "clearCart": "Töm Varukorg",
+    "summary": "Ordersammanfattning",
+    "items": "Artiklar",
+    "total": "Totalt",
+    "checkout": "Gå till Kassan",
+    "remove": "Ta bort artikel"
   }
 }

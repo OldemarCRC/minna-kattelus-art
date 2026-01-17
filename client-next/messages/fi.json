@@ -32,7 +32,7 @@
   },
   "gallery": {
     "title": "Galleria",
-    "description": "Kokoelma töitäni, jotka tutkivat pohjoismaisen luonnon valoa, väriä ja tunnetta",
+    "description": "Tutustu kokoelmaani pohjoismaista nykytaidetta",
     "filters": {
       "all": "KAIKKI",
       "landscapes": "MAISEMAT",
@@ -304,6 +304,19 @@
     "dimensions": "Mitat",
     "price": "Hinta",
     "addToCart": "Lisää Ostoskoriin",
-    "contactForAvailability": "Kysy Saatavuutta"
+    "inCart": "Korissa ✓",
+    "contactForAvailability": "Ota yhteyttä saatavuudesta",
+    "close": "Sulje"
+  },
+  "cart": {
+    "title": "Ostoskori",
+    "empty": "Ostoskorisi on tyhjä",
+    "continueShopping": "Jatka Ostoksia",
+    "clearCart": "Tyhjennä Kori",
+    "summary": "Tilauksen Yhteenveto",
+    "items": "Tuotteet",
+    "total": "Yhteensä",
+    "checkout": "Siirry Kassalle",
+    "remove": "Poista tuote"
   }
 }

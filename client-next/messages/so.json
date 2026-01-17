@@ -32,7 +32,7 @@
     },
     "gallery": {
         "title": "Galari",
-        "description": "Ururinta shaqooyinkayga ee sahamaya iftiinka, midabka iyo dareenka dabeecadda Nordic",
+        "description": "Baadh ururinta farshaxanka Nordic ee casriga ah",
         "filters": {
             "all": "DHAMAAN",
             "landscapes": "LANDSCAPES",
@@ -301,9 +301,22 @@
         "sold": "La Iibiyay",
         "technique": "Technique",
         "year": "Sannadka",
-        "dimensions": "Dimensions",
+        "dimensions": "Cabbirka",
         "price": "Qiimaha",
-        "addToCart": "Ku Dar Cart-ka",
-        "contactForAvailability": "La Xiriir Helitaanka"
+        "addToCart": "Ku Dar Qaadka",
+        "inCart": "Qaadka Ku Jira ✓",
+        "contactForAvailability": "La xiriir Helitaanka",
+        "close": "Xir"
+    },
+    "cart": {
+        "title": "Qaadka Iibsiga",
+        "empty": "Qaadkaaga waa madhan yahay",
+        "continueShopping": "Sii Wad Iibsashada",
+        "clearCart": "Nadiifi Qaadka",
+        "summary": "Koobka Dalabka",
+        "items": "Shayada",
+        "total": "Wadarta",
+        "checkout": "U gudub Bixinta",
+        "remove": "Ka saar shayga"
     }
 }

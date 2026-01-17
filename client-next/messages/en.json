@@ -32,7 +32,7 @@
   },
   "gallery": {
     "title": "Gallery",
-    "description": "A collection of my works exploring light, color and emotion of Nordic nature",
+    "description": "Explore my collection of contemporary Nordic art",
     "filters": {
       "all": "ALL",
       "landscapes": "LANDSCAPES",
@@ -304,6 +304,19 @@
     "dimensions": "Dimensions",
     "price": "Price",
     "addToCart": "Add to Cart",
-    "contactForAvailability": "Contact for Availability"
+    "inCart": "In Cart ✓",
+    "contactForAvailability": "Contact for Availability",
+    "close": "Close"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "continueShopping": "Continue Shopping",
+    "clearCart": "Clear Cart",
+    "summary": "Order Summary",
+    "items": "Items",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "remove": "Remove item"
   }
 }
