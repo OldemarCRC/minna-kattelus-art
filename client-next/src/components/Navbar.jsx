@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useState, useEffect } from 'react';
 import LanguageSwitcher from './LanguageSwitcher';
 import ChangePasswordModal from './ChangePasswordModal';
+import CartIcon from './CartIcon';
 import '@/styles/Navbar.css';
 
 const Navbar = () => {
@@ -175,7 +176,7 @@ const Navbar = () => {
           {/* Actions Container (Language and Cart) - Visible on all screens */}
           <div className="navbar-actions">
             <LanguageSwitcher />
-            <span className="icon-cart">🛒</span>
+            <CartIcon />
 
             {/* Hamburger Button - Visible only on mobile */}
             <button className="menu-toggle" onClick={() => setShowMenu(!showMenu)}>
