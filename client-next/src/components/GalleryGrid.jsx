@@ -69,6 +69,10 @@ const GalleryGrid = () => {
 
   return (
     <div className="gallery-container">
+      <div className="gallery-header">
+        <h1>{t('gallery.title')}</h1>
+        <p className="gallery-description">{t('gallery.description')}</p>
+      </div>
       {/* Category Filter */}
       <div className="category-filter">
         <button
