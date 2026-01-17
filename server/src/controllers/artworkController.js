@@ -80,25 +80,29 @@ export const createArtwork = async (req, res) => {
         en: sanitizeInput(title.en),
         es: sanitizeInput(title.es),
         fi: sanitizeInput(title.fi),
-        sv: sanitizeInput(title.sv)
+        sv: sanitizeInput(title.sv),
+        so: sanitizeInput(title.so)
       },
       description: {
         en: sanitizeInput(description.en),
         es: sanitizeInput(description.es),
         fi: sanitizeInput(description.fi),
-        sv: sanitizeInput(description.sv)
+        sv: sanitizeInput(description.sv),
+        so: sanitizeInput(description.so)
       },
       technique: {
         en: sanitizeInput(technique.en),
         es: sanitizeInput(technique.es),
         fi: sanitizeInput(technique.fi),
-        sv: sanitizeInput(technique.sv)
+        sv: sanitizeInput(technique.sv),
+        so: sanitizeInput(technique.so)
       },
       category: {
         en: sanitizeInput(category.en),
         es: sanitizeInput(category.es),
         fi: sanitizeInput(category.fi),
-        sv: sanitizeInput(category.sv)
+        sv: sanitizeInput(category.sv),
+        so: sanitizeInput(category.so)
       },
       year: parseInt(req.body.year),
       dimensions: {
@@ -174,25 +178,29 @@ export const updateArtwork = async (req, res) => {
         en: sanitizeInput(title.en),
         es: sanitizeInput(title.es),
         fi: sanitizeInput(title.fi),
-        sv: sanitizeInput(title.sv)
+        sv: sanitizeInput(title.sv),
+        so: sanitizeInput(title.so)
       },
       description: {
         en: sanitizeInput(description.en),
         es: sanitizeInput(description.es),
         fi: sanitizeInput(description.fi),
-        sv: sanitizeInput(description.sv)
+        sv: sanitizeInput(description.sv),
+        so: sanitizeInput(description.so)
       },
       technique: {
         en: sanitizeInput(technique.en),
         es: sanitizeInput(technique.es),
         fi: sanitizeInput(technique.fi),
-        sv: sanitizeInput(technique.sv)
+        sv: sanitizeInput(technique.sv),
+        so: sanitizeInput(technique.so)
       },
       category: {
         en: sanitizeInput(category.en),
         es: sanitizeInput(category.es),
         fi: sanitizeInput(category.fi),
-        sv: sanitizeInput(category.sv)
+        sv: sanitizeInput(category.sv),
+        so: sanitizeInput(category.so)
       },
       year: parseInt(req.body.year),
       dimensions: {

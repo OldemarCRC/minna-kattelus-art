@@ -6,19 +6,22 @@ const artworkSchema = new mongoose.Schema(
       en: { type: String, required: true },
       es: { type: String, required: true },
       fi: { type: String, required: true },
-      sv: { type: String, required: true }
+      sv: { type: String, required: true },
+      so: { type: String, required: false },
     },
     description: {
       en: { type: String, required: true },
       es: { type: String, required: true },
       fi: { type: String, required: true },
-      sv: { type: String, required: true }
+      sv: { type: String, required: true },
+      so: { type: String, required: false },
     },
     category: {
       en: { type: String, required: true },
       es: { type: String, required: true },
       fi: { type: String, required: true },
-      sv: { type: String, required: true }
+      sv: { type: String, required: true },
+      so: { type: String, required: false },
     },
     image: {
       type: String,
@@ -34,7 +37,8 @@ const artworkSchema = new mongoose.Schema(
       en: { type: String, required: true },
       es: { type: String, required: true },
       fi: { type: String, required: true },
-      sv: { type: String, required: true }
+      sv: { type: String, required: true },
+      so: { type: String, required: false },
     },
     dimensions: {
       width: { type: Number, required: true },
