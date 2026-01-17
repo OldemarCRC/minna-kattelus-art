@@ -49,16 +49,23 @@
     "sold": "Myyty",
     "inquire": "Kysy Tästä Teoksesta",
     "categories": {
-      "temas": "Teemat",
-      "paisajes": "Maisemat",
-      "abstracto": "Abstrakti",
-      "retratos": "Muotokuvat",
-      "naturaleza": "Luonto"
+      "themes": "Teemat",
+      "landscapes": "Maisemat",
+      "abstract": "Abstrakti",
+      "portraits": "Muotokuvat",
+      "nature": "Luonto"
     }
   },
   "shop": {
     "title": "Kauppa",
     "description": "Alkuperäisteoksia saatavilla. Jokainen teos on ainutlaatuinen ja mukana tulee aitoustodistus.",
+    "filters": {
+      "all": "KAIKKI",
+      "landscapes": "MAISEMAT",
+      "abstract": "ABSTRAKTI",
+      "portraits": "MUOTOKUVAT",
+      "nature": "LUONTO"
+    },
     "sort": {
       "label": "Järjestä:",
       "featured": "Esitellyt",
@@ -66,8 +73,8 @@
       "priceLow": "Hinta: alhaisimmasta korkeimpaan",
       "priceHigh": "Hinta: korkeimmasta alhaisimpaan"
     },
-    "results": "{{count}} teos saatavilla",
-    "results_plural": "{{count}} teosta saatavilla",
+    "resultsOne": "{count} teos saatavilla",
+    "resultsOther": "{count} teosta saatavilla",
     "badges": {
       "sold": "MYYTY",
       "featured": "ESILLÄ"
@@ -99,7 +106,10 @@
       "title": "Etkö löydä etsimääsi?",
       "text": "Otan vastaan tilaustyöt. Ota yhteyttä keskustellaksesi visiostasi ja luodaksesi ainutlaatuisen teoksen tilaasi varten.",
       "button": "Pyydä tilaustyö"
-    }
+    },
+    "noResults": "Tässä kategoriassa ei löytynyt teoksia",
+    "loading": "Ladataan teoksia...",
+    "error": "Virhe teosten lataamisessa. Yritä uudelleen."
   },
   "about": {
     "title": "Tietoja minusta",
@@ -285,16 +295,15 @@
     "dragDrop": "tai vedä ja pudota",
     "fileHint": "PNG, JPG, GIF max 10MB",
     "chartSimulated": "Simuloitu kaavio"
-  }, 
-
+  },
   "artworkModal": {
-  "featured": "Esitelty",
-  "sold": "Myyty",
-  "technique": "Tekniikka",
-  "year": "Vuosi",
-  "dimensions": "Mitat",
-  "price": "Hinta",
-  "addToCart": "Lisää Ostoskoriin",
-  "contactForAvailability": "Kysy Saatavuutta"
-}
+    "featured": "Esitelty",
+    "sold": "Myyty",
+    "technique": "Tekniikka",
+    "year": "Vuosi",
+    "dimensions": "Mitat",
+    "price": "Hinta",
+    "addToCart": "Lisää Ostoskoriin",
+    "contactForAvailability": "Kysy Saatavuutta"
+  }
 }

@@ -49,16 +49,23 @@
     "sold": "Såld",
     "inquire": "Fråga Om Detta Verk",
     "categories": {
-      "temas": "Teman",
-      "paisajes": "Landskap",
-      "abstracto": "Abstrakt",
-      "retratos": "Porträtt",
-      "naturaleza": "Natur"
+      "themes": "Teman",
+      "landscapes": "Landskap",
+      "abstract": "Abstrakt",
+      "portraits": "Porträtt",
+      "nature": "Natur"
     }
   },
   "shop": {
     "title": "Butik",
     "description": "Originalverk tillgängliga för förvärv. Varje verk är unikt och kommer med äkthetscertifikat.",
+    "filters": {
+      "all": "ALLA",
+      "landscapes": "LANDSKAP",
+      "abstract": "ABSTRAKT",
+      "portraits": "PORTRÄTT",
+      "nature": "NATUR"
+    },
     "sort": {
       "label": "Sortera efter:",
       "featured": "Utvalda",
@@ -66,8 +73,8 @@
       "priceLow": "Pris: lägsta till högsta",
       "priceHigh": "Pris: högsta till lägsta"
     },
-    "results": "{{count}} verk tillgängligt",
-    "results_plural": "{{count}} verk tillgängliga",
+    "resultsOne": "{count} verk tillgängligt",
+    "resultsOther": "{count} verk tillgängliga",
     "badges": {
       "sold": "SÅLD",
       "featured": "UTVALD"
@@ -99,7 +106,10 @@
       "title": "Hittar du inte vad du letar efter?",
       "text": "Jag tar emot beställningar. Kontakta mig för att diskutera din vision och skapa ett unikt verk för ditt utrymme.",
       "button": "Begär beställning"
-    }
+    },
+    "noResults": "Inga verk hittades i denna kategori",
+    "loading": "Laddar verk...",
+    "error": "Fel vid laddning av verk. Försök igen."
   },
   "about": {
     "title": "Om mig",

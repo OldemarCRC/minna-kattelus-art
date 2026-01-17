@@ -49,16 +49,23 @@
     "sold": "Vendido",
     "inquire": "Consultar Sobre Esta Obra",
     "categories": {
-      "temas": "Temas",
-      "paisajes": "Paisajes",
-      "abstracto": "Abstracto",
-      "retratos": "Retratos",
-      "naturaleza": "Naturaleza"
+      "themes": "Temas",
+      "landscapes": "Paisajes",
+      "abstract": "Abstracto",
+      "portraits": "Retratos",
+      "nature": "Naturaleza"
     }
   },
   "shop": {
     "title": "Tienda",
     "description": "Obras originales disponibles para adquisición. Cada pieza es única y viene con certificado de autenticidad.",
+    "filters": {
+      "all": "TODAS",
+      "landscapes": "PAISAJES",
+      "abstract": "ABSTRACTO",
+      "portraits": "RETRATOS",
+      "nature": "NATURALEZA"
+    },
     "sort": {
       "label": "Ordenar por:",
       "featured": "Destacadas",
@@ -66,8 +73,8 @@
       "priceLow": "Precio: menor a mayor",
       "priceHigh": "Precio: mayor a menor"
     },
-    "results": "{{count}} obra disponible",
-    "results_plural": "{{count}} obras disponibles",
+    "resultsOne": "{count} obra disponible",
+    "resultsOther": "{count} obras disponibles",
     "badges": {
       "sold": "VENDIDA",
       "featured": "DESTACADA"
@@ -99,7 +106,10 @@
       "title": "¿No encuentras lo que buscas?",
       "text": "Acepto encargos personalizados. Contacta conmigo para discutir tu visión y crear una obra única para tu espacio.",
       "button": "Solicitar Encargo"
-    }
+    },
+    "noResults": "No se encontraron obras en esta categoría",
+    "loading": "Cargando obras...",
+    "error": "Error al cargar las obras. Por favor, intenta de nuevo."
   },
   "about": {
     "title": "Sobre Mí",

@@ -49,16 +49,23 @@
     "sold": "Sold",
     "inquire": "Inquire About This Piece",
     "categories": {
-      "temas": "Themes",
-      "paisajes": "Landscapes",
-      "abstracto": "Abstract",
-      "retratos": "Portraits",
-      "naturaleza": "Nature"
+      "themes": "Themes",
+      "landscapes": "Landscapes",
+      "abstract": "Abstract",
+      "portraits": "Portraits",
+      "nature": "Nature"
     }
   },
   "shop": {
     "title": "Shop",
     "description": "Original works available for acquisition. Each piece is unique and comes with a certificate of authenticity.",
+    "filters": {
+      "all": "ALL",
+      "landscapes": "LANDSCAPES",
+      "abstract": "ABSTRACT",
+      "portraits": "PORTRAITS",
+      "nature": "NATURE"
+    },
     "sort": {
       "label": "Sort by:",
       "featured": "Featured",
@@ -66,8 +73,8 @@
       "priceLow": "Price: low to high",
       "priceHigh": "Price: high to low"
     },
-    "results": "{{count}} work available",
-    "results_plural": "{{count}} works available",
+    "resultsOne": "{count} artwork available",
+    "resultsOther": "{count} artworks available",
     "badges": {
       "sold": "SOLD",
       "featured": "FEATURED"
@@ -99,7 +106,10 @@
       "title": "Can't find what you're looking for?",
       "text": "I accept custom commissions. Contact me to discuss your vision and create a unique work for your space.",
       "button": "Request Commission"
-    }
+    },
+    "noResults": "No artworks found in this category",
+    "loading": "Loading artworks...",
+    "error": "Error loading artworks. Please try again."
   },
   "about": {
     "title": "About Me",
