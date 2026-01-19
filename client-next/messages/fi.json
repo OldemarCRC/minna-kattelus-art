@@ -160,7 +160,25 @@
   },
   "contact": {
     "title": "Ota yhteyttä",
-    "description": "Kiinnostunut teoksesta tai onko sinulla kysyttävää? Haluaisin mielelläni kuulla sinusta.",
+    "description": "Ota yhteyttä kyselyihin, tilauksiin tai ateljeevierailuihin.",
+    "commission": {
+      "title": "Pyydä Tilaustyö",
+      "description": "Kerro minulle visiostasi ja luon sinulle yksilöllisen taideteoksen",
+      "formTitle": "Tilauksen Tiedot",
+      "artworkType": "Taideteoksen Tyyppi",
+      "selectType": "Valitse tyyppi...",
+      "other": "Muu",
+      "dimensions": "Toivotut Mitat",
+      "dimensionsPlaceholder": "esim., 50 × 70 cm tai 20 × 28 tuumaa",
+      "budget": "Budjetti (Valinnainen)",
+      "budgetPlaceholder": "esim., €500-800 tai $600-1000",
+      "additionalDetails": "Lisätiedot",
+      "detailsPlaceholder": "Kuvaile visiotasi: värit, tunnelma, tyylitoiveet, aikataulu jne.",
+      "errors": {
+        "artworkTypeRequired": "Valitse taideteoksen tyyppi",
+        "dimensionsRequired": "Määritä toivotut mitat"
+      }
+    },
     "form": {
       "title": "Lähetä viesti",
       "name": "Nimi",

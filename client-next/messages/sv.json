@@ -160,7 +160,25 @@
   },
   "contact": {
     "title": "Kontakt",
-    "description": "Intresserad av ett verk eller har du några frågor? Jag skulle gärna vilja höra från dig.",
+    "description": "Kontakta mig för förfrågningar, beställningar eller ateljébesök.",
+    "commission": {
+      "title": "Beställ ett Konstverk",
+      "description": "Berätta om din vision så skapar jag ett personligt konstverk åt dig",
+      "formTitle": "Beställningsdetaljer",
+      "artworkType": "Typ av Konstverk",
+      "selectType": "Välj typ...",
+      "other": "Annat",
+      "dimensions": "Önskade Mått",
+      "dimensionsPlaceholder": "t.ex., 50 × 70 cm eller 20 × 28 tum",
+      "budget": "Budgetram (Valfritt)",
+      "budgetPlaceholder": "t.ex., €500-800 eller $600-1000",
+      "additionalDetails": "Ytterligare Detaljer",
+      "detailsPlaceholder": "Beskriv din vision: färger, stämning, stilpreferenser, tidsplan osv.",
+      "errors": {
+        "artworkTypeRequired": "Välj typ av konstverk",
+        "dimensionsRequired": "Ange önskade mått"
+      }
+    },
     "form": {
       "title": "Skicka ett meddelande",
       "name": "Namn",

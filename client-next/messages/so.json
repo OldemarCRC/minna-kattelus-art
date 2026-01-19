@@ -160,7 +160,25 @@
     },
     "contact": {
         "title": "Xiriir",
-        "description": "Ma xiiseynaysaa shaqo ama ma leedahay su'aalo? Waxaan jeclaan lahaa inaan kaa maqlo.",
+        "description": "Nala soo xiriir su'aalaha, dalabka ama booqashada studiyaha.",
+        "commission": {
+            "title": "Dalbo Shaqo Gaarka ah",
+            "description": "Ii sheeg aragtidaada oo waxaan kuu abuuri doonaa farshaxan gaarka kuu ah",
+            "formTitle": "Faahfaahinta Dalabka",
+            "artworkType": "Nooca Farshaxanka",
+            "selectType": "Dooro nooca...",
+            "other": "Kale",
+            "dimensions": "Cabbirka la Rabo",
+            "dimensionsPlaceholder": "tusaale, 50 × 70 cm ama 20 × 28 inji",
+            "budget": "Qiimaha Miisaaniyada (Doorasho)",
+            "budgetPlaceholder": "tusaale, €500-800 ama $600-1000",
+            "additionalDetails": "Faahfaahin Dheeraad ah",
+            "detailsPlaceholder": "Sharax aragtidaada: midabada, dareenka, qaabka aad jeceshahay, waqtiga, iwm.",
+            "errors": {
+                "artworkTypeRequired": "Fadlan dooro nooca farshaxanka",
+                "dimensionsRequired": "Fadlan qeex cabbirka la rabo"
+            }
+        },
         "form": {
             "title": "Dir Fariin",
             "name": "Magaca",

@@ -1,22 +1,28 @@
 'use client'
 
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import '@/styles/Contact.css';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import axios from '@/lib/axios';
 
-export default function Contact(){
+export default function Contact() {
 
     const t = useTranslations();
     const searchParams = useSearchParams();
+    const formType = searchParams.get('type'); // 'commission' o null
+    const isCommission = formType === 'commission';
 
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         subject: '',
         message: '',
+        // Campos adicionales para comisiones
+        artworkType: '',
+        dimensions: '',
+        budget: '',
+        // Honeypots
         phone_optional: '',
         company_name: '',
         mailing_address: ''
@@ -28,7 +34,7 @@ export default function Contact(){
     const [message, setMessage] = useState({ type: '', text: '' });
     const [decodedEmail, setDecodedEmail] = useState('Loading...');
 
-    // Manejo de cambios
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -44,11 +50,24 @@ export default function Contact(){
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
             newErrors.email = t('contact.form.errors.emailInvalid');
         }
-        if (!formData.message.trim()) {
-            newErrors.message = t('contact.form.errors.messageRequired');
-        } else if (formData.message.trim().length < 10) {
-            newErrors.message = t('contact.form.errors.messageShort');
+
+        // Validaciones específicas para comisiones
+        if (isCommission) {
+            if (!formData.artworkType.trim()) {
+                newErrors.artworkType = t('contact.commission.errors.artworkTypeRequired');
+            }
+            if (!formData.dimensions.trim()) {
+                newErrors.dimensions = t('contact.commission.errors.dimensionsRequired');
+            }
+        } else {
+            // Validación normal de mensaje
+            if (!formData.message.trim()) {
+                newErrors.message = t('contact.form.errors.messageRequired');
+            } else if (formData.message.trim().length < 10) {
+                newErrors.message = t('contact.form.errors.messageShort');
+            }
         }
+
         return newErrors;
     };
 
@@ -69,10 +88,25 @@ export default function Contact(){
 
         setIsSubmitting(true);
         try {
-            const response = await axios.post('/api/contact', formData);
+            const response = await axios.post('/api/contact', {
+                ...formData,
+                formType: isCommission ? 'commission' : 'general'
+            });
+
             if (response.data.success) {
                 setMessage({ type: 'success', text: t('contact.form.successMessage') });
-                setFormData({ name: '', email: '', subject: '', message: '', phone_optional: '', company_name: '', mailing_address: '' });
+                setFormData({
+                    name: '',
+                    email: '',
+                    subject: '',
+                    message: '',
+                    artworkType: '',
+                    dimensions: '',
+                    budget: '',
+                    phone_optional: '',
+                    company_name: '',
+                    mailing_address: ''
+                });
             }
         } catch (error) {
             setMessage({
@@ -84,19 +118,24 @@ export default function Contact(){
         }
     };
 
-    // Ofuscación de Email (Estilo React/Next en lugar de manipular DOM directo)
     useEffect(() => {
         const encoded = 'bWlubmFrYXR0ZWx1c0BnbWFpbC5jb20=';
         setDecodedEmail(window.atob(encoded));
     }, []);
 
-    // Pre-llenar subject desde URL
     useEffect(() => {
         const artworkName = searchParams.get('artwork');
+        const typeParam = searchParams.get('type'); // ← Obtener type también
+
         if (artworkName) {
             setFormData(prev => ({
                 ...prev,
                 subject: `Inquiry about: ${decodeURIComponent(artworkName)}`
+            }));
+        } else if (typeParam === 'commission') { // ← Verificar tipo
+            setFormData(prev => ({
+                ...prev,
+                subject: 'Commission Request'
             }));
         }
     }, [searchParams]);
@@ -105,8 +144,12 @@ export default function Contact(){
         <div className="contact-page">
             <div className="contact-header">
                 <div className="container">
-                    <h1>{t('contact.title')}</h1>
-                    <p className="contact-description">{t('contact.description')}</p>
+                    <h1>
+                        {isCommission ? t('contact.commission.title') : t('contact.title')}
+                    </h1>
+                    <p className="contact-description">
+                        {isCommission ? t('contact.commission.description') : t('contact.description')}
+                    </p>
                 </div>
             </div>
 
@@ -114,7 +157,9 @@ export default function Contact(){
                 <div className="container">
                     <div className="contact-grid">
                         <div className="contact-form-section">
-                            <h2>{t('contact.form.title')}</h2>
+                            <h2>
+                                {isCommission ? t('contact.commission.formTitle') : t('contact.form.title')}
+                            </h2>
 
                             {message.text && (
                                 <div className={`message-alert ${message.type === 'success' ? 'success-message' : 'error-message'}`}>
@@ -125,57 +170,134 @@ export default function Contact(){
                             <form onSubmit={handleSubmit} className="contact-form">
                                 <div className="form-group">
                                     <label htmlFor="name">{t('contact.form.name')} <span className="required">*</span></label>
-                                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} className={errors.name ? 'error' : ''} placeholder={t('contact.form.placeholders.name')} />
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        className={errors.name ? 'error' : ''}
+                                        placeholder={t('contact.form.placeholders.name')}
+                                    />
                                     {errors.name && <span className="error-message">{errors.name}</span>}
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="email">{t('contact.form.email')} <span className="required">*</span></label>
-                                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className={errors.email ? 'error' : ''} placeholder={t('contact.form.placeholders.email')} />
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        className={errors.email ? 'error' : ''}
+                                        placeholder={t('contact.form.placeholders.email')}
+                                    />
                                     {errors.email && <span className="error-message">{errors.email}</span>}
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="subject">{t('contact.form.subject')}</label>
-                                    <input type="text" id="subject" name="subject" value={formData.subject} onChange={handleChange} placeholder={t('contact.form.placeholders.subject')} />
+                                    <input
+                                        type="text"
+                                        id="subject"
+                                        name="subject"
+                                        value={formData.subject}
+                                        onChange={handleChange}
+                                        placeholder={t('contact.form.placeholders.subject')}
+                                        readOnly={isCommission}
+                                    />
                                 </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="message">{t('contact.form.message')}<span className="required">*</span></label>
-                                    <textarea id="message" name="message" value={formData.message} onChange={handleChange} className={errors.message ? 'error' : ''} rows="6" placeholder={t('contact.form.placeholders.message')}></textarea>
-                                    {errors.message && <span className="error-message">{errors.message}</span>}
-                                </div>
+                                {/* Formulario Condicional */}
+                                {isCommission ? (
+                                    <>
+                                        <div className="form-group">
+                                            <label htmlFor="artworkType">
+                                                {t('contact.commission.artworkType')} <span className="required">*</span>
+                                            </label>
+                                            <select
+                                                id="artworkType"
+                                                name="artworkType"
+                                                value={formData.artworkType}
+                                                onChange={handleChange}
+                                                className={errors.artworkType ? 'error' : ''}
+                                            >
+                                                <option value="">{t('contact.commission.selectType')}</option>
+                                                <option value="landscape">{t('gallery.filters.landscapes')}</option>
+                                                <option value="abstract">{t('gallery.filters.abstract')}</option>
+                                                <option value="portrait">{t('gallery.filters.portraits')}</option>
+                                                <option value="nature">{t('gallery.filters.nature')}</option>
+                                                <option value="other">{t('contact.commission.other')}</option>
+                                            </select>
+                                            {errors.artworkType && <span className="error-message">{errors.artworkType}</span>}
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="dimensions">
+                                                {t('contact.commission.dimensions')} <span className="required">*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id="dimensions"
+                                                name="dimensions"
+                                                value={formData.dimensions}
+                                                onChange={handleChange}
+                                                className={errors.dimensions ? 'error' : ''}
+                                                placeholder={t('contact.commission.dimensionsPlaceholder')}
+                                            />
+                                            {errors.dimensions && <span className="error-message">{errors.dimensions}</span>}
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="budget">{t('contact.commission.budget')}</label>
+                                            <input
+                                                type="text"
+                                                id="budget"
+                                                name="budget"
+                                                value={formData.budget}
+                                                onChange={handleChange}
+                                                placeholder={t('contact.commission.budgetPlaceholder')}
+                                            />
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label htmlFor="message">{t('contact.commission.additionalDetails')}</label>
+                                            <textarea
+                                                id="message"
+                                                name="message"
+                                                value={formData.message}
+                                                onChange={handleChange}
+                                                rows="6"
+                                                placeholder={t('contact.commission.detailsPlaceholder')}
+                                            ></textarea>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="form-group">
+                                        <label htmlFor="message">{t('contact.form.message')}<span className="required">*</span></label>
+                                        <textarea
+                                            id="message"
+                                            name="message"
+                                            value={formData.message}
+                                            onChange={handleChange}
+                                            className={errors.message ? 'error' : ''}
+                                            rows="6"
+                                            placeholder={t('contact.form.placeholders.message')}
+                                        ></textarea>
+                                        {errors.message && <span className="error-message">{errors.message}</span>}
+                                    </div>
+                                )}
 
                                 {/* Honeypot Fields */}
                                 <input type="text" name="phone_optional" value={formData.phone_optional} onChange={handleChange} tabIndex="-1" autoComplete="off" style={{
-                                    opacity: 0,
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: 0,
-                                    height: 0,
-                                    width: 0,
-                                    zIndex: -1,
-                                    overflow: 'hidden'
+                                    opacity: 0, position: 'absolute', top: 0, left: 0, height: 0, width: 0, zIndex: -1, overflow: 'hidden'
                                 }} />
                                 <input type="text" name="company_name" value={formData.company_name} onChange={handleChange} tabIndex="-1" autoComplete="off" style={{
-                                    opacity: 0,
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: 0,
-                                    height: 0,
-                                    width: 0,
-                                    zIndex: -1,
-                                    overflow: 'hidden'
+                                    opacity: 0, position: 'absolute', top: 0, left: 0, height: 0, width: 0, zIndex: -1, overflow: 'hidden'
                                 }} />
                                 <input type="text" name="mailing_address" value={formData.mailing_address} onChange={handleChange} tabIndex="-1" autoComplete="off" style={{
-                                    opacity: 0,
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: 0,
-                                    height: 0,
-                                    width: 0,
-                                    zIndex: -1,
-                                    overflow: 'hidden'
+                                    opacity: 0, position: 'absolute', top: 0, left: 0, height: 0, width: 0, zIndex: -1, overflow: 'hidden'
                                 }} />
 
                                 <button type="submit" className="btn-primary btn-full" disabled={isSubmitting}>
@@ -188,7 +310,6 @@ export default function Contact(){
                             <h2>{t('contact.info.title')}</h2>
 
                             <div className="contact-info-items">
-                                {/* Email Item */}
                                 <div className="contact-info-item">
                                     <div className="info-icon">✉️</div>
                                     <div className="info-content">
@@ -201,24 +322,18 @@ export default function Contact(){
                                     </div>
                                 </div>
 
-                                {/* Instagram Item */}
                                 <div className="contact-info-item">
                                     <div className="info-icon">📷</div>
                                     <div className="info-content">
                                         <h3>{t('contact.info.instagram')}</h3>
                                         <p>
-                                            <a
-                                                href="https://instagram.com/minnak_art"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
+                                            <a href="https://instagram.com/minnak_art" target="_blank" rel="noopener noreferrer">
                                                 @minnak_art
                                             </a>
                                         </p>
                                     </div>
                                 </div>
 
-                                {/* Location Item */}
                                 <div className="contact-info-item">
                                     <div className="info-icon">📍</div>
                                     <div className="info-content">
@@ -228,7 +343,6 @@ export default function Contact(){
                                 </div>
                             </div>
 
-                            {/* Response Time & Studio Visit */}
                             <div className="response-time">
                                 <h3>{t('contact.info.responseTime.title')}</h3>
                                 <p>{t('contact.info.responseTime.text')}</p>

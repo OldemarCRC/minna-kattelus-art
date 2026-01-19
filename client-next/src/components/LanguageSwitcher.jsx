@@ -15,7 +15,7 @@ const LanguageSwitcher = () => {
     { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'so', name: 'Af-Soomaali', flag: '🇸🇴' },
     { code: 'es', name: 'Español', flag: '🇪🇸' },
-    
+
   ];
 
   const changeLanguage = (newLocale) => {
@@ -23,8 +23,11 @@ const LanguageSwitcher = () => {
     const segments = pathname.split('/');
     segments[1] = newLocale; // Replace locale
     const newPath = segments.join('/');
-    
-    router.push(newPath);
+
+    // Preserve query params
+    const searchParams = window.location.search;
+
+    router.push(newPath + searchParams);
   };
 
   return (

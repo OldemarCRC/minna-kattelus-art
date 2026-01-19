@@ -160,7 +160,25 @@
   },
   "contact": {
     "title": "Contacto",
-    "description": "¿Interesado en una obra o tienes alguna consulta? Me encantaría saber de ti.",
+    "description": "Ponte en contacto para consultas, encargos o visitas al estudio",
+    "commission": {
+      "title": "Solicitar un Encargo",
+      "description": "Cuéntame tu visión y crearé una obra personalizada para ti",
+      "formTitle": "Detalles del Encargo",
+      "artworkType": "Tipo de Obra",
+      "selectType": "Selecciona tipo...",
+      "other": "Otro",
+      "dimensions": "Dimensiones Deseadas",
+      "dimensionsPlaceholder": "ej., 50 × 70 cm o 20 × 28 pulgadas",
+      "budget": "Rango de Presupuesto (Opcional)",
+      "budgetPlaceholder": "ej., €500-800 o $600-1000",
+      "additionalDetails": "Detalles Adicionales",
+      "detailsPlaceholder": "Describe tu visión: colores, atmósfera, preferencias de estilo, plazos, etc.",
+      "errors": {
+        "artworkTypeRequired": "Por favor selecciona el tipo de obra",
+        "dimensionsRequired": "Por favor especifica las dimensiones deseadas"
+      }
+    },
     "form": {
       "title": "Envía un Mensaje",
       "name": "Nombre",

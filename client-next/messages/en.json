@@ -160,7 +160,25 @@
   },
   "contact": {
     "title": "Contact",
-    "description": "Interested in a work or have any questions? I would love to hear from you.",
+    "description": "Get in touch for inquiries, commissions, or studio visits",
+    "commission": {
+      "title": "Request a Commission",
+      "description": "Tell me about your vision and I'll create a custom artwork for you",
+      "formTitle": "Commission Details",
+      "artworkType": "Type of Artwork",
+      "selectType": "Select type...",
+      "other": "Other",
+      "dimensions": "Desired Dimensions",
+      "dimensionsPlaceholder": "e.g., 50 × 70 cm or 20 × 28 inches",
+      "budget": "Budget Range (Optional)",
+      "budgetPlaceholder": "e.g., €500-800 or $600-1000",
+      "additionalDetails": "Additional Details",
+      "detailsPlaceholder": "Describe your vision: colors, mood, style preferences, timeline, etc.",
+      "errors": {
+        "artworkTypeRequired": "Please select the type of artwork",
+        "dimensionsRequired": "Please specify desired dimensions"
+      }
+    },
     "form": {
       "title": "Send a Message",
       "name": "Name",

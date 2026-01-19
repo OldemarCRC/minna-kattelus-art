@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
+import { useRouter, useParams } from 'next/navigation';
 import axios from '@/lib/axios';
 import ArtworkModal from '@/components/ArtworkModal';
 import '@/styles/Shop.css';
 
 export default function ShopPage() {
-  const locale = useLocale();
+  const router = useRouter();
+  const { locale } = useParams();
   const t = useTranslations();
 
   const [artworks, setArtworks] = useState([]);
@@ -26,6 +28,9 @@ export default function ShopPage() {
     { key: 'nature', label: t('shop.filters.nature') }
   ];
 
+  const handleCommissionRequest = () => {
+    router.push(`/${locale}/contact?type=commission`);
+  };
 
   useEffect(() => {
     const fetchArtworks = async () => {
@@ -317,7 +322,12 @@ export default function ShopPage() {
         <div className="container cta-content">
           <h2>{t('shop.cta.title')}</h2>
           <p>{t('shop.cta.text')}</p>
-          <button className="btn-primary">{t('shop.cta.button')}</button>
+          <button
+            className="btn-primary"
+            onClick={handleCommissionRequest}
+          >
+            {t('shop.cta.button')}
+          </button>
         </div>
       </section>
 
