@@ -79,6 +79,7 @@ Desktop.ini
 # Ignore all docs except for the specific instructions file
 docs/*
 !docs/OHJEET-TIEDOSTONIMET.md
+!docs/SCALING.md
 
 # Ignore temporary files
 **/estructura.txt
