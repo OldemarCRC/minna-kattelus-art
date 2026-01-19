@@ -2,8 +2,47 @@
 
 import { createContext, useContext, useReducer, useEffect, useState  } from 'react';
 
-const CartContext = createContext();
+/**
+ * CART STORAGE STRATEGY - LOCALSTORAGE ONLY
+ * 
+ * Current Implementation:
+ * - Cart stored in browser localStorage only
+ * - Persists across sessions (same browser)
+ * - Shared between anonymous and logged-in users
+ * - No server synchronization
+ * 
+ * SCALING CONSIDERATIONS:
+ * If the business grows or requirements change, consider:
+ * 
+ * 1. SERVER SYNCHRONIZATION (Multi-device support)
+ *    - Save cart to MongoDB per user
+ *    - Merge localStorage + server cart on login
+ *    - Enable cart recovery across devices
+ *    - API: POST /api/cart/sync
+ * 
+ * 2. CART ANALYTICS (Abandoned cart tracking)
+ *    - Track cart additions/removals
+ *    - Email reminders for abandoned carts
+ *    - Conversion funnel analysis
+ * 
+ * 3. EXPIRATION POLICY (Prevent stale data)
+ *    - Add timestamp to cart items
+ *    - Auto-clear carts older than 30 days
+ *    - Re-check artwork availability on load
+ * 
+ * 4. PERFORMANCE (High traffic)
+ *    - Consider Redis for cart caching
+ *    - Implement cart item reservations
+ *    - Add queue system for checkout
+ * 
+ * Current approach is optimal for:
+ * - Art gallery with limited inventory
+ * - Low to medium traffic
+ * - Simple purchasing flow
+ */
 
+const CartContext = createContext();
+const CART_STORAGE_KEY = 'cart'; // Change if migrating to user-specific carts
 const cartReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_ITEM':
