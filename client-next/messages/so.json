@@ -336,5 +336,87 @@
         "total": "Wadarta",
         "checkout": "U gudub Bixinta",
         "remove": "Ka saar shayga"
+    },
+    "checkout": {
+        "title": "Bixinta",
+        "orderSummary": "Kooban Dalabka",
+        "shippingInfo": "Macluumaadka Rarida",
+        "subtotal": "Wada Horteed",
+        "shipping": "Rarida",
+        "calculated": "Waxaa lagu xisaabinayaa tallaabada xigta",
+        "total": "Wadarta",
+        "placeOrder": "Sameey Dalabka",
+        "processing": "Socda...",
+        "form": {
+            "name": "Magaca Buuxa",
+            "email": "Cinwaanka Emailka",
+            "phone": "Lambarka Taleefanka (Doorasho)",
+            "country": "Dalka",
+            "city": "Magaalada",
+            "address": "Cinwaanka Wadada",
+            "postalCode": "Koodhka Boostada",
+            "paymentMethod": "Habka Lacag Bixinta",
+            "notes": "Qoraalada Dalabka (Doorasho)",
+            "notesPlaceholder": "Tilmaamaha gaarka ah ee rarida, fariinta hadiyada, iwm."
+        },
+        "payment": {
+            "bankTransfer": "Wareejinta Bangiga",
+            "creditCard": "Kaadhka Amaahda (La Jilciyey)"
+        },
+        "errors": {
+            "nameRequired": "Magaca buuxa ayaa loo baahan yahay",
+            "emailRequired": "Email ayaa loo baahan yahay",
+            "emailInvalid": "Emailka ma aha mid sax ah",
+            "countryRequired": "Dalka ayaa loo baahan yahay",
+            "cityRequired": "Magaalada ayaa loo baahan yahay",
+            "addressRequired": "Cinwaanka ayaa loo baahan yahay",
+            "postalCodeRequired": "Koodhka boostada ayaa loo baahan yahay",
+            "orderFailed": "Lama helin in la abuuro dalabka. Fadlan isku day mar kale."
+        }
+    },
+    "orderConfirmation": {
+        "title": "Dalabka La Xaqiijiyay!",
+        "message": "Waad ku mahadsan tahay iibsigaaga. Waxaan kuu dirnay email xaqiijin ah oo leh faahfaahinta dalabka.",
+        "loading": "Soo dejinaya faahfaahinta dalabka...",
+        "orderNumber": "Lambarka Dalabka",
+        "shippingAddress": "Cinwaanka Rarida",
+        "contactInfo": "Macluumaadka Xiriirka",
+        "paymentMethod": "Habka Lacag Bixinta",
+        "orderItems": "Shayada Dalabka",
+        "subtotal": "Wada Horteed",
+        "shipping": "Rarida",
+        "total": "Wadarta",
+        "yourNotes": "Qoraalaadaada",
+        "printOrder": "Daabac Dalabka",
+        "continueShopping": "Sii Wad Iibsashada",
+        "backToShop": "Ku Noqo Dukaamka",
+        "status": {
+            "pending": "Sugitaan",
+            "confirmed": "La Xaqiijiyay",
+            "processing": "Habsamaynta",
+            "shipped": "La Diray",
+            "delivered": "La Keenay",
+            "cancelled": "La Joojiyay"
+        },
+        "payment": {
+            "bank_transfer": "Wareejinta Bangiga",
+            "credit_card": "Kaadhka Amaahda",
+            "stripe": "Stripe"
+        },
+        "paymentStatus": {
+            "pending": "Lacag Bixintu Waa Sugitaan",
+            "paid": "La Bixiyay",
+            "failed": "Lacag Bixintu Way Fashilantay"
+        },
+        "nextSteps": {
+            "title": "Maxaa Xiga?",
+            "step1": "Waxaad heli doontaa email xaqiijin ah oo leh tilmaamaha lacag bixinta.",
+            "step2": "Marka lacag bixintu la xaqiijiyo, waxaan si taxadar leh u xirmi doonnaa farshaxaanka.",
+            "step3": "Waxaad heli doontaa macluumaadka raadinta marka dalabkaaga la diro."
+        },
+        "errors": {
+            "title": "Dalabka Lama Helin",
+            "orderNotFound": "Ma heli karin dalabkan. Fadlan hubi emailkaaga linkiga saxda ah."
+        }
     }
 }

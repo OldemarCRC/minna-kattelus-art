@@ -336,5 +336,87 @@
     "total": "Total",
     "checkout": "Proceder al Pago",
     "remove": "Eliminar artículo"
+  },
+  "checkout": {
+    "title": "Finalizar Compra",
+    "orderSummary": "Resumen del Pedido",
+    "shippingInfo": "Información de Envío",
+    "subtotal": "Subtotal",
+    "shipping": "Envío",
+    "calculated": "Calculado en el siguiente paso",
+    "total": "Total",
+    "placeOrder": "Realizar Pedido",
+    "processing": "Procesando...",
+    "form": {
+      "name": "Nombre Completo",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono (Opcional)",
+      "country": "País",
+      "city": "Ciudad",
+      "address": "Dirección",
+      "postalCode": "Código Postal",
+      "paymentMethod": "Método de Pago",
+      "notes": "Notas del Pedido (Opcional)",
+      "notesPlaceholder": "Instrucciones especiales de entrega, mensaje de regalo, etc."
+    },
+    "payment": {
+      "bankTransfer": "Transferencia Bancaria",
+      "creditCard": "Tarjeta de Crédito (Simulado)"
+    },
+    "errors": {
+      "nameRequired": "El nombre completo es requerido",
+      "emailRequired": "El correo es requerido",
+      "emailInvalid": "Correo electrónico inválido",
+      "countryRequired": "El país es requerido",
+      "cityRequired": "La ciudad es requerida",
+      "addressRequired": "La dirección es requerida",
+      "postalCodeRequired": "El código postal es requerido",
+      "orderFailed": "Error al crear el pedido. Inténtalo de nuevo."
+    }
+  },
+  "orderConfirmation": {
+    "title": "¡Pedido Confirmado!",
+    "message": "Gracias por tu compra. Te hemos enviado un correo de confirmación con los detalles del pedido.",
+    "loading": "Cargando detalles del pedido...",
+    "orderNumber": "Número de Pedido",
+    "shippingAddress": "Dirección de Envío",
+    "contactInfo": "Información de Contacto",
+    "paymentMethod": "Método de Pago",
+    "orderItems": "Artículos del Pedido",
+    "subtotal": "Subtotal",
+    "shipping": "Envío",
+    "total": "Total",
+    "yourNotes": "Tus Notas",
+    "printOrder": "Imprimir Pedido",
+    "continueShopping": "Continuar Comprando",
+    "backToShop": "Volver a la Tienda",
+    "status": {
+      "pending": "Pendiente",
+      "confirmed": "Confirmado",
+      "processing": "Procesando",
+      "shipped": "Enviado",
+      "delivered": "Entregado",
+      "cancelled": "Cancelado"
+    },
+    "payment": {
+      "bank_transfer": "Transferencia Bancaria",
+      "credit_card": "Tarjeta de Crédito",
+      "stripe": "Stripe"
+    },
+    "paymentStatus": {
+      "pending": "Pago Pendiente",
+      "paid": "Pagado",
+      "failed": "Pago Fallido"
+    },
+    "nextSteps": {
+      "title": "¿Qué Sigue?",
+      "step1": "Recibirás un correo de confirmación con las instrucciones de pago.",
+      "step2": "Una vez confirmado el pago, empaquetaremos cuidadosamente tu obra.",
+      "step3": "Recibirás información de seguimiento cuando se envíe tu pedido."
+    },
+    "errors": {
+      "title": "Pedido No Encontrado",
+      "orderNotFound": "No pudimos encontrar este pedido. Por favor verifica tu correo para el enlace correcto."
+    }
   }
 }

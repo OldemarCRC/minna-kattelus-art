@@ -336,5 +336,87 @@
     "total": "Yhteensä",
     "checkout": "Siirry Kassalle",
     "remove": "Poista tuote"
+  },
+  "checkout": {
+    "title": "Kassa",
+    "orderSummary": "Tilauksen Yhteenveto",
+    "shippingInfo": "Toimitus Tiedot",
+    "subtotal": "Välisumma",
+    "shipping": "Toimitus",
+    "calculated": "Lasketaan seuraavassa vaiheessa",
+    "total": "Yhteensä",
+    "placeOrder": "Tee Tilaus",
+    "processing": "Käsitellään...",
+    "form": {
+      "name": "Koko Nimi",
+      "email": "Sähköpostiosoite",
+      "phone": "Puhelinnumero (Valinnainen)",
+      "country": "Maa",
+      "city": "Kaupunki",
+      "address": "Katuosoite",
+      "postalCode": "Postinumero",
+      "paymentMethod": "Maksutapa",
+      "notes": "Tilauksen Huomautukset (Valinnainen)",
+      "notesPlaceholder": "Erityiset toimitusohjeet, lahjaviesti jne."
+    },
+    "payment": {
+      "bankTransfer": "Tilisiirto",
+      "creditCard": "Luottokortti (Simuloitu)"
+    },
+    "errors": {
+      "nameRequired": "Koko nimi vaaditaan",
+      "emailRequired": "Sähköposti vaaditaan",
+      "emailInvalid": "Virheellinen sähköpostiosoite",
+      "countryRequired": "Maa vaaditaan",
+      "cityRequired": "Kaupunki vaaditaan",
+      "addressRequired": "Osoite vaaditaan",
+      "postalCodeRequired": "Postinumero vaaditaan",
+      "orderFailed": "Tilauksen luominen epäonnistui. Yritä uudelleen."
+    }
+  },
+  "orderConfirmation": {
+    "title": "Tilaus Vahvistettu!",
+    "message": "Kiitos ostoksestasi. Olemme lähettäneet vahvistusviestin tilauksen tiedoilla.",
+    "loading": "Ladataan tilauksen tietoja...",
+    "orderNumber": "Tilausnumero",
+    "shippingAddress": "Toimitusosoite",
+    "contactInfo": "Yhteystiedot",
+    "paymentMethod": "Maksutapa",
+    "orderItems": "Tilauksen Tuotteet",
+    "subtotal": "Välisumma",
+    "shipping": "Toimitus",
+    "total": "Yhteensä",
+    "yourNotes": "Huomautuksesi",
+    "printOrder": "Tulosta Tilaus",
+    "continueShopping": "Jatka Ostoksia",
+    "backToShop": "Takaisin Kauppaan",
+    "status": {
+      "pending": "Odottaa",
+      "confirmed": "Vahvistettu",
+      "processing": "Käsittelyssä",
+      "shipped": "Lähetetty",
+      "delivered": "Toimitettu",
+      "cancelled": "Peruttu"
+    },
+    "payment": {
+      "bank_transfer": "Tilisiirto",
+      "credit_card": "Luottokortti",
+      "stripe": "Stripe"
+    },
+    "paymentStatus": {
+      "pending": "Maksu Odottaa",
+      "paid": "Maksettu",
+      "failed": "Maksu Epäonnistui"
+    },
+    "nextSteps": {
+      "title": "Mitä Seuraavaksi?",
+      "step1": "Saat pian vahvistusviestin maksuohjeilla.",
+      "step2": "Kun maksu on vahvistettu, pakkaamme taideteoksesi huolellisesti.",
+      "step3": "Saat seurantatiedot, kun tilauksesi lähetetään."
+    },
+    "errors": {
+      "title": "Tilausta Ei Löytynyt",
+      "orderNotFound": "Emme löytäneet tätä tilausta. Tarkista sähköpostistasi oikea linkki."
+    }
   }
 }

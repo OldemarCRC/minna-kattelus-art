@@ -336,5 +336,87 @@
     "total": "Totalt",
     "checkout": "Gå till Kassan",
     "remove": "Ta bort artikel"
+  },
+  "checkout": {
+    "title": "Kassa",
+    "orderSummary": "Ordersammanfattning",
+    "shippingInfo": "Leveransinformation",
+    "subtotal": "Delsumma",
+    "shipping": "Frakt",
+    "calculated": "Beräknas i nästa steg",
+    "total": "Totalt",
+    "placeOrder": "Lägg Order",
+    "processing": "Bearbetar...",
+    "form": {
+      "name": "Fullständigt Namn",
+      "email": "E-postadress",
+      "phone": "Telefonnummer (Valfritt)",
+      "country": "Land",
+      "city": "Stad",
+      "address": "Gatuadress",
+      "postalCode": "Postnummer",
+      "paymentMethod": "Betalningsmetod",
+      "notes": "Orderanteckningar (Valfritt)",
+      "notesPlaceholder": "Speciella leveransinstruktioner, gåvomeddelande osv."
+    },
+    "payment": {
+      "bankTransfer": "Banköverföring",
+      "creditCard": "Kreditkort (Simulerat)"
+    },
+    "errors": {
+      "nameRequired": "Fullständigt namn krävs",
+      "emailRequired": "E-post krävs",
+      "emailInvalid": "Ogiltig e-postadress",
+      "countryRequired": "Land krävs",
+      "cityRequired": "Stad krävs",
+      "addressRequired": "Adress krävs",
+      "postalCodeRequired": "Postnummer krävs",
+      "orderFailed": "Misslyckades skapa order. Försök igen."
+    }
+  },
+  "orderConfirmation": {
+    "title": "Order Bekräftad!",
+    "message": "Tack för ditt köp. Vi har skickat ett bekräftelsemail med orderdetaljer.",
+    "loading": "Laddar orderdetaljer...",
+    "orderNumber": "Ordernummer",
+    "shippingAddress": "Leveransadress",
+    "contactInfo": "Kontaktinformation",
+    "paymentMethod": "Betalningsmetod",
+    "orderItems": "Orderartiklar",
+    "subtotal": "Delsumma",
+    "shipping": "Frakt",
+    "total": "Totalt",
+    "yourNotes": "Dina Anteckningar",
+    "printOrder": "Skriv ut Order",
+    "continueShopping": "Fortsätt Handla",
+    "backToShop": "Tillbaka till Butiken",
+    "status": {
+      "pending": "Väntar",
+      "confirmed": "Bekräftad",
+      "processing": "Behandlas",
+      "shipped": "Skickad",
+      "delivered": "Levererad",
+      "cancelled": "Avbruten"
+    },
+    "payment": {
+      "bank_transfer": "Banköverföring",
+      "credit_card": "Kreditkort",
+      "stripe": "Stripe"
+    },
+    "paymentStatus": {
+      "pending": "Betalning Väntar",
+      "paid": "Betald",
+      "failed": "Betalning Misslyckades"
+    },
+    "nextSteps": {
+      "title": "Vad Händer Nu?",
+      "step1": "Du kommer snart få ett bekräftelsemail med betalningsinstruktioner.",
+      "step2": "När betalningen är bekräftad packar vi ditt konstverk noggrant.",
+      "step3": "Du får spårningsinformation när din order skickas."
+    },
+    "errors": {
+      "title": "Order Hittades Inte",
+      "orderNotFound": "Vi kunde inte hitta denna order. Kontrollera din e-post för rätt länk."
+    }
   }
 }

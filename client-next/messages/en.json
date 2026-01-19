@@ -336,5 +336,87 @@
     "total": "Total",
     "checkout": "Proceed to Checkout",
     "remove": "Remove item"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "orderSummary": "Order Summary",
+    "shippingInfo": "Shipping Information",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "calculated": "Calculated at next step",
+    "total": "Total",
+    "placeOrder": "Place Order",
+    "processing": "Processing...",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number (Optional)",
+      "country": "Country",
+      "city": "City",
+      "address": "Street Address",
+      "postalCode": "Postal Code",
+      "paymentMethod": "Payment Method",
+      "notes": "Order Notes (Optional)",
+      "notesPlaceholder": "Special delivery instructions, gift message, etc."
+    },
+    "payment": {
+      "bankTransfer": "Bank Transfer",
+      "creditCard": "Credit Card (Simulated)"
+    },
+    "errors": {
+      "nameRequired": "Full name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email address",
+      "countryRequired": "Country is required",
+      "cityRequired": "City is required",
+      "addressRequired": "Address is required",
+      "postalCodeRequired": "Postal code is required",
+      "orderFailed": "Failed to create order. Please try again."
+    }
+  },
+  "orderConfirmation": {
+    "title": "Order Confirmed!",
+    "message": "Thank you for your purchase. We've sent a confirmation email with order details.",
+    "loading": "Loading order details...",
+    "orderNumber": "Order Number",
+    "shippingAddress": "Shipping Address",
+    "contactInfo": "Contact Information",
+    "paymentMethod": "Payment Method",
+    "orderItems": "Order Items",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "yourNotes": "Your Notes",
+    "printOrder": "Print Order",
+    "continueShopping": "Continue Shopping",
+    "backToShop": "Back to Shop",
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    },
+    "payment": {
+      "bank_transfer": "Bank Transfer",
+      "credit_card": "Credit Card",
+      "stripe": "Stripe"
+    },
+    "paymentStatus": {
+      "pending": "Payment Pending",
+      "paid": "Paid",
+      "failed": "Payment Failed"
+    },
+    "nextSteps": {
+      "title": "What's Next?",
+      "step1": "You will receive a confirmation email shortly with payment instructions.",
+      "step2": "Once payment is confirmed, we will carefully package your artwork.",
+      "step3": "You'll receive tracking information when your order ships."
+    },
+    "errors": {
+      "title": "Order Not Found",
+      "orderNotFound": "We couldn't find this order. Please check your email for the correct link."
+    }
   }
 }
