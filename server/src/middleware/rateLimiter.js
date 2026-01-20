@@ -107,3 +107,26 @@ export const publicArtworkLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 });
+
+
+// Rate limiter para órdenes - Estricto
+export const orderLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hora
+  max: 5, // Máximo 5 órdenes por IP por hora
+  message: {
+    success: false,
+    message: 'Too many orders placed. Please try again later.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res) => {
+    console.log('🚨 Order rate limit exceeded');
+    console.log('   IP:', req.ip);
+    console.log('   Time:', new Date().toLocaleString());
+    
+    res.status(429).json({
+      success: false,
+      message: 'Too many orders placed. Please try again later.'
+    });
+  }
+});

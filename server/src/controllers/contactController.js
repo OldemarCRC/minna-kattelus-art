@@ -7,12 +7,27 @@ import { sanitizeInput } from '../utils/sanitizer.js';
 // @access  Public
 export const sendContactMessage = async (req, res, next) => {
   try {
-    const { name, email, subject, message, phone_optional, company_name, mailing_address } = req.body;
+    const { 
+      name, 
+      email, 
+      subject, 
+      message, 
+      formType,
+      // Commission-specific fields
+      artworkType,
+      dimensions,
+      budget,
+      phone, 
+      email_confirm, 
+      full_name_verify 
+    } = req.body;
 
-    console.log('Subject received from frontend:', subject);
-    // HONEYPOTS: Si alguno o todos los campos "phone_optional", "company_name" o "mailing_address" están llenos = BOT
-    if (phone_optional || company_name || mailing_address) {
-      console.log('Bot detected! Multiple honeypots filled');
+    console.log('Contact form submission - Type:', formType || 'general');
+    console.log('Subject received:', subject);
+
+    // HONEYPOTS: Si alguno está lleno = BOT
+    if (phone || email_confirm || full_name_verify) {
+      console.log('🤖 Bot detected! Honeypot triggered');
       // Responder como si todo estuviera bien para no revelar el honeypot
       return res.status(200).json({
         success: true,
@@ -20,18 +35,28 @@ export const sendContactMessage = async (req, res, next) => {
       });
     }
 
+    console.log('✅ Honeypot check passed - processing legitimate message');
+
+    // Sanitizar inputs básicos
     const sanitizedName = sanitizeInput(name);
     const sanitizedEmail = sanitizeInput(email);
-    const sanitizedMessage = sanitizeInput(message);
+    const sanitizedMessage = sanitizeInput(message || '');
 
-    console.log('Honeypot check passed - processing legitimate message');
-
-    if (!sanitizedName || !sanitizedEmail || !sanitizedMessage) {
-      throw createError(400, 'Please provide name, email, and message');
-    }
     // Validar campos requeridos
-    if (!name || !email || !message) {
-      throw createError(400, 'Please provide name, email, and message');
+    if (!sanitizedName || !sanitizedEmail) {
+      throw createError(400, 'Please provide name and email');
+    }
+
+    // Para comisiones, validar campos específicos
+    if (formType === 'commission') {
+      if (!artworkType || !dimensions) {
+        throw createError(400, 'Please provide artwork type and dimensions');
+      }
+    } else {
+      // Para formulario normal, mensaje es requerido
+      if (!sanitizedMessage || sanitizedMessage.length < 10) {
+        throw createError(400, 'Message must be at least 10 characters long');
+      }
     }
 
     // Validar formato de email
@@ -40,12 +65,8 @@ export const sendContactMessage = async (req, res, next) => {
       throw createError(400, 'Please provide a valid email address');
     }
 
-    // Validar longitud del mensaje
-    if (sanitizedMessage.length < 10) {
-      throw createError(400, 'Message must be at least 10 characters long');
-    }
-
-    if (sanitizedMessage.length > 2000) {
+    // Validar longitud del mensaje si existe
+    if (sanitizedMessage && sanitizedMessage.length > 2000) {
       throw createError(400, 'Message must not exceed 2000 characters');
     }
 
@@ -55,12 +76,31 @@ export const sendContactMessage = async (req, res, next) => {
       req.socket.remoteAddress ||
       req.ip;
 
-    console.log(`Contact form submission from ${sanitizedName} (${sanitizedEmail}) - IP: ${userIp}`);
+    console.log(`📧 Contact from ${sanitizedName} (${sanitizedEmail}) - IP: ${userIp}`);
+
+    // Preparar datos según tipo de formulario
+    let emailData = {
+      name: sanitizedName,
+      email: sanitizedEmail,
+      subject: subject || 'Contact Form Submission',
+      message: sanitizedMessage
+    };
+
+    // Agregar datos específicos de comisión
+    if (formType === 'commission') {
+      emailData = {
+        ...emailData,
+        formType: 'commission',
+        artworkType: sanitizeInput(artworkType),
+        dimensions: sanitizeInput(dimensions),
+        budget: budget ? sanitizeInput(budget) : 'Not specified'
+      };
+    }
 
     // Enviar email
-    await sendContactFormEmail(sanitizedName, sanitizedEmail, subject, sanitizedMessage);
+    await sendContactFormEmail(emailData);
 
-    console.log(`Contact email sent successfully to ${process.env.CONTACT_EMAIL}`);
+    console.log(`✅ Contact email sent successfully to ${process.env.CONTACT_EMAIL}`);
 
     res.status(200).json({
       success: true,
@@ -68,7 +108,7 @@ export const sendContactMessage = async (req, res, next) => {
     });
 
   } catch (error) {
-    console.error('Contact form error:', error);
+    console.error('❌ Contact form error:', error);
     next(error);
   }
 };

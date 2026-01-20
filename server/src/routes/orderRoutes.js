@@ -7,11 +7,12 @@ import {
   updateOrderStatus 
 } from '../controllers/orderController.js';
 import { protect, adminOnly } from '../middleware/authMiddleware.js';
+import { orderLimiter } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
 // Public routes
-router.post('/', createOrder);
+router.post('/', orderLimiter, createOrder);
 router.get('/number/:orderNumber', getOrderByNumber);
 
 // Protected routes

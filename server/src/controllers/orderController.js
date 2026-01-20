@@ -1,5 +1,6 @@
 import Order from '../models/Order.js';
 import Artwork from '../models/Artwork.js';
+import { sendOrderConfirmationEmail } from '../utils/mailer.js';
 
 // Create new order
 export const createOrder = async (req, res) => {
@@ -99,6 +100,14 @@ export const createOrder = async (req, res) => {
       message: 'Order created successfully',
       data: order
     });
+
+    try {
+      await sendOrderConfirmationEmail(order);
+      console.log('✅ Confirmation email sent to:', customer.email);
+    } catch (emailError) {
+      console.error('⚠️ Failed to send confirmation email:', emailError.message);
+
+    }
 
   } catch (error) {
     console.error('❌ CREATE ORDER ERROR:', error);
