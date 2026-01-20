@@ -28,6 +28,7 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderCreated, setOrderCreated] = useState(false);
+  const [formStartTime] = useState(Date.now());
 
   // Redirect if cart is empty (but not while submitting or after order created)
   useEffect(() => {
@@ -46,7 +47,7 @@ export default function CheckoutPage() {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!formData.name.trim()) newErrors.name = t('errors.nameRequired');
     if (!formData.email.trim()) {
       newErrors.email = t('errors.emailRequired');
@@ -57,12 +58,18 @@ export default function CheckoutPage() {
     if (!formData.city.trim()) newErrors.city = t('errors.cityRequired');
     if (!formData.address.trim()) newErrors.address = t('errors.addressRequired');
     if (!formData.postalCode.trim()) newErrors.postalCode = t('errors.postalCodeRequired');
-    
+
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const timeSpent = (Date.now() - formStartTime) / 1000;
+    if (timeSpent < 5) {  // 5 segundos para checkout (más campos que contact)
+      alert(t('errors.tooFast'));
+      return;
+    }
 
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
@@ -107,28 +114,28 @@ export default function CheckoutPage() {
 
     } catch (error) {
       console.error('Checkout error:', error);
-      
+
       // Check if specific artworks are unavailable
       if (error.response?.data?.unavailableArtworks) {
         const unavailable = error.response.data.unavailableArtworks;
         const titles = unavailable.map(a => a.title).join('\n• ');
-        
+
         const userConfirm = confirm(
           `The following artworks are no longer available:\n\n• ${titles}\n\nWould you like to remove them from your cart and continue?`
         );
-        
+
         if (userConfirm) {
           // Remove unavailable items from cart
           unavailable.forEach(artwork => {
             removeItem(artwork.id);
           });
-          
+
           alert('Unavailable items have been removed. Please review your cart and try again.');
         }
       } else {
         alert(error.response?.data?.message || t('errors.orderFailed'));
       }
-      
+
       setIsSubmitting(false);
     }
   };
@@ -146,7 +153,7 @@ export default function CheckoutPage() {
           {/* Order Summary */}
           <div className="order-summary">
             <h2>{t('orderSummary')}</h2>
-            
+
             <div className="summary-items">
               {items.map((item) => (
                 <div key={item.id} className="summary-item">
@@ -309,8 +316,8 @@ export default function CheckoutPage() {
                 />
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="btn-checkout-submit"
                 disabled={isSubmitting}
               >

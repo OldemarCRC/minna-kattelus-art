@@ -22,10 +22,10 @@ export default function Contact() {
         artworkType: '',
         dimensions: '',
         budget: '',
-        // Honeypots
-        phone_optional: '',
-        company_name: '',
-        mailing_address: ''
+        // Campos opcionales
+        phone: '',
+        email_confirm: '',
+        full_name_verify: ''
     });
 
     const [formStartTime] = useState(Date.now());
@@ -103,9 +103,9 @@ export default function Contact() {
                     artworkType: '',
                     dimensions: '',
                     budget: '',
-                    phone_optional: '',
-                    company_name: '',
-                    mailing_address: ''
+                    phone: '',
+                    email_confirm: '',
+                    full_name_verify: ''
                 });
             }
         } catch (error) {
@@ -119,20 +119,20 @@ export default function Contact() {
     };
 
     useEffect(() => {
-        const encoded = 'bWlubmFrYXR0ZWx1c0BnbWFpbC5jb20=';
+        const encoded = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
         setDecodedEmail(window.atob(encoded));
     }, []);
 
     useEffect(() => {
         const artworkName = searchParams.get('artwork');
-        const typeParam = searchParams.get('type'); // ← Obtener type también
+        const typeParam = searchParams.get('type');
 
         if (artworkName) {
             setFormData(prev => ({
                 ...prev,
                 subject: `Inquiry about: ${decodeURIComponent(artworkName)}`
             }));
-        } else if (typeParam === 'commission') { // ← Verificar tipo
+        } else if (typeParam === 'commission') {
             setFormData(prev => ({
                 ...prev,
                 subject: 'Commission Request'
@@ -290,13 +290,13 @@ export default function Contact() {
                                 )}
 
                                 {/* Honeypot Fields */}
-                                <input type="text" name="phone_optional" value={formData.phone_optional} onChange={handleChange} tabIndex="-1" autoComplete="off" style={{
+                                <input type="text" name="phone" value={formData.phone} onChange={handleChange} tabIndex="-1" autoComplete="off" style={{
                                     opacity: 0, position: 'absolute', top: 0, left: 0, height: 0, width: 0, zIndex: -1, overflow: 'hidden'
                                 }} />
-                                <input type="text" name="company_name" value={formData.company_name} onChange={handleChange} tabIndex="-1" autoComplete="off" style={{
+                                <input type="text" name="email_confirm" value={formData.email_confirm} onChange={handleChange} tabIndex="-1" autoComplete="off" style={{
                                     opacity: 0, position: 'absolute', top: 0, left: 0, height: 0, width: 0, zIndex: -1, overflow: 'hidden'
                                 }} />
-                                <input type="text" name="mailing_address" value={formData.mailing_address} onChange={handleChange} tabIndex="-1" autoComplete="off" style={{
+                                <input type="text" name="full_name_verify" value={formData.full_name_verify} onChange={handleChange} tabIndex="-1" autoComplete="off" style={{
                                     opacity: 0, position: 'absolute', top: 0, left: 0, height: 0, width: 0, zIndex: -1, overflow: 'hidden'
                                 }} />
 
