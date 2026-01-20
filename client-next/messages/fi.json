@@ -371,7 +371,8 @@
       "cityRequired": "Kaupunki vaaditaan",
       "addressRequired": "Osoite vaaditaan",
       "postalCodeRequired": "Postinumero vaaditaan",
-      "orderFailed": "Tilauksen luominen epäonnistui. Yritä uudelleen."
+      "orderFailed": "Tilauksen luominen epäonnistui. Yritä uudelleen.",
+      "tooFast": "Ole hyvä ja käytä aikaa tilauksesi tarkistamiseen."
     }
   },
   "orderConfirmation": {

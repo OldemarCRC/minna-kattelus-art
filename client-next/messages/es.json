@@ -371,7 +371,8 @@
       "cityRequired": "La ciudad es requerida",
       "addressRequired": "La dirección es requerida",
       "postalCodeRequired": "El código postal es requerido",
-      "orderFailed": "Error al crear el pedido. Inténtalo de nuevo."
+      "orderFailed": "Error al crear el pedido. Inténtalo de nuevo.",
+      "tooFast": "Por favor, tómate tu tiempo revisando tu pedido."
     }
   },
   "orderConfirmation": {

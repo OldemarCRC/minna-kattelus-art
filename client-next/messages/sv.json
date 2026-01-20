@@ -371,7 +371,8 @@
       "cityRequired": "Stad krävs",
       "addressRequired": "Adress krävs",
       "postalCodeRequired": "Postnummer krävs",
-      "orderFailed": "Misslyckades skapa order. Försök igen."
+      "orderFailed": "Misslyckades skapa order. Försök igen.",
+      "tooFast": "Vänligen ta dig tid att granska din beställning."
     }
   },
   "orderConfirmation": {

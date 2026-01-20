@@ -371,7 +371,8 @@
             "cityRequired": "Magaalada ayaa loo baahan yahay",
             "addressRequired": "Cinwaanka ayaa loo baahan yahay",
             "postalCodeRequired": "Koodhka boostada ayaa loo baahan yahay",
-            "orderFailed": "Lama helin in la abuuro dalabka. Fadlan isku day mar kale."
+            "orderFailed": "Lama helin in la abuuro dalabka. Fadlan isku day mar kale.",
+            "tooFast": "Fadlan waqti ku qaado si aad u eegto dalabkaaga."
         }
     },
     "orderConfirmation": {
