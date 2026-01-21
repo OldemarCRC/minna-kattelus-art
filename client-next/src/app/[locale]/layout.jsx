@@ -2,12 +2,12 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { locales } from '@/i18n';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { AuthContextProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
+import { Toaster } from '@/components/ui/Toaster';
 
 import '@/app/globals.css';
+import '@/styles/ui.css';
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -34,14 +34,10 @@ export default async function LocaleLayout({ children, params }) {
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          {/* 2. ENVUELVE TODO CON EL PROVIDER DE AUTENTICACIÓN */}
           <AuthContextProvider>
             <CartProvider>
-              <Navbar />
-              <main>
-                {children}
-              </main>
-              <Footer />
+              {children}
+              <Toaster />
             </CartProvider>
           </AuthContextProvider>
         </NextIntlClientProvider>
