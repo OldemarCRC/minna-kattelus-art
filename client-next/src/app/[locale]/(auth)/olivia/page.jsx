@@ -4,6 +4,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from "@/context/AuthContext";
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import '@/styles/Login.css';
 import axios from '@/lib/axios';
 
@@ -14,7 +15,7 @@ export default function LoginPage() {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
-    email: "" 
+    email: "" // Honeypot
   });
 
   const { loading, error, dispatch } = useContext(AuthContext);
@@ -23,9 +24,12 @@ export default function LoginPage() {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
+  // Show error toast when error changes
   useEffect(() => {
     if (error) {
-      window.alert(error);
+      toast.error('Login Failed', {
+        description: error,
+      });
     }
   }, [error]);
 
@@ -46,25 +50,33 @@ export default function LoginPage() {
 
         dispatch({ type: "LOGIN_SUCCESS", payload: userDetails });
         
-        // Guardamos en sessionStorage (solo disponible en cliente)
+        // Store in sessionStorage (only available on client)
         sessionStorage.setItem("user", JSON.stringify(userDetails));
         
-        console.log("Login successful!");
+        // Show success toast
+        toast.success('Welcome back!', {
+          description: `Logged in as ${userDetails.username}`,
+        });
         
-        // Redirección con delay para feedback visual
+        // Redirect with delay for visual feedback
         setTimeout(() => {
           if (userDetails.role === "editor" || userDetails.role === "admin") {
             router.push('/dashboard');
           } else {
             router.push('/');
           }
-        }, 2000);
+        }, 1500);
       } else {
         throw new Error(data.message || "Login failed.");
       }
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || "Login failed.";
-      window.alert(errorMessage);
+      
+      // Show error toast
+      toast.error('Login Failed', {
+        description: errorMessage,
+      });
+      
       dispatch({ type: "LOGIN_FAILURE", payload: errorMessage });
     }
   };
@@ -74,12 +86,6 @@ export default function LoginPage() {
       <div className="login-card">
         <h2 className="login-title">{t('admin.loginTitle')}</h2>
         <p className="login-subtitle">{t('admin.loginSubtitle')}</p>
-        
-        {error && (
-          <div className="login-error" role="alert">
-            <p>{error}</p>
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
@@ -116,6 +122,7 @@ export default function LoginPage() {
             />
           </div>
 
+          {/* Honeypot field - hidden from users */}
           <input
             type="email"
             id="email"

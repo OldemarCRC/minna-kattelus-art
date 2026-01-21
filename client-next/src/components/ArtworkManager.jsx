@@ -1,6 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
+import { toast } from 'sonner';
+import { useConfirmDialog } from '@/hooks/useConfirmDialog';
 import axios from '@/lib/axios';
 import '@/styles/ArtworkManager.css';
 
@@ -47,15 +49,15 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 const ArtworkManager = () => {
   const locale = useLocale();
   const t = useTranslations();
+  const { confirm, ConfirmDialog } = useConfirmDialog();
   
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   
-  const userStr = sessionStorage.getItem('user');
+  const userStr = typeof window !== 'undefined' ? sessionStorage.getItem('user') : null;
   const currentUser = userStr ? JSON.parse(userStr) : null;
   const isAdmin = currentUser?.role === 'admin';
   
@@ -88,6 +90,9 @@ const ArtworkManager = () => {
     } catch (err) {
       console.error('Error fetching artworks:', err);
       setError('Error loading artworks');
+      toast.error('Error loading artworks', {
+        description: 'Please try refreshing the page.',
+      });
       setLoading(false);
     }
   };
@@ -112,7 +117,6 @@ const ArtworkManager = () => {
     }
   };
 
-
   const handleCategoryChange = (e) => {
     const selectedKey = e.target.value;
     const selectedCategory = CATEGORIES[selectedKey];
@@ -122,7 +126,6 @@ const ArtworkManager = () => {
       category: selectedCategory
     }));
   };
-
 
   const getCurrentCategoryKey = () => {
     if (!formData.category.en) return '';
@@ -150,12 +153,11 @@ const ArtworkManager = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setSuccess('');
 
     try {
       const formDataToSend = new FormData();
 
-      // Agregar imagen si existe
+      // Add image if exists
       if (imageFile) {
         formDataToSend.append('image', imageFile);
       }
@@ -166,7 +168,7 @@ const ArtworkManager = () => {
       formDataToSend.append('technique', JSON.stringify(formData.technique));
       formDataToSend.append('dimensions', JSON.stringify(formData.dimensions));
       
-      // Campos simples
+      // Simple fields
       formDataToSend.append('year', formData.year);
       formDataToSend.append('price', formData.price);
       formDataToSend.append('currency', formData.currency);
@@ -183,10 +185,14 @@ const ArtworkManager = () => {
 
       if (editingId) {
         await axios.put(`/api/artworks/${editingId}`, formDataToSend, config);
-        setSuccess('Artwork updated successfully');
+        toast.success('Artwork updated', {
+          description: 'The artwork has been updated successfully.',
+        });
       } else {
         await axios.post('/api/artworks', formDataToSend, config);
-        setSuccess('Artwork created successfully');
+        toast.success('Artwork created', {
+          description: 'The new artwork has been added to the gallery.',
+        });
       }
 
       resetForm();
@@ -194,7 +200,11 @@ const ArtworkManager = () => {
       setShowForm(false);
     } catch (err) {
       console.error('Error saving artwork:', err);
-      setError(err.response?.data?.message || 'Error saving artwork');
+      const errorMsg = err.response?.data?.message || 'Error saving artwork';
+      setError(errorMsg);
+      toast.error('Error saving artwork', {
+        description: errorMsg,
+      });
     }
   };
 
@@ -215,20 +225,36 @@ const ArtworkManager = () => {
     setImagePreview(`${API_URL}/uploads/artworks/${artwork.image}`);
     setEditingId(artwork._id);
     setShowForm(true);
+    
+    // Scroll to form
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this artwork?')) {
-      return;
-    }
+  const handleDelete = async (id, title) => {
+    // Use AlertDialog for confirmation
+    const confirmed = await confirm({
+      title: 'Delete Artwork',
+      description: `Are you sure you want to delete "${title}"? This action cannot be undone.`,
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      variant: 'danger',
+    });
+
+    if (!confirmed) return;
 
     try {
       await axios.delete(`/api/artworks/${id}`);
-      setSuccess('Artwork deleted successfully');
+      toast.success('Artwork deleted', {
+        description: 'The artwork has been permanently removed.',
+      });
       fetchArtworks();
     } catch (err) {
       console.error('Error deleting artwork:', err);
-      setError(err.response?.data?.message || 'Error deleting artwork');
+      const errorMsg = err.response?.data?.message || 'Error deleting artwork';
+      setError(errorMsg);
+      toast.error('Error deleting artwork', {
+        description: errorMsg,
+      });
     }
   };
 
@@ -271,7 +297,6 @@ const ArtworkManager = () => {
       </div>
 
       {error && <div className="alert alert-error">{error}</div>}
-      {success && <div className="alert alert-success">{success}</div>}
 
       {showForm && (
         <div className="artwork-form-container">
@@ -365,7 +390,7 @@ const ArtworkManager = () => {
                     </option>
                   ))}
                 </select>
-                {/* Mostrar categoría en todos los idiomas (solo preview) */}
+                {/* Show category in all languages (preview only) */}
                 {formData.category.en && (
                   <div className="category-preview">
                     <small>
@@ -545,7 +570,10 @@ const ArtworkManager = () => {
                   Edit
                 </button>
                 {isAdmin && (
-                  <button onClick={() => handleDelete(artwork._id)} className="btn-delete">
+                  <button 
+                    onClick={() => handleDelete(artwork._id, artwork.title[locale] || artwork.title.en)} 
+                    className="btn-delete"
+                  >
                     Delete
                   </button>
                 )}
@@ -554,6 +582,9 @@ const ArtworkManager = () => {
           ))}
         </div>
       </div>
+      
+      {/* Render the ConfirmDialog */}
+      {ConfirmDialog}
     </div>
   );
 };

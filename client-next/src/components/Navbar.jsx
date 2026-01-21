@@ -14,7 +14,7 @@ const Navbar = () => {
   const router = useRouter();
   const t = useTranslations();
   const currentLang = useLocale();
-  
+
   const [user, setUser] = useState(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -71,45 +71,45 @@ const Navbar = () => {
           {/* Navigation Menu - Hidden on mobile */}
           <ul className={`navbar-menu ${showMenu ? 'open' : ''}`}>
             <li>
-              <Link 
-                href={`/${currentLang}`} 
-                className={`nav-link ${isActive('/')}`} 
+              <Link
+                href={`/${currentLang}`}
+                className={`nav-link ${isActive('/')}`}
                 onClick={closeMobileMenu}
               >
                 {t('nav.home')}
               </Link>
             </li>
             <li>
-              <Link 
-                href={`/${currentLang}/gallery`} 
-                className={`nav-link ${isActive('/gallery')}`} 
+              <Link
+                href={`/${currentLang}/gallery`}
+                className={`nav-link ${isActive('/gallery')}`}
                 onClick={closeMobileMenu}
               >
                 {t('nav.gallery')}
               </Link>
             </li>
             <li>
-              <Link 
-                href={`/${currentLang}/shop`} 
-                className={`nav-link ${isActive('/shop')}`} 
+              <Link
+                href={`/${currentLang}/shop`}
+                className={`nav-link ${isActive('/shop')}`}
                 onClick={closeMobileMenu}
               >
                 {t('nav.shop')}
               </Link>
             </li>
             <li>
-              <Link 
-                href={`/${currentLang}/about-me`} 
-                className={`nav-link ${isActive('/about-me')}`} 
+              <Link
+                href={`/${currentLang}/about-me`}
+                className={`nav-link ${isActive('/about-me')}`}
                 onClick={closeMobileMenu}
               >
                 {t('nav.about')}
               </Link>
             </li>
             <li>
-              <Link 
-                href={`/${currentLang}/contact`} 
-                className={`nav-link ${isActive('/contact')}`} 
+              <Link
+                href={`/${currentLang}/contact`}
+                className={`nav-link ${isActive('/contact')}`}
                 onClick={closeMobileMenu}
               >
                 {t('nav.contact')}
@@ -117,9 +117,9 @@ const Navbar = () => {
             </li>
             {user && (user.role === 'admin' || user.role === 'editor') && (
               <li>
-                <Link 
-                  href={`/${currentLang}/dashboard`} 
-                  className={`nav-link ${isActive('/dashboard')}`} 
+                <Link
+                  href={`/${currentLang}/dashboard`}
+                  className={`nav-link ${isActive('/dashboard')}`}
                   onClick={closeMobileMenu}
                 >
                   DASHBOARD
@@ -158,14 +158,17 @@ const Navbar = () => {
                       <svg className="password-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                       </svg>
-                      Change Password
+                      {t('nav.changePassword')}
                     </button>
 
-                    <button className="logout-button" onClick={handleLogout}>
+                    <button className="logout-button" onClick={(e) => {
+                      e.stopPropagation();
+                      handleLogout();
+                    }}>
                       <svg className="logout-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                       </svg>
-                      Sign Out
+                      {t('nav.signOut')}
                     </button>
                   </div>
                 )}

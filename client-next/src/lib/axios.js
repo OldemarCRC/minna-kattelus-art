@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'sonner';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
@@ -75,8 +76,17 @@ axiosInstance.interceptors.response.use(
         if (typeof window !== 'undefined') {
           sessionStorage.removeItem('user');
           sessionStorage.removeItem('token');
-          alert('Your session has been closed because you logged in from another location');
-          window.location.href = '/';
+          
+          // Use toast instead of alert
+          toast.warning('Session Closed', {
+            description: 'Your session has been closed because you logged in from another location.',
+            duration: 5000,
+          });
+          
+          // Delay redirect to let user see the toast
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 2000);
         }
       }
       // Expired or invalid token
