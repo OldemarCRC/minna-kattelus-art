@@ -1,5 +1,14 @@
 /* ===== DASHBOARD - Diseño Escandinavo ===== */
 
+
+/* Header */
+.dashboard-header {
+  background-color: var(--color-background);
+  padding: var(--spacing-xl) 0 var(--spacing-lg);
+  text-align: center;
+}
+
+
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -591,4 +600,51 @@
   .chart-bars-container {
     height: 150px;
   }
+}
+
+
+/* ===== DASHBOARD PAGE (Sin Sidebar) ===== */
+.dashboard-page {
+  margin-top: 80px; /* Espacio para el Navbar fijo */
+  min-height: calc(100vh - 80px);
+  background-color: var(--color-background);
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg) 0;
+  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dashboard-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.dashboard-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.chart-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Admin Actions */
+.admin-actions {
+  display: flex;
+  gap: 1rem;
+  padding: var(--spacing-md) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.admin-actions .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }

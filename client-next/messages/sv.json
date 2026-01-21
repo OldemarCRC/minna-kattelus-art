@@ -4,12 +4,14 @@
     "gallery": "GALLERI",
     "shop": "BUTIK",
     "about": "OM MIG",
-    "contact": "KONTAKT"
+    "contact": "KONTAKT",
+    "changePassword": "Byt Lösenord",
+    "signOut": "Logga Ut"
   },
   "home": {
     "hero": {
       "title": "Konst som fångar\nnordisk essens",
-      "subtitle": "Utforskar ljus, landskap och känslor genom samtida målning",
+      "subtitle": "Utforskar ljus och skugga genom samtida färg.",
       "viewGallery": "Se galleri",
       "learnMore": "Läs mer"
     },
@@ -276,7 +278,8 @@
     "chartTitle": "Månatliga Besök",
     "formTitle": "Konstverkshantering",
     "sectionVisits": "Besöksstatistik",
-    "sectionArtworks": "Verksstatistik"
+    "sectionArtworks": "Verksstatistik",
+    "registerUser": "+ Registrera Ny Användare"
   },
   "form": {
     "newButton": "Nytt Verk",

@@ -4,12 +4,14 @@
         "gallery": "GALARI",
         "shop": "DUKAANKA",
         "about": "ABOUT",
-        "contact": "XIRIIR"
+        "contact": "XIRIIR",
+        "changePassword": "Beddel Furaha",
+        "signOut": "Ka Bax"
     },
     "home": {
         "hero": {
             "title": "Farshaxan Muujinaya\nDabeecadda Nordic",
-            "subtitle": "Sahaminta iftiinka, muuqaalka iyo dareenka iyada oo loo marayo sawir casri ah",
+            "subtitle": "Sahaminta iftiin iyo hoos, iyada oo loo marayo midab casri ah.",
             "viewGallery": "Arag Galari",
             "learnMore": "Faahfaahin Dheeraad ah"
         },
@@ -276,7 +278,8 @@
         "chartTitle": "Monthly Visits",
         "formTitle": "Artwork Management",
         "sectionVisits": "Visit Statistics",
-        "sectionArtworks": "Artwork Statistics"
+        "sectionArtworks": "Artwork Statistics",
+        "registerUser": "+ Diiwaan Geli Isticmaale Cusub"
     },
     "form": {
         "newButton": "Shaqo Cusub",

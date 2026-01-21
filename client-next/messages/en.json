@@ -4,12 +4,14 @@
     "gallery": "GALLERY",
     "shop": "SHOP",
     "about": "ABOUT ME",
-    "contact": "CONTACT"
+    "contact": "CONTACT",
+    "changePassword": "Change Password",
+    "signOut": "Sign Out"
   },
   "home": {
     "hero": {
       "title": "Art that Captures\nthe Nordic Essence",
-      "subtitle": "Exploring light, landscape and emotions through contemporary painting",
+      "subtitle": "Exploring light and shadow through contemporary color",
       "viewGallery": "View Gallery",
       "learnMore": "Learn More"
     },
@@ -276,7 +278,8 @@
     "chartTitle": "Monthly Visits",
     "formTitle": "Artwork Management",
     "sectionVisits": "Visit Statistics",
-    "sectionArtworks": "Artwork Statistics"
+    "sectionArtworks": "Artwork Statistics",
+    "registerUser": "+ Register New User"
   },
   "form": {
     "newButton": "New Artwork",

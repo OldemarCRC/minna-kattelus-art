@@ -4,12 +4,14 @@
     "gallery": "GALLERIA",
     "shop": "KAUPPA",
     "about": "TIETOJA MINUSTA",
-    "contact": "OTA YHTEYTTÄ"
+    "contact": "OTA YHTEYTTÄ",
+    "changePassword": "Vaihda Salasana",
+    "signOut": "Kirjaudu Ulos"
   },
   "home": {
     "hero": {
       "title": "Taidetta joka vangitsee\npohjoismaisen olemuksen",
-      "subtitle": "Tutkimassa valoa, maisemaa ja tunteita nykytaiteen maalauksen kautta",
+      "subtitle": "Tutkimassa valoa, pimeyttä ja värejä nykymaalauksen keinoin.",
       "viewGallery": "Katso galleriaa",
       "learnMore": "Lue lisää"
     },
@@ -276,7 +278,8 @@
     "chartTitle": "Kuukausittaiset Vierailut",
     "formTitle": "Teosten Hallinta",
     "sectionVisits": "Vierailutilastot",
-    "sectionArtworks": "Teostilastot"
+    "sectionArtworks": "Teostilastot",
+    "registerUser": "+ Rekisteröi Uusi Käyttäjä"
   },
   "form": {
     "newButton": "Uusi Teos",

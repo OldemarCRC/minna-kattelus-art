@@ -4,12 +4,14 @@
     "gallery": "GALERÍA",
     "shop": "TIENDA",
     "about": "SOBRE MÍ",
-    "contact": "CONTACTO"
+    "contact": "CONTACTO",
+    "changePassword": "Cambiar Contraseña",
+    "signOut": "Cerrar Sesión"
   },
   "home": {
     "hero": {
       "title": "Arte que Captura\nla Esencia Nórdica",
-      "subtitle": "Explorando la luz, el paisaje y las emociones a través de la pintura contemporánea",
+      "subtitle": "Explorando la luz y la sombra a través del color contemporáneo.",
       "viewGallery": "Ver Galería",
       "learnMore": "Conocer Más"
     },
@@ -276,7 +278,8 @@
     "chartTitle": "Visitas Mensuales",
     "formTitle": "Gestión de Obras",
     "sectionVisits": "Estadísticas de Visitas",
-    "sectionArtworks": "Estadísticas de Obras"
+    "sectionArtworks": "Estadísticas de Obras",
+    "registerUser": "+ Registrar Nuevo Usuario"
   },
   "form": {
     "newButton": "Nueva Obra",
