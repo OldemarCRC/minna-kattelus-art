@@ -126,8 +126,13 @@ const Navbar = () => {
                 </Link>
               </li>
             )}
+
+          </ul>
+
+          {/* Actions Container (Language and Cart) - Visible on all screens */}
+          <div className="navbar-actions">
             {user && (
-              <li className="user-menu-container">
+              <div className="user-menu-container">
                 <button
                   className="user-menu-toggle"
                   onClick={() => setShowUserMenu(!showUserMenu)}
@@ -172,12 +177,8 @@ const Navbar = () => {
                     </button>
                   </div>
                 )}
-              </li>
+              </div>
             )}
-          </ul>
-
-          {/* Actions Container (Language and Cart) - Visible on all screens */}
-          <div className="navbar-actions">
             <LanguageSwitcher />
             <CartIcon />
 

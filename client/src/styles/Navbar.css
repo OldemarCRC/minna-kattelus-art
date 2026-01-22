@@ -14,12 +14,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 2.5rem;
 }
 
 .navbar-brand {
+  flex-shrink: 0;
   font-family: var(--font-serif);
   font-size: 1.5rem;
   color: var(--color-primary);
+  white-space: nowrap;
   font-weight: 500;
   letter-spacing: 1px;
 }
@@ -31,12 +34,15 @@
   margin: 0;
   padding: 0;
   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  flex: 1;
+  justify-content: center;
 }
 
 .nav-link {
   font-size: 0.85rem;
   letter-spacing: 1px;
   color: var(--color-text);
+  white-space: nowrap;
   font-weight: 400;
   position: relative;
   padding: 0.5rem 0;
@@ -65,8 +71,8 @@
 .navbar-actions {
   display: flex;
   align-items: center;
-  /* Espaciado para el selector de idioma, carrito y el toggle */
-  gap: 1.5rem; 
+  gap: 1.5rem;
+  flex-shrink: 0;
 }
 
 .icon-cart {
@@ -81,7 +87,7 @@
 
 /* Ocultar botón de hamburguesa por defecto (escritorio) */
 .menu-toggle {
-  display: none; 
+  display: none;
   background: none;
   border: none;
   cursor: pointer;
@@ -96,7 +102,7 @@
 }
 
 /* Media Query para móvil */
-@media (max-width: 992px) { 
+@media (max-width: 992px) {
   .navbar-brand {
     font-size: 1.2rem;
   }
@@ -108,7 +114,7 @@
 
   /* Mostrar botón de hamburguesa */
   .menu-toggle {
-    display: block; 
+    display: block;
   }
 
   /* Ocultar el menú de navegación en móvil por defecto */
@@ -120,24 +126,24 @@
     width: 100%;
     height: auto;
     flex-direction: column;
-    background-color: var(--color-white); 
+    background-color: var(--color-white);
     border-top: 1px solid rgba(45, 74, 62, 0.1);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     padding: 1rem 0;
-    
+
     transform: translateX(100%);
     opacity: 0;
     pointer-events: none;
-    gap: 0; 
+    gap: 0;
   }
-  
+
   /* Mostrar el menú cuando tiene la clase 'open' */
   .navbar-menu.open {
     transform: translateX(0);
     opacity: 1;
     pointer-events: all;
   }
-  
+
   .navbar-menu li {
     width: 100%;
     text-align: left;
@@ -162,7 +168,7 @@
     padding: 0.75rem 1rem;
     font-size: 1rem;
   }
-  
+
   .user-dropdown {
     position: static;
     width: 100%;
@@ -175,11 +181,12 @@
     margin-top: 0;
   }
 
-  .user-info, .logout-button {
+  .user-info,
+  .logout-button {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
-  
+
   .user-info {
     border-bottom: none;
     padding-bottom: 0.5rem;
@@ -198,7 +205,7 @@
   padding: 0.5rem 1rem;
   background-color: transparent;
   border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border-radius: 8px;
   cursor: pointer;
   transition: var(--transition);
   font-size: 0.9rem;
@@ -248,6 +255,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -323,7 +331,7 @@
 }
 
 /* Separador visual entre cambiar contraseña y logout */
-.change-password-button + .logout-button {
+.change-password-button+.logout-button {
   border-top: 1px solid #e8e8e8;
   padding-top: 1rem;
   margin-top: 0.5rem;
