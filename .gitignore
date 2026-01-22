@@ -15,6 +15,12 @@ client-next/out/
 client-next/next-env.d.ts
 .vercel
 
+# === NEXT.JS (client-next) ===
+client/.next/
+client/out/
+client/next-env.d.ts
+.vercel
+
 # === BUILD OUTPUTS ===
 # Vite, React legacy, and Server builds
 **/dist/
