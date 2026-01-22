@@ -2,8 +2,8 @@ import axios from './axios';
 
 let inactivityTimer;
 let heartbeatInterval;
-const minutes = 15;
-const INACTIVITY_TIME = minutes * 60 * 1000; // 15 minutos
+const minutes = 15; // 15 minutos
+const INACTIVITY_TIME = minutes * 60 * 1000; 
 const HEARTBEAT_INTERVAL = 5 * 60 * 1000; // 5 minutos
 
 const sendHeartbeat = async () => {
