@@ -1,6 +1,7 @@
 'use client';
 
 import { Toaster as SonnerToaster } from 'sonner';
+import '@/styles/ui.css';
 
 export function Toaster() {
   return (
