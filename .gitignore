@@ -9,17 +9,12 @@
 !.yarn/releases
 !.yarn/versions
 
-# === NEXT.JS (client-next) ===
-client-next/.next/
-client-next/out/
-client-next/next-env.d.ts
-.vercel
-
-# === NEXT.JS (client-next) ===
+# === NEXT.JS (client) ===
 client/.next/
 client/out/
 client/next-env.d.ts
 .vercel
+client/node_modules/
 
 # === BUILD OUTPUTS ===
 # Vite, React legacy, and Server builds

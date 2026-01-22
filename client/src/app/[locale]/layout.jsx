@@ -7,7 +7,7 @@ import { CartProvider } from '@/context/CartContext';
 import { Toaster } from '@/components/ui/Toaster';
 
 import '@/app/globals.css';
-import '@/styles/ui.css';
+
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
