@@ -1,14 +1,17 @@
+'use client';
+
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import axios from '../utils/axios';
-import ArtworkModal from './ArtworkModal';
-import './GalleryGrid.css';
+import { useLocale, useTranslations } from 'next-intl';
+import axios from '@/lib/axios';
+import ArtworkModal from '@/components/ArtworkModal';
+import '@/styles/GalleryGrid.css';
 
-
-const CATEGORIES = ['TEMAS', 'PAISAJES', 'ABSTRACTO', 'RETRATOS', 'NATURALEZA'];
+const CATEGORIES = ['landscapes', 'abstract', 'portraits', 'nature'];
 
 const GalleryGrid = () => {
-  const { t, i18n } = useTranslation();
+  const locale = useLocale();
+  const t = useTranslations();
+
   const [artworks, setArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +24,7 @@ const GalleryGrid = () => {
 
   useEffect(() => {
     filterArtworks();
-  }, [selectedCategory, artworks]);
+  }, [selectedCategory, artworks, locale]);
 
   const fetchArtworks = async () => {
     try {
@@ -38,7 +41,10 @@ const GalleryGrid = () => {
     if (!selectedCategory) {
       setFilteredArtworks(artworks);
     } else {
-      setFilteredArtworks(artworks.filter(art => art.category === selectedCategory));
+      setFilteredArtworks(artworks.filter(art => {
+        const artworkCategory = (art.category[locale] || art.category.en).toLowerCase();
+        return artworkCategory === selectedCategory.toLowerCase();
+      }));
     }
   };
 
@@ -63,6 +69,10 @@ const GalleryGrid = () => {
 
   return (
     <div className="gallery-container">
+      <div className="gallery-header">
+        <h1>{t('gallery.title')}</h1>
+        <p className="gallery-description">{t('gallery.description')}</p>
+      </div>
       {/* Category Filter */}
       <div className="category-filter">
         <button
@@ -71,21 +81,23 @@ const GalleryGrid = () => {
         >
           {t('gallery.filters.all')}
         </button>
-        {CATEGORIES.map(category => (
-          <button
-            key={category}
-            className={selectedCategory === category ? 'active' : ''}
-            onClick={() => setSelectedCategory(category)}
-          >
-            {t(`gallery.categories.${category.toLowerCase()}`)}
-          </button>
-        ))}
+        {CATEGORIES.map(category => {
+          const translatedCategory = t(`gallery.filters.${category}`);
+          return (
+            <button
+              key={category}
+              className={selectedCategory === translatedCategory ? 'active' : ''}
+              onClick={() => setSelectedCategory(translatedCategory)}
+            >
+              {translatedCategory}
+            </button>
+          );
+        })}
       </div>
 
       {/* Gallery Grid */}
       <div className="gallery-grid">
         {filteredArtworks.map(artwork => {
-          const currentLang = i18n.language;
           return (
             <div
               key={artwork._id}
@@ -94,12 +106,12 @@ const GalleryGrid = () => {
             >
               <div className="gallery-image">
                 <img
-                  src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/uploads/artworks/${artwork.image}`}
-                  alt={artwork.title[currentLang] || artwork.title.en}
+                  src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/artworks/${artwork.image}`}
+                  alt={artwork.title[locale] || artwork.title.en}
                   loading="lazy"
                 />
                 <div className="gallery-overlay">
-                  <h3>{artwork.title[currentLang] || artwork.title.en}</h3>
+                  <h3>{artwork.title[locale] || artwork.title.en}</h3>
                   <p>{artwork.year}</p>
                 </div>
               </div>

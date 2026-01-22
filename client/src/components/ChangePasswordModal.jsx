@@ -1,7 +1,9 @@
+'use client';
+
 import { useState } from 'react';
-import axios from '../utils/axios';
-import './ChangePasswordModal.css';
-import { validatePasswordStrength } from '../utils/passwordValidator';
+import axios from '@/lib/axios';
+import '@/styles/ChangePasswordModal.css';
+import { validatePasswordStrength } from '@/lib/passwordValidator';
 
 const ChangePasswordModal = ({ isOpen, onClose, user }) => {
   const [formData, setFormData] = useState({
@@ -26,7 +28,8 @@ const ChangePasswordModal = ({ isOpen, onClose, user }) => {
       ...formData,
       [name]: value
     });
-    // Validar nueva contraseña en tiempo real
+    
+    // Validate new password in real time
     if (name === 'newPassword') {
       const validation = validatePasswordStrength(value);
       setPasswordRequirements(validation);
@@ -39,7 +42,7 @@ const ChangePasswordModal = ({ isOpen, onClose, user }) => {
     setError('');
     setSuccess('');
 
-    // Validaciones frontend
+    // Frontend validations
     if (formData.newPassword.length < 6) {
       setError('New password must be at least 6 characters');
       return;
@@ -68,14 +71,14 @@ const ChangePasswordModal = ({ isOpen, onClose, user }) => {
 
       setSuccess(response.data.message);
 
-      // Limpiar formulario
+      // Clear form
       setFormData({
         currentPassword: '',
         newPassword: '',
         confirmPassword: ''
       });
 
-      // Cerrar modal después de 2 segundos
+      // Close modal after 2 seconds
       setTimeout(() => {
         onClose();
         setSuccess('');
@@ -94,7 +97,7 @@ const ChangePasswordModal = ({ isOpen, onClose, user }) => {
     <div className="password-modal-overlay" onClick={onClose}>
       <div className="password-modal" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>
-          ✕
+          ×
         </button>
 
         <div className="modal-header">

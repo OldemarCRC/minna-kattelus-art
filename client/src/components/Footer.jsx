@@ -1,23 +1,27 @@
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import './Footer.css';
-import { useTranslation } from 'react-i18next';
+'use client';
+
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
+import '@/styles/Footer.css';
 
 const Footer = () => {
+  const t = useTranslations();
+  const locale = useLocale();
   const currentYear = new Date().getFullYear();
-  const { t } = useTranslation();
+  const [decodedEmail, setDecodedEmail] = useState('Loading...');
 
   useEffect(() => {
     // Email ofuscado en Base64
-    const encoded = 'bWlubmFrYXR0ZWx1c0BnbWFpbC5jb20='; // minnakattelus@gmail.com, cambiar cuando tengamos email del dominio
-    const emailLink = document.getElementById('footer-email-link');
+    const encoded = 'bWlubmFrYXR0ZWx1c0BnbWFpbC5jb20='; 
+    try {
 
-    if (emailLink) {
-      const email = atob(encoded);
-      emailLink.textContent = email;
-      emailLink.href = '/contact';
+      setDecodedEmail(window.atob(encoded));
+    } catch (e) {
+      console.error("Error decoding email", e);
     }
   }, []);
+
   return (
     <footer className="footer">
       <div className="container">
@@ -34,10 +38,10 @@ const Footer = () => {
           <div className="footer-section">
             <h3>{t('footer.links')}</h3>
             <ul className="footer-links">
-              <li><Link to="/gallery">{t('gallery.title')}</Link></li>
-              <li><Link to="/shop">{t('shop.title')}</Link></li>
-              <li><Link to="/about-me">{t('about.title')}</Link></li>
-              <li><Link to="/contact">{t('contact.title')}</Link></li>
+              <li><Link href={`/${locale}/gallery`}>{t('gallery.title')}</Link></li>
+              <li><Link href={`/${locale}/shop`}>{t('shop.title')}</Link></li>
+              <li><Link href={`/${locale}/about-me`}>{t('about.title')}</Link></li>
+              <li><Link href={`/${locale}/contact`}>{t('contact.title')}</Link></li>
             </ul>
           </div>
 
@@ -46,7 +50,9 @@ const Footer = () => {
             <h3>{t('contact.title')}</h3>
             <ul className="footer-contact">
               <li>
-                <a id="footer-email-link" href="#">Loading...</a>
+                <Link href={`/${locale}/contact`} id="footer-email-link">
+                  {decodedEmail}
+                </Link>
               </li>
               <li>{t('contact.info.locationValue')}</li>
             </ul>

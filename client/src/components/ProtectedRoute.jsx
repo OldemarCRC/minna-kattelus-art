@@ -1,23 +1,21 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+'use client';
+
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from "@/context/AuthContext";
+import { notFound } from 'next/navigation';
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
-  // Obtener usuario de sessionStorage
-  const userStr = sessionStorage.getItem('user');
-  const user = userStr ? JSON.parse(userStr) : null;
+  const { user, loading: authLoading } = useContext(AuthContext);
 
-  // Si no hay usuario, redirigir a home
-  if (!user) {
-    return <Navigate to="/" replace />;
+  if (authLoading) {
+    return null;
   }
 
-  // Si hay roles permitidos y el usuario no tiene el rol correcto
-  if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
-    return <Navigate to="/" replace />;
+  if (!user || (allowedRoles.length > 0 && !allowedRoles.includes(user.role))) {
+    return notFound();
   }
 
-  // Si todo está bien, mostrar el componente
-  return children;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

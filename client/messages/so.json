@@ -1,0 +1,426 @@
+{
+    "nav": {
+        "home": "GURIGA",
+        "gallery": "GALARI",
+        "shop": "DUKAANKA",
+        "about": "ABOUT",
+        "contact": "XIRIIR",
+        "changePassword": "Beddel Furaha",
+        "signOut": "Ka Bax"
+    },
+    "home": {
+        "hero": {
+            "title": "Farshaxan Muujinaya\nDabeecadda Nordic",
+            "subtitle": "Sahaminta iftiin iyo hoos, iyada oo loo marayo midab casri ah.",
+            "viewGallery": "Arag Galari",
+            "learnMore": "Faahfaahin Dheeraad ah"
+        },
+        "featured": {
+            "title": "Shaqooyin Muuqda",
+            "subtitle": "Xulasho shaqooyinkaygii ugu dambeeyay",
+            "viewAll": "Arag Galari Dhammaystiran"
+        },
+        "about": {
+            "title": "Waa Ayo Minna",
+            "text1": "Waxaan ahay Minna Kattelus, farshaxan-yaqaan Finnish ah iyo macallin farshaxan muuqaal. Shaqadaydu waxay sahamiso xiriirka iftiinka Nordic iyo dareenka dadka, abuurida muuqaalo iyo sawirro muujinaya dabeecadda deggan ee Waqooyiga Yurub.",
+            "text2": "Sawir iyada oo loo marayo, waxaan raadinayaa inaan qaado daqiiqado qurux ah oo fekerka leh, oo aan daawadaha u yeedho inay joogsadaan oo dib ugu noqdaan waxa nagu hareeraysan.",
+            "button": "Akhri Wax Badan"
+        },
+        "cta": {
+            "title": "Hel Shaqo Original ah",
+            "subtitle": "Midkiiba waa shaqo gaar ah oo leh certificate of authenticity. Delivery badbaado leh oo Yurub oo dhan.",
+            "button": "Eeg Dukaanka"
+        }
+    },
+    "gallery": {
+        "title": "Galari",
+        "description": "Baadh ururinta farshaxanka Nordic ee casriga ah",
+        "filters": {
+            "all": "DHAMAAN",
+            "landscapes": "LANDSCAPES",
+            "abstract": "ABSTRACT",
+            "portraits": "PORTRAITS",
+            "nature": "DABEECADDA"
+        },
+        "loading": "Soo raraya galari...",
+        "noArtworks": "Ma jiraan shaqooyin category-gan",
+        "technique": "Technique",
+        "dimensions": "Cabbirka",
+        "category": "Category",
+        "price": "Qiimaha",
+        "sold": "La Iibiyay",
+        "inquire": "Weydiiso Shaqadan",
+        "categories": {
+            "themes": "Mawduucyada",
+            "landscapes": "Landscapes",
+            "abstract": "Abstract",
+            "portraits": "Portraits",
+            "nature": "Dabeecadda"
+        }
+    },
+    "shop": {
+        "title": "Dukaanka",
+        "description": "Shaqooyin original ah oo diyaar u ah in la gato. Midkiiba waa gaar ah oo leh certificate of authenticity.",
+        "filters": {
+            "all": "DHAMAAN",
+            "landscapes": "LANDSCAPES",
+            "abstract": "ABSTRACT",
+            "portraits": "PORTRAITS",
+            "nature": "DABEECADDA"
+        },
+        "sort": {
+            "label": "Kala sooc:",
+            "featured": "Featured",
+            "newest": "Kuwa Cusub",
+            "priceLow": "Qiimaha: hoose → sare",
+            "priceHigh": "Qiimaha: sare → hoose"
+        },
+        "resultsOne": "{count} shaqo diyaar ah",
+        "resultsOther": "{count} shaqooyin diyaar ah",
+        "badges": {
+            "sold": "LA IIBIYAY",
+            "featured": "FEATURED"
+        },
+        "buttons": {
+            "viewDetails": "Arag Details",
+            "addToCart": "Ku Dar Cart-ka",
+            "notAvailable": "Ma Heli Kartid"
+        },
+        "info": {
+            "original": {
+                "title": "Shaqooyin Original ah",
+                "text": "Midkiiba waa shaqo original ah oo gaar ah, oo Minna Kattelus gacan ku sawiray."
+            },
+            "certificate": {
+                "title": "Certificate of Authenticity",
+                "text": "Dhammaan shaqooyinka waxaa ku jira certificate saxiixan oo xaqiijinaya inay yihiin kuwo original ah."
+            },
+            "shipping": {
+                "title": "Shipping Badbaado leh",
+                "text": "Baakad professional ah iyo insurance leh oo Yurub oo dhan."
+            },
+            "consultation": {
+                "title": "La-tashi Gaara ah",
+                "text": "Ma xiiseynaysaa shaqo? Nala soo xiriir macluumaad dheeraad ah ama aad studio-ga soo booqato."
+            }
+        },
+        "cta": {
+            "title": "Ma heli kartid waxaad raadineyso?",
+            "text": "Waxaan aqbalaa dalbo custom ah. Igala soo xiriir si aan ugaga wada hadalno fikradahaaga oo aan kuugu abuuro shaqo gaar ah.",
+            "button": "Dalbo Shaqo Custom"
+        },
+        "noResults": "Ma jiraan shaqooyin category-gan",
+        "loading": "Soo raraya shaqooyinka...",
+        "error": "Khalad ayaa dhacay. Fadlan isku day mar kale."
+    },
+    "about": {
+        "title": "Waa Ayo Minna",
+        "subtitle": "Farshaxan-yaqaan Finnish ah iyo Macallin Visual Arts",
+        "intro": "Waxaan ahay Minna Kattelus, farshaxan-yaqaan Finnish ah oo shaqadeedu ku saleysan tahay sahaminta iftiinka Nordic iyo dareenka dadka iyada oo loo marayo sawir casri ah.",
+        "journey": {
+            "title": "Socdaalkayga Farshaxannimo",
+            "p1": "Waxaan ku dhashay oo ku koray Finland, xiriirkaygu dabeecadda iyo landscape-ka Finnish wuxuu ahaa mid aan looga maarmaan karin ilaa aan yaraa. Caruurnimadiidii, waxaan saacado ku qaadan jiray eegista sida iftiinka uu u beddelayo kaymaha iyo hararka. Xiisaha hore ee iftiinka iyo midabka ayaa noqday foundation-ka shaqadayda farshaxannimo.",
+            "p2": "Ka dib markaan dhamaystay waxbarashadayda Vaasa Academy of Fine Arts, waxaan soo gashay sahaminta techniques iyo media kala duwan. Waxay ahayd Master's in Fine Arts ee University of Helsinki markaan helay codkayga gaarka ah: isku dhafka Nordic landscape, emotional abstraction iyo palette midab oo ay dhiirigeliyeen xilliyadda Finnish.",
+            "p3": "Shaqadaygu farshaxannimo wuxuu isku daraa techniques dhaqameed oo casri ah, oo ugu horeeya ka shaqeeya acrylic iyo oil on canvas. Waxaan aad u rumaysanahay awoodda isbeddelka farshaxanka iyo awooddeeda ay ku xirto waxa nagu hareeraysan iyo dareennadayada ugu qoto dheer."
+        },
+        "teaching": {
+            "title": "Teaching iyo Vocational Work",
+            "p1": "Marka laga reebo shaqadayda farshaxannimo, waxaan ahay macallin xarun vocational ah halkaas oo aan la wadaago mabda'a sawirka dareenka creative landscape. Teaching-ku way i hodmisay sida artist ahaan markaan awood u yeesho inaan isbeddelo oo aan la wadaago farshaxanka ardaydayda, dhiirigelinta creativity iyo personal expression.",
+            "p2": "Waxaan aad u rumaysanahay awoodda isbeddelka farshaxanka iyo awooddeeda ay ku xirto dadka iyo dareennadooda ugu qoto dheer. Classes-kayga, waxaan ku dhiirigeliyaa ardayda inay helaan codkooda farshaxannimo oo ay ku tijaabiyaan iyaga oo aan ka baqeyn khaladaadka.",
+            "p3": "Teaching waxay ii oggolaataa inaan soo celiyo wixii farshaxanku ii siiyay: hab lagu arko adduunka dareen ka badan iyo qalab lagu muujiyo waxa aan la muujin karin."
+        },
+        "education": {
+            "title": "Waxbarasho",
+            "mfa": "MFA in Fine Arts",
+            "mfaInstitution": "University of Helsinki, 2017",
+            "bfa": "BFA in Painting",
+            "bfaInstitution": "Vaasa Academy of Fine Arts, 2013"
+        },
+        "exhibitions": {
+            "title": "Exhibitions Dhowaan",
+            "solo": "Solo",
+            "group": "Group"
+        },
+        "techniques": {
+            "title": "Techniques",
+            "acrylic": "Acrylic on canvas",
+            "oil": "Oil on canvas",
+            "layering": "Layered painting",
+            "mixed": "Mixed media"
+        },
+        "philosophy": {
+            "title": "Falsafadayda Farshaxannimo",
+            "quote": "Farshaxanku ma aha waxaad aragto kaliya, laakiin waxaad dareentid. Brush stroke kasta waa dareen, midab kasta waa xusuus, iyo shaqo kasta waa window ku jira ruuxa Nordic landscape.",
+            "text": "Shaqadaydu waxay raadinaysaa inay qabato essence-ka Finnish landscapes iyo dareenka ay keenaan. Kuma raadinayo inaan abuuro literal representations, laakiin emotional interpretations oo u yeedhaya daawadaha contemplation-kooda. Iftiinka, atmosphere-ka iyo midabku waa qalabkayga si aan u dhiso buundo u dhexeeya adduunka dibadda iyo adduunkayaga gudaha."
+        },
+        "cta": {
+            "title": "Ma xiiseynaysaa shaqadayda?",
+            "text": "Waxaan jeclaan lahaa inaan kula xiriiro. Hadday tahay inaad gato shaqo, commission gaara ah, ama si fudud sheeko ku saabsan farshaxanka.",
+            "viewWorks": "Arag Shaqooyinka Diyaar ah",
+            "contact": "Soo Xiriir"
+        }
+    },
+    "contact": {
+        "title": "Xiriir",
+        "description": "Nala soo xiriir su'aalaha, dalabka ama booqashada studiyaha.",
+        "commission": {
+            "title": "Dalbo Shaqo Gaarka ah",
+            "description": "Ii sheeg aragtidaada oo waxaan kuu abuuri doonaa farshaxan gaarka kuu ah",
+            "formTitle": "Faahfaahinta Dalabka",
+            "artworkType": "Nooca Farshaxanka",
+            "selectType": "Dooro nooca...",
+            "other": "Kale",
+            "dimensions": "Cabbirka la Rabo",
+            "dimensionsPlaceholder": "tusaale, 50 × 70 cm ama 20 × 28 inji",
+            "budget": "Qiimaha Miisaaniyada (Doorasho)",
+            "budgetPlaceholder": "tusaale, €500-800 ama $600-1000",
+            "additionalDetails": "Faahfaahin Dheeraad ah",
+            "detailsPlaceholder": "Sharax aragtidaada: midabada, dareenka, qaabka aad jeceshahay, waqtiga, iwm.",
+            "errors": {
+                "artworkTypeRequired": "Fadlan dooro nooca farshaxanka",
+                "dimensionsRequired": "Fadlan qeex cabbirka la rabo"
+            }
+        },
+        "form": {
+            "title": "Dir Fariin",
+            "name": "Magaca",
+            "email": "Email",
+            "subject": "Subject",
+            "message": "Fariin",
+            "required": "*",
+            "placeholders": {
+                "name": "Magacaaga",
+                "email": "email@kaaga.com",
+                "subject": "Subject-ka fariin",
+                "message": "Halkan ku qor fariintaada..."
+            },
+            "errors": {
+                "nameRequired": "Magaca waa lagama maarmaan",
+                "emailRequired": "Email waa lagama maarmaan",
+                "emailInvalid": "Email ma aha mid sax ah",
+                "messageRequired": "Fariin waa lagama maarmaan",
+                "messageShort": "Fariinta waa inay ahaato ugu yaraan 10 xaraf"
+            },
+            "submit": "Dir Fariin",
+            "submitting": "Diraya...",
+            "successMessage": "✓ Fariinta si guul leh ayaa loo diray! Waan kuu soo celin doonaa dhowaan.",
+            "errorMessage": "✕ Dirista fariinta way fashilantay. Fadlan isku day mar kale."
+        },
+        "info": {
+            "title": "Macluumaadka Xiriirka",
+            "email": "Email",
+            "instagram": "Instagram",
+            "location": "Goobta",
+            "locationValue": "Helsinki, Finland",
+            "responseTime": {
+                "title": "Wakhtiga Jawaabta",
+                "text": "Caadi ahaan waxaan kuugu soo jawaabaa 24-48 saacadood gudahood."
+            },
+            "studioVisit": {
+                "title": "Booqashada Studio-ga",
+                "text": "Haddii aad joogto Helsinki oo aad rabto inaad shaqooyinka hortayda aragto, fadlan nala soo xiriir si aad ballan u qabtid."
+            }
+        },
+        "faq": {
+            "title": "Su'aalaha Inta Badan La Isweydiiyo",
+            "q1": {
+                "question": "Ma qabtaa commissions custom ah?",
+                "answer": "Haa, waxaan aqbalaa commissions gaara ah. Igala soo xiriir fikradahaaga waxaanan bixin doonaa qiimo iyo timeline."
+            },
+            "q2": {
+                "question": "Ma dirtaa internationally?",
+                "answer": "Hadda waxaan u dirnaa Yurub oo dhan. Shipping dibadda Yurub, igala soo xiriir si aan ugaga wada hadalno options iyo costs."
+            },
+            "q3": {
+                "question": "Shaqooyinku ma ku jiraan certificate?",
+                "answer": "Dhammaan shaqooyinkayga original ah waxaa ku jira certificate saxiixan oo numbered ah oo xaqiijinaya authenticity-gooda."
+            },
+            "q4": {
+                "question": "Ma bixisaa prints?",
+                "answer": "Hadda waxaan kaliya iibinayaa shaqooyin original ah. Haddii aad xiiseyneyso limited edition prints, igala soo xiriir macluumaad dheeraad ah."
+            }
+        }
+    },
+    "footer": {
+        "about": "Farshaxan-yaqaan Finnish ah iyo macallin visual arts oo takhasusay contemporary painting oo ay dhiirigeliyeen iftiinka Nordic iyo landscape-ka.",
+        "links": "Links",
+        "contact": "Xiriir",
+        "follow": "I Raac",
+        "rights": "Dhammaan xuquuqda way reserved yihiin."
+    },
+    "common": {
+        "year": "{{year}}",
+        "medium": "Medium",
+        "size": "Size"
+    },
+    "error404": {
+        "title": "Oops! Waxay u egtahay Muse ayaa Qaaday Boggan.",
+        "message": "URL-ka aad isku dayday inaad hesho ma jiro, ama masterpiece-ka aad raadinaysay wuxuu ku yaal wall kale. Farshaxanku mararka qaarkood wuu chaotic noqon karaa.",
+        "homeButton": "Ku Noqo Gallery Weyn",
+        "imageAlt": "Artist painting oo leh chaos of paint. Error 404"
+    },
+    "admin": {
+        "loginTitle": "Administration",
+        "loginSubtitle": "Exclusive access maamulka shaqooyinka",
+        "userLabel": "Username",
+        "passwordLabel": "Password",
+        "loginButton": "Gal",
+        "loginError": "Credentials khaldan. Fadlan isku day mar kale.",
+        "apiError": "Server connection error.",
+        "dashboardTitle": "Administration Dashboard",
+        "statsVisitors": "Total Visitors",
+        "statsVisitorsMonth": "Visitors (Bishii la soo dhaafay)",
+        "statsVisitorsDay": "Visitors Maanta",
+        "statsPaintingsAvailable": "Shaqooyin Diyaar ah",
+        "statsPaintingsSoldMonth": "La Iibiyay Bishan",
+        "statsPaintingsTransit": "Transit-ka",
+        "statsPaintingsPendingShip": "Sugaya Shipping",
+        "chartTitle": "Monthly Visits",
+        "formTitle": "Artwork Management",
+        "sectionVisits": "Visit Statistics",
+        "sectionArtworks": "Artwork Statistics",
+        "registerUser": "+ Diiwaan Geli Isticmaale Cusub"
+    },
+    "form": {
+        "newButton": "Shaqo Cusub",
+        "titleLabel": "Title",
+        "titlePlaceholder": "Nordic Winter",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Contemporary painting inspired by Finnish landscapes...",
+        "categoryLabel": "Category",
+        "categoryPlaceholder": "Dooro category",
+        "categoryLandscape": "Landscape",
+        "categoryAbstract": "Abstract",
+        "categoryPortrait": "Portrait",
+        "categoryNature": "Dabeecad",
+        "priceLabel": "Qiimaha",
+        "dimensionsLabel": "Dimensions",
+        "dimensionsPlaceholder": "80 x 100 cm",
+        "statusLabel": "Status",
+        "statusAvailable": "Diyaar ah",
+        "statusSold": "La Iibiyay",
+        "statusTransit": "Transit-ka",
+        "statusPending": "Sugaya Shipping",
+        "stockLabel": "Stock",
+        "availableLabel": "Diyaar u ah Sale",
+        "imageLabel": "Sawirka Shaqada",
+        "saveButton": "Kaydi Shaqada",
+        "deleteButton": "Tirtir",
+        "modeEditing": "Edit Mode",
+        "modeNew": "New Entry Mode"
+    },
+    "dashboard": {
+        "logout": "Kabax",
+        "overview": "Overview",
+        "uploadFile": "Soo rar file",
+        "dragDrop": "ama jiid oo dhig",
+        "fileHint": "PNG, JPG, GIF ilaa 10MB",
+        "chartSimulated": "Simulated chart"
+    },
+    "artworkModal": {
+        "featured": "Featured",
+        "sold": "La Iibiyay",
+        "technique": "Technique",
+        "year": "Sannadka",
+        "dimensions": "Cabbirka",
+        "price": "Qiimaha",
+        "addToCart": "Ku Dar Qaadka",
+        "inCart": "Qaadka Ku Jira ✓",
+        "contactForAvailability": "La xiriir Helitaanka",
+        "close": "Xir"
+    },
+    "cart": {
+        "title": "Qaadka Iibsiga",
+        "empty": "Qaadkaaga waa madhan yahay",
+        "continueShopping": "Sii Wad Iibsashada",
+        "clearCart": "Nadiifi Qaadka",
+        "summary": "Koobka Dalabka",
+        "items": "Shayada",
+        "total": "Wadarta",
+        "checkout": "U gudub Bixinta",
+        "remove": "Ka saar shayga"
+    },
+    "checkout": {
+        "title": "Bixinta",
+        "orderSummary": "Kooban Dalabka",
+        "shippingInfo": "Macluumaadka Rarida",
+        "subtotal": "Wada Horteed",
+        "shipping": "Rarida",
+        "calculated": "Waxaa lagu xisaabinayaa tallaabada xigta",
+        "total": "Wadarta",
+        "placeOrder": "Sameey Dalabka",
+        "processing": "Socda...",
+        "form": {
+            "name": "Magaca Buuxa",
+            "email": "Cinwaanka Emailka",
+            "phone": "Lambarka Taleefanka (Doorasho)",
+            "country": "Dalka",
+            "city": "Magaalada",
+            "address": "Cinwaanka Wadada",
+            "postalCode": "Koodhka Boostada",
+            "paymentMethod": "Habka Lacag Bixinta",
+            "notes": "Qoraalada Dalabka (Doorasho)",
+            "notesPlaceholder": "Tilmaamaha gaarka ah ee rarida, fariinta hadiyada, iwm."
+        },
+        "payment": {
+            "bankTransfer": "Wareejinta Bangiga",
+            "creditCard": "Kaadhka Amaahda (La Jilciyey)"
+        },
+        "errors": {
+            "nameRequired": "Magaca buuxa ayaa loo baahan yahay",
+            "emailRequired": "Email ayaa loo baahan yahay",
+            "emailInvalid": "Emailka ma aha mid sax ah",
+            "countryRequired": "Dalka ayaa loo baahan yahay",
+            "cityRequired": "Magaalada ayaa loo baahan yahay",
+            "addressRequired": "Cinwaanka ayaa loo baahan yahay",
+            "postalCodeRequired": "Koodhka boostada ayaa loo baahan yahay",
+            "orderFailed": "Lama helin in la abuuro dalabka. Fadlan isku day mar kale.",
+            "tooFast": "Fadlan waqti ku qaado si aad u eegto dalabkaaga."
+        }
+    },
+    "orderConfirmation": {
+        "title": "Dalabka La Xaqiijiyay!",
+        "message": "Waad ku mahadsan tahay iibsigaaga. Waxaan kuu dirnay email xaqiijin ah oo leh faahfaahinta dalabka.",
+        "loading": "Soo dejinaya faahfaahinta dalabka...",
+        "orderNumber": "Lambarka Dalabka",
+        "shippingAddress": "Cinwaanka Rarida",
+        "contactInfo": "Macluumaadka Xiriirka",
+        "paymentMethod": "Habka Lacag Bixinta",
+        "orderItems": "Shayada Dalabka",
+        "subtotal": "Wada Horteed",
+        "shipping": "Rarida",
+        "total": "Wadarta",
+        "yourNotes": "Qoraalaadaada",
+        "printOrder": "Daabac Dalabka",
+        "continueShopping": "Sii Wad Iibsashada",
+        "backToShop": "Ku Noqo Dukaamka",
+        "status": {
+            "pending": "Sugitaan",
+            "confirmed": "La Xaqiijiyay",
+            "processing": "Habsamaynta",
+            "shipped": "La Diray",
+            "delivered": "La Keenay",
+            "cancelled": "La Joojiyay"
+        },
+        "payment": {
+            "bank_transfer": "Wareejinta Bangiga",
+            "credit_card": "Kaadhka Amaahda",
+            "stripe": "Stripe"
+        },
+        "paymentStatus": {
+            "pending": "Lacag Bixintu Waa Sugitaan",
+            "paid": "La Bixiyay",
+            "failed": "Lacag Bixintu Way Fashilantay"
+        },
+        "nextSteps": {
+            "title": "Maxaa Xiga?",
+            "step1": "Waxaad heli doontaa email xaqiijin ah oo leh tilmaamaha lacag bixinta.",
+            "step2": "Marka lacag bixintu la xaqiijiyo, waxaan si taxadar leh u xirmi doonnaa farshaxaanka.",
+            "step3": "Waxaad heli doontaa macluumaadka raadinta marka dalabkaaga la diro."
+        },
+        "errors": {
+            "title": "Dalabka Lama Helin",
+            "orderNotFound": "Ma heli karin dalabkan. Fadlan hubi emailkaaga linkiga saxda ah."
+        }
+    }
+}

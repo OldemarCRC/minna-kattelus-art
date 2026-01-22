@@ -1,26 +1,36 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+'use client';
+
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { useTranslations, useLocale } from 'next-intl';
 import { useState, useEffect } from 'react';
 import LanguageSwitcher from './LanguageSwitcher';
 import ChangePasswordModal from './ChangePasswordModal';
-import './Navbar.css';
+import CartIcon from './CartIcon';
+import '@/styles/Navbar.css';
 
 const Navbar = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { t } = useTranslation();
+  const pathname = usePathname();
+  const router = useRouter();
+  const t = useTranslations();
+  const currentLang = useLocale();
+
   const [user, setUser] = useState(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
+
   const isActive = (path) => {
-    return location.pathname === path ? 'active' : '';
+    const fullPath = `/${currentLang}${path}`;
+    return pathname === fullPath ? 'active' : '';
   };
 
   useEffect(() => {
     const checkUser = () => {
-      const userStr = sessionStorage.getItem('user');
-      setUser(userStr ? JSON.parse(userStr) : null);
+      if (typeof window !== 'undefined') {
+        const userStr = sessionStorage.getItem('user');
+        setUser(userStr ? JSON.parse(userStr) : null);
+      }
     };
 
     checkUser();
@@ -29,17 +39,21 @@ const Navbar = () => {
       checkUser();
     };
 
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, [location]);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('storage', handleStorageChange);
+      return () => window.removeEventListener('storage', handleStorageChange);
+    }
+  }, [pathname]);
 
   const handleLogout = () => {
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('token');
-    setUser(null);
-    setShowUserMenu(false);
-    setShowMenu(false);
-    navigate('/');
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+      setUser(null);
+      setShowUserMenu(false);
+      setShowMenu(false);
+      router.push(`/${currentLang}`);
+    }
   };
 
   const closeMobileMenu = () => {
@@ -50,40 +64,64 @@ const Navbar = () => {
     <div>
       <nav className="navbar">
         <div className="container navbar-content">
-          <Link to="/" className="navbar-brand" onClick={closeMobileMenu}>
+          <Link href={`/${currentLang}`} className="navbar-brand" onClick={closeMobileMenu}>
             Minna Kattelus
           </Link>
 
-          {/* Menú de Navegación - Se oculta en móvil */}
+          {/* Navigation Menu - Hidden on mobile */}
           <ul className={`navbar-menu ${showMenu ? 'open' : ''}`}>
             <li>
-              <Link to="/" className={`nav-link ${isActive('/')}`} onClick={closeMobileMenu}>
+              <Link
+                href={`/${currentLang}`}
+                className={`nav-link ${isActive('/')}`}
+                onClick={closeMobileMenu}
+              >
                 {t('nav.home')}
               </Link>
             </li>
             <li>
-              <Link to="/gallery" className={`nav-link ${isActive('/gallery')}`} onClick={closeMobileMenu}>
+              <Link
+                href={`/${currentLang}/gallery`}
+                className={`nav-link ${isActive('/gallery')}`}
+                onClick={closeMobileMenu}
+              >
                 {t('nav.gallery')}
               </Link>
             </li>
             <li>
-              <Link to="/shop" className={`nav-link ${isActive('/shop')}`} onClick={closeMobileMenu}>
+              <Link
+                href={`/${currentLang}/shop`}
+                className={`nav-link ${isActive('/shop')}`}
+                onClick={closeMobileMenu}
+              >
                 {t('nav.shop')}
               </Link>
             </li>
             <li>
-              <Link to="/about-me" className={`nav-link ${isActive('/about-me')}`} onClick={closeMobileMenu}>
+              <Link
+                href={`/${currentLang}/about-me`}
+                className={`nav-link ${isActive('/about-me')}`}
+                onClick={closeMobileMenu}
+              >
                 {t('nav.about')}
               </Link>
             </li>
             <li>
-              <Link to="/contact" className={`nav-link ${isActive('/contact')}`} onClick={closeMobileMenu}>
+              <Link
+                href={`/${currentLang}/contact`}
+                className={`nav-link ${isActive('/contact')}`}
+                onClick={closeMobileMenu}
+              >
                 {t('nav.contact')}
               </Link>
             </li>
             {user && (user.role === 'admin' || user.role === 'editor') && (
               <li>
-                <Link to="/dashboard" className={`nav-link ${isActive('/dashboard')}`} onClick={closeMobileMenu}>
+                <Link
+                  href={`/${currentLang}/dashboard`}
+                  className={`nav-link ${isActive('/dashboard')}`}
+                  onClick={closeMobileMenu}
+                >
                   DASHBOARD
                 </Link>
               </li>
@@ -110,7 +148,6 @@ const Navbar = () => {
                       <p className="user-role">{user.role}</p>
                     </div>
 
-                    {/* NUEVO: Botón de cambio de contraseña */}
                     <button
                       className="change-password-button"
                       onClick={() => {
@@ -121,14 +158,17 @@ const Navbar = () => {
                       <svg className="password-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                       </svg>
-                      Change Password
+                      {t('nav.changePassword')}
                     </button>
 
-                    <button className="logout-button" onClick={handleLogout}>
+                    <button className="logout-button" onClick={(e) => {
+                      e.stopPropagation();
+                      handleLogout();
+                    }}>
                       <svg className="logout-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                       </svg>
-                      Sign Out
+                      {t('nav.signOut')}
                     </button>
                   </div>
                 )}
@@ -136,13 +176,12 @@ const Navbar = () => {
             )}
           </ul>
 
-          {/* Contenedor de Acciones (Idioma y Carrito) - Visible en todas las pantallas */}
-          {/* Lo mantenemos fuera de la UL para que no se oculte en móvil */}
+          {/* Actions Container (Language and Cart) - Visible on all screens */}
           <div className="navbar-actions">
             <LanguageSwitcher />
-            <span className="icon-cart">🛒</span>
+            <CartIcon />
 
-            {/* Botón de Hamburguesa - Visible solo en móvil */}
+            {/* Hamburger Button - Visible only on mobile */}
             <button className="menu-toggle" onClick={() => setShowMenu(!showMenu)}>
               <svg className="hamburguer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 {showMenu ? (
