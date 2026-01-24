@@ -116,7 +116,7 @@ export default function Home() {
                 </div>
               ))
             ) : (
-              <p>{t('home.featured.noWorks')}</p>
+              <p className="no-works-message">{t('home.featured.noWorks')}</p>
             )}
           </div>
 
