@@ -5,6 +5,7 @@ import { locales } from '@/i18n';
 import { AuthContextProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
 import { Toaster } from '@/components/ui/Toaster';
+import { ForceScrollToTop } from '@/components/ForceScrollToTop';
 
 import '@/app/globals.css';
 
@@ -36,6 +37,7 @@ export default async function LocaleLayout({ children, params }) {
         <NextIntlClientProvider messages={messages}>
           <AuthContextProvider>
             <CartProvider>
+              <ForceScrollToTop />
               {children}
               <Toaster />
             </CartProvider>
