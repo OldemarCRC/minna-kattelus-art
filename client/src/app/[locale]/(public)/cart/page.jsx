@@ -113,12 +113,12 @@ export default function CartPage() {
               </span>
             </div>
 
-            <button className="btn-checkout" onClick={handleCheckout}>
+            <button className="btn-primary btn-checkout" onClick={handleCheckout}>
               {t('checkout')}
             </button>
 
             <button
-              className="btn-continue"
+              className="btn-secondary btn-continue"
               onClick={() => router.push(`/${locale}/shop`)}
             >
               {t('continueShopping')}

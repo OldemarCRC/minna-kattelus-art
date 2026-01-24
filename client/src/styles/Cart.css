@@ -191,42 +191,46 @@
 }
 
 /* Buttons */
+
 .btn-checkout,
 .btn-continue{
   width: 100%;
-  padding: 1rem;
-  border: none;
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*padding: 1rem;*/
+  /*border: none;*/
+  /*font-size: 1rem;*/
+  /*font-weight: 500;*/
+  /*letter-spacing: 0.5px;*/
+  /*text-transform: uppercase;*/
+  /*cursor: pointer;*/
+ /* transition: var(--transition);*/
   margin-top: var(--spacing-md);
 }
 
-.btn-checkout {
+/* .btn-checkout {
   background-color: var(--color-primary);
   color: var(--color-white);
-}
+} */
 
-.btn-checkout:hover {
+/* .btn-checkout:hover {
   background-color: #1f3810;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(45, 80, 22, 0.3);
-}
+} */
 
-.btn-continue{
+/* .btn-continue{
   background-color: transparent;
   color: var(--color-primary);
   border: 1px solid var(--color-primary);
-}
+} */
 
-.btn-continue:hover {
+/* .btn-continue:hover {
   background-color: var(--color-primary);
   color: var(--color-white);
 }
-
+ */
 /* Responsive */
 @media (max-width: 968px) {
   .cart-content {
