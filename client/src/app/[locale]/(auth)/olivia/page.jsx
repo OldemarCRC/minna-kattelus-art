@@ -137,7 +137,7 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className={`login-button ${loading ? 'loading' : ''}`}
+            className={`btn-primary login-button ${loading ? 'loading' : ''}`}
             disabled={loading}
           >
             {loading ? '...' : t('admin.loginButton')}
