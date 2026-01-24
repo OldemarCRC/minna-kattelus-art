@@ -212,7 +212,7 @@ const ChangePasswordModal = ({ isOpen, onClose, user }) => {
           <div className="modal-actions">
             <button
               type="button"
-              className="btn-cancel"
+              className="btn-secondary"
               onClick={onClose}
               disabled={loading}
             >
@@ -220,7 +220,7 @@ const ChangePasswordModal = ({ isOpen, onClose, user }) => {
             </button>
             <button
               type="submit"
-              className="btn-submit"
+              className="btn-primary"
               disabled={loading}
             >
               {loading ? 'Changing...' : 'Change Password'}

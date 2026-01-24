@@ -69,7 +69,7 @@ export default function VerifyEmailPage() {
             <p className="redirect-message">You will be redirected to the login page shortly.</p>
             <button 
               onClick={() => router.push(`/${locale}/olivia`)} 
-              className="verify-button"
+              className="btn-primary"
             >
               Go to Login
             </button>
@@ -84,7 +84,7 @@ export default function VerifyEmailPage() {
             <p className="help-message">Please contact your administrator for assistance.</p>
             <button 
               onClick={() => router.push(`/${locale}`)} 
-              className="verify-button secondary"
+              className="btn-secondary"
             >
               Go to Home
             </button>
