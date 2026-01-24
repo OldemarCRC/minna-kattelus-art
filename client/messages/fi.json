@@ -6,7 +6,9 @@
     "about": "TIETOJA MINUSTA",
     "contact": "OTA YHTEYTTÄ",
     "changePassword": "Vaihda Salasana",
-    "signOut": "Kirjaudu Ulos"
+    "signOut": "Kirjaudu Ulos",
+    "signOutConfirm": "Haluatko varmasti kirjautua ulos?",
+    "signOutSuccess": "Uloskirjautuminen onnistui"
   },
   "home": {
     "hero": {
@@ -18,7 +20,8 @@
     "featured": {
       "title": "Esitellyt teokset",
       "subtitle": "Valikoima viimeisimmistä töistäni",
-      "viewAll": "Katso koko galleria"
+      "viewAll": "Katso koko galleria",
+      "noWorks": "Ei esiteltäviä teoksia tällä hetkellä. Palaa pian takaisin!"
     },
     "about": {
       "title": "Tietoja minusta",
@@ -28,7 +31,7 @@
     },
     "cta": {
       "title": "Hanki alkuperäisteos",
-      "subtitle": "Jokainen teos on ainutlaatuinen ja mukana tulee aitoustodistus. Turvallinen toimitus kaikkialle Eurooppaan.",
+      "subtitle": "Löydät valikoimastani paperille maalattuja vesi- ja peitevärimaalauksia alkuperäisteoksina. Maalausten materiaalit ovat laadukasta taiteilijatasoa. Mukana tulee aitoustodistus. Turvallinen toimitus kaikkialle Eurooppaan.",
       "button": "Tutustu kauppaan"
     }
   },
@@ -251,7 +254,8 @@
   "common": {
     "year": "{{year}}",
     "medium": "Tekniikka",
-    "size": "Koko"
+    "size": "Koko",
+    "cancel": "Peruuta"
   },
   "error404": {
     "title": "Hups! Näyttää siltä, että Muusa vei tämän sivun.",

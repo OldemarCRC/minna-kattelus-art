@@ -6,7 +6,9 @@
         "about": "ABOUT",
         "contact": "XIRIIR",
         "changePassword": "Beddel Furaha",
-        "signOut": "Ka Bax"
+        "signOut": "Ka Bax",
+        "signOutConfirm": "Ma hubtaa inaad rabto inaad ka baxdo?",
+        "signOutSuccess": "Si guul leh ayaa looga baxay"
     },
     "home": {
         "hero": {
@@ -18,7 +20,8 @@
         "featured": {
             "title": "Shaqooyin Muuqda",
             "subtitle": "Xulasho shaqooyinkaygii ugu dambeeyay",
-            "viewAll": "Arag Galari Dhammaystiran"
+            "viewAll": "Arag Galari Dhammaystiran",
+            "noWorks": "Ma jiraan shaqooyin la soo bandhigay hadda. Dib u soo laabo dhawaan!"
         },
         "about": {
             "title": "Waa Ayo Minna",
@@ -28,7 +31,7 @@
         },
         "cta": {
             "title": "Hel Shaqo Original ah",
-            "subtitle": "Midkiiba waa shaqo gaar ah oo leh certificate of authenticity. Delivery badbaado leh oo Yurub oo dhan.",
+            "subtitle": "Ururkayga waxaad ka helaysaa sawirro gacmeed asalkooda ah oo lagu rinjiyeeyay warqad, kuwaas oo loo adeegsaday biyaha iyo midabada kale ee khaaska ah. Qalabka loo isticmaalo sawirrada waa kuwa tayadoodu aad u sarrayso oo heer farshaxanimo ah. Waxaa la socda shahaadada xaqiijinta asalka sawirka. Waxaan si ammaan ah kuugu soo gaarsiinaynaa meel kasta oo Yurub ka mid ah.",
             "button": "Eeg Dukaanka"
         }
     },
@@ -251,7 +254,8 @@
     "common": {
         "year": "{{year}}",
         "medium": "Medium",
-        "size": "Size"
+        "size": "Size",
+        "cancel": "Ka noqo"
     },
     "error404": {
         "title": "Oops! Waxay u egtahay Muse ayaa Qaaday Boggan.",

@@ -6,7 +6,9 @@
     "about": "ABOUT ME",
     "contact": "CONTACT",
     "changePassword": "Change Password",
-    "signOut": "Sign Out"
+    "signOut": "Sign Out",
+    "signOutConfirm": "Are you sure you want to sign out?",
+    "signOutSuccess": "Signed out successfully"
   },
   "home": {
     "hero": {
@@ -18,7 +20,8 @@
     "featured": {
       "title": "Featured Works",
       "subtitle": "A selection of my most recent works",
-      "viewAll": "View Full Gallery"
+      "viewAll": "View Full Gallery",
+      "noWorks": "No featured works at the moment. Check back soon!"
     },
     "about": {
       "title": "About Me",
@@ -28,7 +31,7 @@
     },
     "cta": {
       "title": "Acquire an Original Work",
-      "subtitle": "Each piece is unique and comes with a certificate of authenticity. Secure shipping throughout Europe.",
+      "subtitle": "In my collection, you will find original watercolor and gouache paintings on paper. The materials used are of high professional artist quality. A certificate of authenticity is included. Safe delivery everywhere in Europe.",
       "button": "Explore Shop"
     }
   },
@@ -251,7 +254,8 @@
   "common": {
     "year": "{{year}}",
     "medium": "Medium",
-    "size": "Size"
+    "size": "Size",
+    "cancel": "Cancel"
   },
   "error404": {
     "title": "Oops! It Seems the Muse Took This Page.",

@@ -6,7 +6,9 @@
     "about": "OM MIG",
     "contact": "KONTAKT",
     "changePassword": "Byt Lösenord",
-    "signOut": "Logga Ut"
+    "signOut": "Logga Ut",
+    "signOutConfirm": "Är du säker på att du vill logga ut?",
+    "signOutSuccess": "Utloggad"
   },
   "home": {
     "hero": {
@@ -18,7 +20,8 @@
     "featured": {
       "title": "Utvalda verk",
       "subtitle": "Ett urval av mina senaste arbeten",
-      "viewAll": "Se hela galleriet"
+      "viewAll": "Se hela galleriet",
+      "noWorks": "Inga framhävda verk för tillfället. Kom snart tillbaka!"
     },
     "about": {
       "title": "Om mig",
@@ -28,7 +31,7 @@
     },
     "cta": {
       "title": "Förvärva ett originalverk",
-      "subtitle": "Varje verk är unikt och kommer med äkthetscertifikat. Säker frakt i hela Europa.",
+      "subtitle": "I mitt urval hittar du originalmålningar i akvarell och gouache på papper. Målningarna är utförda med material av hög konstnärskvalitet. Ett äkthetsintyg medföljer. Säker leverans inom hela Europa.",
       "button": "Utforska butiken"
     }
   },
@@ -251,7 +254,8 @@
   "common": {
     "year": "{{year}}",
     "medium": "Teknik",
-    "size": "Storlek"
+    "size": "Storlek",
+    "cancel": "Avbryt"
   },
   "error404": {
     "title": "Hoppsan! Det verkar som att Musan tog denna sida.",

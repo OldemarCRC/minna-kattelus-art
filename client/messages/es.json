@@ -6,7 +6,9 @@
     "about": "SOBRE MÍ",
     "contact": "CONTACTO",
     "changePassword": "Cambiar Contraseña",
-    "signOut": "Cerrar Sesión"
+    "signOut": "Cerrar Sesión",
+    "signOutConfirm": "¿Estás seguro de que deseas cerrar sesión?",
+    "signOutSuccess": "Sesión cerrada exitosamente"
   },
   "home": {
     "hero": {
@@ -18,7 +20,8 @@
     "featured": {
       "title": "Obras Destacadas",
       "subtitle": "Una selección de mis trabajos más recientes",
-      "viewAll": "Ver Toda la Galería"
+      "viewAll": "Ver Toda la Galería",
+      "noWorks": "No hay obras destacadas en este momento. ¡Vuelve pronto!"
     },
     "about": {
       "title": "Sobre Mí",
@@ -28,7 +31,7 @@
     },
     "cta": {
       "title": "Adquiere una Obra Original",
-      "subtitle": "Cada pieza es única y viene con certificado de autenticidad. Envíos seguros a toda Europa.",
+      "subtitle": "Encontrarás en mi selección pinturas originales en acuarela y gouache sobre papel. Los materiales de las obras son de alta calidad profesional. Cada pieza incluye un certificado de autenticidad. Envío seguro a toda Europa.",
       "button": "Explorar Tienda"
     }
   },
@@ -251,7 +254,8 @@
   "common": {
     "year": "{{year}}",
     "medium": "Técnica",
-    "size": "Tamaño"
+    "size": "Tamaño",
+    "cancel": "Cancelar"
   },
   "error404": {
     "title": "¡Vaya! Parece que la musa se ha llevado esta página.",
