@@ -5,10 +5,6 @@ import { useTranslations } from 'next-intl';
 import { notFound } from 'next/navigation';
 import '@/styles/Dashboard.css';
 import ArtworkManager from '@/components/ArtworkManager';
-import axios from '@/lib/axios';
-import { stopInactivityDetector } from '@/lib/inactivityDetector';
-import { toast } from 'sonner';
-import { useConfirmDialog } from '@/hooks/useConfirmDialog';
 import { useParams } from 'next/navigation';
 
 // --- MOCK DATA ---
@@ -69,7 +65,6 @@ const ChartPlaceholder = ({ title, data }) => {
 // --- MAIN COMPONENT ---
 export default function DashboardPage() {
   const t = useTranslations();
-  const { confirm, ConfirmDialog } = useConfirmDialog();
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [shouldShow404, setShouldShow404] = useState(false);
@@ -96,34 +91,6 @@ export default function DashboardPage() {
     setIsLoading(false);
   }, []);
 
-  const handleLogout = async () => {
-    const confirmed = await confirm({
-      title: 'Sign Out',
-      description: 'Are you sure you want to sign out?',
-      confirmText: 'Sign Out',
-      cancelText: 'Cancel',
-      variant: 'default',
-    });
-
-    if (!confirmed) return;
-
-    try {
-      stopInactivityDetector();
-      await axios.post('/api/auth/logout');
-
-      sessionStorage.removeItem('user');
-      sessionStorage.removeItem('token');
-
-      toast.success('Signed out successfully');
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Logout error:', error);
-      stopInactivityDetector();
-      sessionStorage.removeItem('user');
-      sessionStorage.removeItem('token');
-      window.location.href = '/';
-    }
-  };
 
   // Show nothing while loading to prevent flash
   if (isLoading) {
@@ -177,8 +144,6 @@ export default function DashboardPage() {
           </section>
         )}
       </div>
-
-      {ConfirmDialog}
     </div>
   );
 }

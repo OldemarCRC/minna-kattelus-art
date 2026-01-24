@@ -4,6 +4,10 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+import { useConfirmDialog } from '@/hooks/useConfirmDialog';
+import { stopInactivityDetector } from '@/lib/inactivityDetector';
+import axios from '@/lib/axios';
 import LanguageSwitcher from './LanguageSwitcher';
 import ChangePasswordModal from './ChangePasswordModal';
 import CartIcon from './CartIcon';
@@ -14,6 +18,7 @@ const Navbar = () => {
   const router = useRouter();
   const t = useTranslations();
   const currentLang = useLocale();
+  const { confirm, ConfirmDialog } = useConfirmDialog();
 
   const [user, setUser] = useState(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -45,14 +50,35 @@ const Navbar = () => {
     }
   }, [pathname]);
 
-  const handleLogout = () => {
-    if (typeof window !== 'undefined') {
+  const handleLogout = async () => {
+    const confirmed = await confirm({
+      title: t('nav.signOut'),
+      description: t('nav.signOutConfirm'),
+      confirmText: t('nav.signOut'),
+      cancelText: t('common.cancel'),
+      variant: 'default',
+    });
+
+    if (!confirmed) return;
+
+    try {
+      stopInactivityDetector();
+      await axios.post('/api/auth/logout');
+
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('token');
       setUser(null);
       setShowUserMenu(false);
       setShowMenu(false);
-      router.push(`/${currentLang}`);
+
+      toast.success(t('nav.signOutSuccess'));
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Logout error:', error);
+      stopInactivityDetector();
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+      window.location.href = '/';
     }
   };
 
@@ -201,6 +227,7 @@ const Navbar = () => {
         onClose={() => setShowPasswordModal(false)}
         user={user}
       />
+      {ConfirmDialog}
     </div>
   );
 };
