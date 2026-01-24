@@ -330,7 +330,6 @@ export const getFeaturedArtworks = async (req, res) => {
   try {
     const featuredArtworks = await Artwork.find({ 
       featured: true,
-      available: true 
     })
     .sort({ displayOrder: 1, createdAt: -1 })
     .limit(6)
