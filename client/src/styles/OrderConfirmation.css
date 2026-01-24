@@ -370,3 +370,41 @@
     text-align: center;
   }
 }
+
+@media print {
+  /* Ocultamos absolutamente todo el contenido del body */
+  body * {
+    visibility: hidden;
+  }
+
+  @page {
+    size: A4;
+    margin: 15mm; /* Margen de seguridad para impresoras */
+  }
+
+  /* Hacemos visible el div específico y todo lo que contenga */
+  .order-details-card,
+  .order-details-card * {
+    visibility: visible;
+  }
+
+  /* Posicionamos el div al inicio de la página impresa */
+  .order-details-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 12pt;
+  }
+  
+  .order-details-card * {
+    overflow: visible !important;
+    word-wrap: break-word;
+  }
+  /* Opcional: Ocultar botones internos que no quieras que salgan en el papel */
+  .order-details-card button {
+    display: none;
+  }
+}
