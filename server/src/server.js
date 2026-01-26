@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import os from 'os';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
@@ -18,9 +19,9 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const allowedOrigins = process.env.CLIENT_URLS 
+const allowedOrigins = process.env.CLIENT_URLS
   ? process.env.CLIENT_URLS.split(',').map(url => url.trim())
-  : ['http://localhost:3000'];
+  : ['http://localhost:5001'];
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -63,7 +64,7 @@ app.use(cors({
   origin: function (origin, callback) {
     // Permite requests sin origin (mobile apps, Postman, etc.)
     if (!origin) return callback(null, true);
-    
+
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -156,6 +157,18 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
+  const nets = os.networkInterfaces();
+  let localIp = 'localhost';
+
+  // Busca la IP real de la laptop en la red local
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+      if (net.family === 'IPv4' && !net.internal) {
+        localIp = net.address;
+      }
+    }
+  }
+
   console.log(`Server running on port ${PORT}`);
-  console.log(`API available at http://192.168.10.45:${PORT}/api`);
+  console.log(`API available at http://${localIp}:${PORT}/api`);
 });
