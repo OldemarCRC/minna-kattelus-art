@@ -25,8 +25,8 @@
         },
         "about": {
             "title": "Waa Ayo Minna",
-            "text1": "Waxaan ahay Minna Kattelus, farshaxan-yaqaan Finnish ah iyo macallin farshaxan muuqaal. Shaqadaydu waxay sahamiso xiriirka iftiinka Nordic iyo dareenka dadka, abuurida muuqaalo iyo sawirro muujinaya dabeecadda deggan ee Waqooyiga Yurub.",
-            "text2": "Sawir iyada oo loo marayo, waxaan raadinayaa inaan qaado daqiiqado qurux ah oo fekerka leh, oo aan daawadaha u yeedho inay joogsadaan oo dib ugu noqdaan waxa nagu hareeraysan.",
+            "text1": "Waxaan ahay Minna Kattelus, oo ah farshaxaniyad u dhalatay Finland, isla markaana ah macalinka farshaxanka muuqaalka. Sawirradaydu waxay ka turjumayaan dareenka muuqaalka dhulku kiciyo ee wareegga nuurka iyo mugdiga ee woqooyiga fog.",
+            "text2": "Waxaan sawirrada ku dhex qabtaa dareenka curiyeyaasha dabiiciga ah, anigoo ka sheekaynaya waayo-aragnimada bini'aadamka ee hortaagan kala duwanaanshiyaha adduunka.",
             "button": "Akhri Wax Badan"
         },
         "cta": {
@@ -251,12 +251,6 @@
         "follow": "I Raac",
         "rights": "Dhammaan xuquuqda way reserved yihiin."
     },
-    "common": {
-        "year": "{{year}}",
-        "medium": "Medium",
-        "size": "Size",
-        "cancel": "Ka noqo"
-    },
     "error404": {
         "title": "Oops! Waxay u egtahay Muse ayaa Qaaday Boggan.",
         "message": "URL-ka aad isku dayday inaad hesho ma jiro, ama masterpiece-ka aad raadinaysay wuxuu ku yaal wall kale. Farshaxanku mararka qaarkood wuu chaotic noqon karaa.",
@@ -312,14 +306,6 @@
         "deleteButton": "Tirtir",
         "modeEditing": "Edit Mode",
         "modeNew": "New Entry Mode"
-    },
-    "dashboard": {
-        "logout": "Kabax",
-        "overview": "Overview",
-        "uploadFile": "Soo rar file",
-        "dragDrop": "ama jiid oo dhig",
-        "fileHint": "PNG, JPG, GIF ilaa 10MB",
-        "chartSimulated": "Simulated chart"
     },
     "artworkModal": {
         "featured": "Featured",
@@ -426,5 +412,55 @@
             "title": "Dalabka Lama Helin",
             "orderNotFound": "Ma heli karin dalabkan. Fadlan hubi emailkaaga linkiga saxda ah."
         }
+    },
+    "dashboard": {
+        "artworkStats": "Tirakoobka Farshaxanka",
+        "totalArtworks": "Wadarta Farshaxanka",
+        "availableArtworks": "La Heli Karo",
+        "soldArtworks": "La Iibiyay",
+        "featuredArtworks": "La Soo Bandhigay",
+        "orderStats": "Tirakoobka Dalbashada",
+        "totalOrders": "Wadarta Dalbashada",
+        "pendingOrders": "Sugaya",
+        "shippedOrders": "La Diray",
+        "deliveredOrders": "La Gaarsiiyay",
+        "revenueStats": "Dakhliga",
+        "totalRevenue": "Wadarta Dakhliga",
+        "monthlyRevenue": "Bishaan",
+        "yearlyRevenue": "Sannadkan",
+        "revenueChart": "Dakhliga Bishiiba",
+        "recentOrders": "Dalbashada Dhawaan",
+        "orderNumber": "Dalbasho #",
+        "customer": "Macmiilka",
+        "items": "Alaabta",
+        "total": "Wadarta",
+        "date": "Taariikhda",
+        "status": "Xaalada",
+        "actions": "Ficilada",
+        "noOrders": "Wali ma jiro dalbasho",
+        "noData": "Ma jiro xog la heli karo",
+        "confirmStatusChange": "Beddel Xaalada Dalbashada",
+        "confirmStatusChangeDesc": "Ma hubtaa inaad rabto inaad beddesho xaalada {status}?",
+        "statusUpdated": "Xaalada dalbashada waa la cusbooneysiiyay",
+        "errorLoadingStats": "Khalad markii la soo dejinayay tirakoobka",
+        "errorLoadingOrders": "Khalad markii la soo dejinayay dalbashada",
+        "errorUpdatingStatus": "Khalad markii la cusbooneysiinayay xaalada",
+        "noRevenueYet": "Wali ma jiro dakhli la diiwaan geliyay",
+        "chartPeriod": "Muddo",
+        "month": "bil",
+        "months": "bilood",
+        "statuses": {
+            "pending": "Sugaya",
+            "confirmed": "La Xaqiijiyay",
+            "processing": "La Habeynayo",
+            "shipped": "La Diray",
+            "delivered": "La Gaarsiiyay",
+            "cancelled": "La Joojiyay"
+        }
+    },
+    "common": {
+        "loading": "Soo dejinaya...",
+        "confirm": "Xaqiiji",
+        "cancel": "Ka noqo"
     }
 }

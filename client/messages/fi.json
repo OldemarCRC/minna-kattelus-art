@@ -25,8 +25,8 @@
     },
     "about": {
       "title": "Tietoja minusta",
-      "text1": "Olen Minna Kattelus, suomalainen taiteilija ja kuvataiteen opettaja. Työni tutkii pohjoismaisen valon ja ihmisten tunteiden välistä suhdetta luoden maisemia ja maalauksia, jotka vangitsevat pohjoisen rauhallisen ja mietiskelevän olemuksen.",
-      "text2": "Maalauksen kautta pyrin vangitsemaan kauneuden ja mietiskelyn ohikiitäviä hetkiä kutsuen katsojaa pysähtymään ja yhdistämään uudelleen ympäröivään maailmaan.",
+      "text1": "Olen Minna Kattelus, suomalainen taiteilija ja kuvataiteen opettaja. Maalaukseni peilaavat maiseman herättämiä tunteita pohjoisen valon ja pimeän vuodenkierrossa. ",
+      "text2": "Tallenna kuviin aistimuksia luonnon elementeistä ja kerron ihmisen kokemuksesta maailman moninaisuuden äärellä.",
       "button": "Lue lisää"
     },
     "cta": {
@@ -251,12 +251,6 @@
     "follow": "Seuraa minua",
     "rights": "Kaikki oikeudet pidätetään."
   },
-  "common": {
-    "year": "{{year}}",
-    "medium": "Tekniikka",
-    "size": "Koko",
-    "cancel": "Peruuta"
-  },
   "error404": {
     "title": "Hups! Näyttää siltä, että Muusa vei tämän sivun.",
     "message": "Yrittämääsi URL-osoitetta ei ole olemassa, tai etsimäsi mestariteos on toisella seinällä. Taide voi olla joskus kaoottista.",
@@ -312,14 +306,6 @@
     "deleteButton": "Poista",
     "modeEditing": "Muokkaustila",
     "modeNew": "Uusi Tila"
-  },
-  "dashboard": {
-    "logout": "Kirjaudu Ulos",
-    "overview": "Yleiskatsaus",
-    "uploadFile": "Lataa tiedosto",
-    "dragDrop": "tai vedä ja pudota",
-    "fileHint": "PNG, JPG, GIF max 10MB",
-    "chartSimulated": "Simuloitu kaavio"
   },
   "artworkModal": {
     "featured": "Esitelty",
@@ -426,5 +412,55 @@
       "title": "Tilausta Ei Löytynyt",
       "orderNotFound": "Emme löytäneet tätä tilausta. Tarkista sähköpostistasi oikea linkki."
     }
+  },
+  "dashboard": {
+    "artworkStats": "Teosten Tilastot",
+    "totalArtworks": "Teoksia Yhteensä",
+    "availableArtworks": "Saatavilla",
+    "soldArtworks": "Myyty",
+    "featuredArtworks": "Suositellut",
+    "orderStats": "Tilausten Tilastot",
+    "totalOrders": "Tilauksia Yhteensä",
+    "pendingOrders": "Odottaa",
+    "shippedOrders": "Lähetetty",
+    "deliveredOrders": "Toimitettu",
+    "revenueStats": "Tulot",
+    "totalRevenue": "Kokonaistulot",
+    "monthlyRevenue": "Tässä Kuussa",
+    "yearlyRevenue": "Tänä Vuonna",
+    "revenueChart": "Kuukausitulot",
+    "recentOrders": "Viimeisimmät Tilaukset",
+    "orderNumber": "Tilaus #",
+    "customer": "Asiakas",
+    "items": "Tuotteet",
+    "total": "Yhteensä",
+    "date": "Päivämäärä",
+    "status": "Tila",
+    "actions": "Toiminnot",
+    "noOrders": "Ei tilauksia vielä",
+    "noData": "Ei tietoja saatavilla",
+    "confirmStatusChange": "Muuta Tilauksen Tilaa",
+    "confirmStatusChangeDesc": "Haluatko varmasti muuttaa tilan tilaan {status}?",
+    "statusUpdated": "Tilauksen tila päivitetty",
+    "errorLoadingStats": "Virhe tilastojen lataamisessa",
+    "errorLoadingOrders": "Virhe tilausten lataamisessa",
+    "errorUpdatingStatus": "Virhe tilan päivittämisessä",
+    "noRevenueYet": "Ei vielä tuloja",
+    "chartPeriod": "Ajanjakso",
+    "month": "kuukausi",
+    "months": "kuukautta",
+    "statuses": {
+      "pending": "Odottaa",
+      "confirmed": "Vahvistettu",
+      "processing": "Käsittelyssä",
+      "shipped": "Lähetetty",
+      "delivered": "Toimitettu",
+      "cancelled": "Peruutettu"
+    }
+  },
+  "common": {
+    "loading": "Ladataan...",
+    "confirm": "Vahvista",
+    "cancel": "Peruuta"
   }
 }

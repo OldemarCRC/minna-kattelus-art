@@ -25,8 +25,8 @@
     },
     "about": {
       "title": "About Me",
-      "text1": "I am Minna Kattelus, a Finnish artist and visual arts teacher. My work explores the relationship between Nordic light and human emotions, creating landscapes and paintings that capture the tranquil and contemplative essence of the North.",
-      "text2": "Through painting, I seek to capture ephemeral moments of beauty and contemplation, inviting the viewer to pause and reconnect with what surrounds us.",
+      "text1": "I am Minna Kattelus, a Finnish artist and visual arts teacher. My paintings reflect the emotions evoked by the landscape within the northern cycle of light and darkness.",
+      "text2": "I capture sensations of natural elements in my images, narrating the human experience in the face of the world's diversity.",
       "button": "Learn More"
     },
     "cta": {
@@ -251,12 +251,6 @@
     "follow": "Follow Me",
     "rights": "All rights reserved."
   },
-  "common": {
-    "year": "{{year}}",
-    "medium": "Medium",
-    "size": "Size",
-    "cancel": "Cancel"
-  },
   "error404": {
     "title": "Oops! It Seems the Muse Took This Page.",
     "message": "The URL you tried to access does not exist, or the masterpiece you were looking for is on another wall. Art can sometimes be chaotic.",
@@ -312,14 +306,6 @@
     "deleteButton": "Delete",
     "modeEditing": "Edit Mode",
     "modeNew": "New Entry Mode"
-  },
-  "dashboard": {
-    "logout": "Sign Out",
-    "overview": "Overview",
-    "uploadFile": "Upload a file",
-    "dragDrop": "or drag and drop",
-    "fileHint": "PNG, JPG, GIF up to 10MB",
-    "chartSimulated": "Simulated chart"
   },
   "artworkModal": {
     "featured": "Featured",
@@ -426,5 +412,55 @@
       "title": "Order Not Found",
       "orderNotFound": "We couldn't find this order. Please check your email for the correct link."
     }
+  },
+  "dashboard": {
+    "artworkStats": "Artwork Statistics",
+    "totalArtworks": "Total Artworks",
+    "availableArtworks": "Available",
+    "soldArtworks": "Sold",
+    "featuredArtworks": "Featured",
+    "orderStats": "Order Statistics",
+    "totalOrders": "Total Orders",
+    "pendingOrders": "Pending",
+    "shippedOrders": "Shipped",
+    "deliveredOrders": "Delivered",
+    "revenueStats": "Revenue",
+    "totalRevenue": "Total Revenue",
+    "monthlyRevenue": "This Month",
+    "yearlyRevenue": "This Year",
+    "revenueChart": "Monthly Revenue",
+    "recentOrders": "Recent Orders",
+    "orderNumber": "Order #",
+    "customer": "Customer",
+    "items": "Items",
+    "total": "Total",
+    "date": "Date",
+    "status": "Status",
+    "actions": "Actions",
+    "noOrders": "No orders yet",
+    "noData": "No data available",
+    "confirmStatusChange": "Change Order Status",
+    "confirmStatusChangeDesc": "Are you sure you want to change the status to {status}?",
+    "statusUpdated": "Order status updated successfully",
+    "errorLoadingStats": "Error loading statistics",
+    "errorLoadingOrders": "Error loading orders",
+    "errorUpdatingStatus": "Error updating order status",
+    "noRevenueYet": "No revenue recorded yet",
+    "chartPeriod": "Period",
+    "month": "month",
+    "months": "months",
+    "statuses": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   }
 }

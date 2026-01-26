@@ -179,6 +179,20 @@ const Navbar = () => {
                       <p className="user-role">{user.role}</p>
                     </div>
 
+                    {/* Register User - Admin only */}
+                    {user?.role === 'admin' && (
+                      <Link
+                        href={`/${currentLang}/user-register`}
+                        className="dropdown-menu-button"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        <svg className="menu-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                        </svg>
+                        {t('admin.registerUser')}
+                      </Link>
+                    )}
+
                     <button
                       className="change-password-button"
                       onClick={() => {
@@ -194,6 +208,7 @@ const Navbar = () => {
 
                     <button className="logout-button" onClick={(e) => {
                       e.stopPropagation();
+                      setShowUserMenu(false);
                       handleLogout();
                     }}>
                       <svg className="logout-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">

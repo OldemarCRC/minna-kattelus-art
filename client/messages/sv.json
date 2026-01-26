@@ -25,8 +25,8 @@
     },
     "about": {
       "title": "Om mig",
-      "text1": "Jag är Minna Kattelus, finländsk konstnär och bildkonstlärare. Mitt arbete utforskar förhållandet mellan nordiskt ljus och mänskliga känslor, skapar landskap och målningar som fångar nordens lugna och kontemplativa essens.",
-      "text2": "Genom målning försöker jag fånga flyktiga ögonblick av skönhet och kontemplation, bjuda in betraktaren att pausa och återknyta kontakten med vad som omger oss.",
+      "text1": "Jag är Minna Kattelus, en finländsk konstnär och bildkonstlärare. Mina målningar speglar de känslor som landskapet väcker i den nordiska cykeln av ljus och mörker.",
+      "text2": "Jag fångar förnimmelser av naturens element i mina bilder och berättar om den mänskliga erfarenheten inför världens mångfald.",
       "button": "Läs mer"
     },
     "cta": {
@@ -251,12 +251,6 @@
     "follow": "Följ mig",
     "rights": "Alla rättigheter förbehållna."
   },
-  "common": {
-    "year": "{{year}}",
-    "medium": "Teknik",
-    "size": "Storlek",
-    "cancel": "Avbryt"
-  },
   "error404": {
     "title": "Hoppsan! Det verkar som att Musan tog denna sida.",
     "message": "URL:en du försökte komma åt existerar inte, eller så är mästerverket du letade efter på en annan vägg. Konst kan ibland vara kaotisk.",
@@ -312,14 +306,6 @@
     "deleteButton": "Radera",
     "modeEditing": "Redigeringsläge",
     "modeNew": "Nytt Läge"
-  },
-  "dashboard": {
-    "logout": "Logga ut",
-    "overview": "Översikt",
-    "uploadFile": "Ladda upp en fil",
-    "dragDrop": "eller dra och släpp",
-    "fileHint": "PNG, JPG, GIF upp till 10MB",
-    "chartSimulated": "Simulerat diagram"
   },
   "artworkModal": {
     "featured": "Utvald",
@@ -426,5 +412,55 @@
       "title": "Order Hittades Inte",
       "orderNotFound": "Vi kunde inte hitta denna order. Kontrollera din e-post för rätt länk."
     }
+  },
+  "dashboard": {
+    "artworkStats": "Konstverk Statistik",
+    "totalArtworks": "Totalt Antal Konstverk",
+    "availableArtworks": "Tillgängliga",
+    "soldArtworks": "Sålda",
+    "featuredArtworks": "Utvalda",
+    "orderStats": "Beställningsstatistik",
+    "totalOrders": "Totalt Antal Beställningar",
+    "pendingOrders": "Väntande",
+    "shippedOrders": "Skickade",
+    "deliveredOrders": "Levererade",
+    "revenueStats": "Intäkter",
+    "totalRevenue": "Totala Intäkter",
+    "monthlyRevenue": "Denna Månad",
+    "yearlyRevenue": "Detta År",
+    "revenueChart": "Månadsintäkter",
+    "recentOrders": "Senaste Beställningar",
+    "orderNumber": "Beställning #",
+    "customer": "Kund",
+    "items": "Artiklar",
+    "total": "Totalt",
+    "date": "Datum",
+    "status": "Status",
+    "actions": "Åtgärder",
+    "noOrders": "Inga beställningar ännu",
+    "noData": "Ingen data tillgänglig",
+    "confirmStatusChange": "Ändra Beställningsstatus",
+    "confirmStatusChangeDesc": "Är du säker på att du vill ändra status till {status}?",
+    "statusUpdated": "Beställningsstatus uppdaterad",
+    "errorLoadingStats": "Fel vid laddning av statistik",
+    "errorLoadingOrders": "Fel vid laddning av beställningar",
+    "errorUpdatingStatus": "Fel vid uppdatering av status",
+    "noRevenueYet": "Inga intäkter registrerade ännu",
+    "chartPeriod": "Period",
+    "month": "månad",
+    "months": "månader",
+    "statuses": {
+      "pending": "Väntande",
+      "confirmed": "Bekräftad",
+      "processing": "Behandlas",
+      "shipped": "Skickad",
+      "delivered": "Levererad",
+      "cancelled": "Avbruten"
+    }
+  },
+  "common": {
+    "loading": "Laddar...",
+    "confirm": "Bekräfta",
+    "cancel": "Avbryt"
   }
 }

@@ -1,63 +1,208 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import '@/styles/Dashboard.css';
 import ArtworkManager from '@/components/ArtworkManager';
-import { useParams } from 'next/navigation';
+import axios from '@/lib/axios';
+import { toast } from 'sonner';
+import { useConfirmDialog } from '@/hooks/useConfirmDialog';
 
-// --- MOCK DATA ---
-const mockStats = {
-  totalVisitors: 154820,
-  visitorsLastMonth: 12450,
-  visitorsToday: 890,
-  paintingsAvailable: 45,
-  paintingsSoldMonth: 5,
-  paintingsTransit: 2,
-  paintingsPendingShip: 3,
+// --- ICONS ---
+const Icons = {
+  artwork: (
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  ),
+  check: (
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+    </svg>
+  ),
+  sold: (
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  orders: (
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+    </svg>
+  ),
+  pending: (
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  shipped: (
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+    </svg>
+  ),
+  revenue: (
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+    </svg>
+  ),
 };
 
-const mockChartData = [
-  { name: 'Ene', uv: 4000 }, { name: 'Feb', uv: 3000 }, { name: 'Mar', uv: 2000 },
-  { name: 'Abr', uv: 2780 }, { name: 'May', uv: 1890 }, { name: 'Jun', uv: 2390 },
-  { name: 'Jul', uv: 3490 }, { name: 'Ago', uv: 3000 }, { name: 'Sep', uv: 4200 },
-  { name: 'Oct', uv: 3500 }, { name: 'Nov', uv: 4100 }, { name: 'Dic', uv: 4500 },
-];
-
-// --- AUXILIARY COMPONENTS ---
-const StatCard = ({ title, value, color }) => (
+// --- STAT CARD COMPONENT ---
+const StatCard = ({ title, value, icon, color }) => (
   <div className={`stat-card ${color}`}>
     <div>
       <p className="card-title">{title}</p>
-      <p className="card-value">{value.toLocaleString('es-ES')}</p>
+      <p className="card-value">{typeof value === 'number' ? value.toLocaleString('fi-FI') : value}</p>
     </div>
     <div className="card-icon-wrapper">
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
+      {icon}
     </div>
   </div>
 );
 
-const ChartPlaceholder = ({ title, data }) => {
+// --- REVENUE CHART COMPONENT (Improved) ---
+
+const RevenueChart = ({ data, title }) => {
   const t = useTranslations();
+  
+  // If no data at all
+  if (!data || data.length === 0) {
+    return (
+      <div className="chart-wrapper">
+        <h3 className="chart-title">{title}</h3>
+        <div className="chart-empty">
+          <p>{t('dashboard.noData')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  const maxRevenue = Math.max(...data.map(d => d.revenue), 1);
+  const hasRevenue = data.some(d => d.revenue > 0);
+
   return (
     <div className="chart-wrapper">
       <h3 className="chart-title">{title}</h3>
-      <div className="chart-bars-container">
-        {data.map((item) => (
-          <div key={item.name} className="chart-bar-item">
-            <div
-              className="chart-bar"
-              style={{ height: `${(item.uv / 5000) * 100}%` }}
-              title={`${item.name}: ${item.uv}`}
-            ></div>
-            <span className="chart-bar-label">{item.name}</span>
+      {!hasRevenue ? (
+        <div className="chart-empty">
+          <p>{t('dashboard.noRevenueYet')}</p>
+        </div>
+      ) : (
+        <>
+          <div className="chart-bars-container">
+            {data.map((item, index) => {
+              const heightPercent = (item.revenue / maxRevenue) * 100;
+              // Minimum height of 4% if there's any revenue, so it's visible
+              const displayHeight = item.revenue > 0 ? Math.max(heightPercent, 4) : 0;
+              
+              return (
+                <div key={index} className="chart-bar-item">
+                  {item.revenue > 0 && (
+                    <span className="chart-bar-value">
+                      €{item.revenue.toLocaleString('fi-FI')}
+                    </span>
+                  )}
+                  <div
+                    className="chart-bar"
+                    style={{ height: `${displayHeight}%` }}
+                    title={`${item.name} ${item.year}: €${item.revenue.toLocaleString('fi-FI')} (${item.orders} ${item.orders === 1 ? 'order' : 'orders'})`}
+                  ></div>
+                  <span className="chart-bar-label">{item.name}</span>
+                </div>
+              );
+            })}
           </div>
-        ))}
+          <p className="chart-summary">
+            {t('dashboard.chartPeriod')}: {data.length} {data.length === 1 ? t('dashboard.month') : t('dashboard.months')}
+          </p>
+        </>
+      )}
+    </div>
+  );
+};
+
+
+// --- ORDERS TABLE COMPONENT ---
+const OrdersTable = ({ orders, locale, onStatusChange }) => {
+  const t = useTranslations();
+
+  const statusColors = {
+    pending: 'status-pending',
+    confirmed: 'status-confirmed',
+    processing: 'status-processing',
+    shipped: 'status-shipped',
+    delivered: 'status-delivered',
+    cancelled: 'status-cancelled'
+  };
+
+  const statusOptions = ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'];
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('fi-FI', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  };
+
+  if (!orders || orders.length === 0) {
+    return (
+      <div className="orders-empty">
+        <p>{t('dashboard.noOrders')}</p>
       </div>
-      <p className="chart-info">{t('dashboard.chartSimulated')}</p>
+    );
+  }
+
+  return (
+    <div className="orders-table-wrapper">
+      <table className="orders-table">
+        <thead>
+          <tr>
+            <th>{t('dashboard.orderNumber')}</th>
+            <th>{t('dashboard.customer')}</th>
+            <th>{t('dashboard.items')}</th>
+            <th>{t('dashboard.total')}</th>
+            <th>{t('dashboard.date')}</th>
+            <th>{t('dashboard.status')}</th>
+            <th>{t('dashboard.actions')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orders.map((order) => (
+            <tr key={order._id}>
+              <td className="order-number">{order.orderNumber}</td>
+              <td>
+                <div className="customer-info">
+                  <span className="customer-name">{order.customer.name}</span>
+                  <span className="customer-email">{order.customer.email}</span>
+                </div>
+              </td>
+              <td>{order.items.length}</td>
+              <td className="order-total">€{order.total.toLocaleString('fi-FI')}</td>
+              <td>{formatDate(order.createdAt)}</td>
+              <td>
+                <span className={`status-badge ${statusColors[order.status]}`}>
+                  {t(`dashboard.statuses.${order.status}`)}
+                </span>
+              </td>
+              <td>
+                <select
+                  className="status-select"
+                  value={order.status}
+                  onChange={(e) => onStatusChange(order._id, e.target.value)}
+                >
+                  {statusOptions.map((status) => (
+                    <option key={status} value={status}>
+                      {t(`dashboard.statuses.${status}`)}
+                    </option>
+                  ))}
+                </select>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
@@ -65,11 +210,20 @@ const ChartPlaceholder = ({ title, data }) => {
 // --- MAIN COMPONENT ---
 export default function DashboardPage() {
   const t = useTranslations();
+  const locale = useLocale();
+  const { confirm, ConfirmDialog } = useConfirmDialog();
+  
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [shouldShow404, setShouldShow404] = useState(false);
-  const { locale } = useParams();
+  
+  // Dashboard data
+  const [stats, setStats] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [statsLoading, setStatsLoading] = useState(true);
+  const [ordersLoading, setOrdersLoading] = useState(true);
 
+  // Auth check
   useEffect(() => {
     const userStr = sessionStorage.getItem('user');
 
@@ -91,8 +245,78 @@ export default function DashboardPage() {
     setIsLoading(false);
   }, []);
 
+  // Fetch dashboard stats
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get('/api/dashboard/stats');
+        if (response.data.success) {
+          setStats(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+        toast.error(t('dashboard.errorLoadingStats'));
+      } finally {
+        setStatsLoading(false);
+      }
+    };
 
-  // Show nothing while loading to prevent flash
+    if (currentUser) {
+      fetchStats();
+    }
+  }, [currentUser, t]);
+
+  // Fetch orders
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get('/api/orders?limit=10');
+        if (response.data.success) {
+          setOrders(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+        toast.error(t('dashboard.errorLoadingOrders'));
+      } finally {
+        setOrdersLoading(false);
+      }
+    };
+
+    if (currentUser) {
+      fetchOrders();
+    }
+  }, [currentUser, t]);
+
+  // Handle order status change
+  const handleStatusChange = async (orderId, newStatus) => {
+    const confirmed = await confirm({
+      title: t('dashboard.confirmStatusChange'),
+      description: t('dashboard.confirmStatusChangeDesc', { status: t(`dashboard.statuses.${newStatus}`) }),
+      confirmText: t('common.confirm'),
+      cancelText: t('common.cancel'),
+      variant: 'default',
+    });
+
+    if (!confirmed) return;
+
+    try {
+      const response = await axios.patch(`/api/orders/${orderId}/status`, {
+        status: newStatus
+      });
+
+      if (response.data.success) {
+        setOrders(orders.map(order => 
+          order._id === orderId ? { ...order, status: newStatus } : order
+        ));
+        toast.success(t('dashboard.statusUpdated'));
+      }
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      toast.error(t('dashboard.errorUpdatingStatus'));
+    }
+  };
+
+  // Show nothing while loading
   if (isLoading) {
     return null;
   }
@@ -109,41 +333,123 @@ export default function DashboardPage() {
           <h1 className="dashboard-title">{t('admin.dashboardTitle')}</h1>
         </header>
 
+        {/* Artwork Statistics */}
         <section className="dashboard-section">
-          <h2 className="section-title">{t('admin.sectionVisits')}</h2>
-          <div className="stats-grid-3">
-            <StatCard title={t('admin.statsVisitors')} value={mockStats.totalVisitors} color="blue" />
-            <StatCard title={t('admin.statsVisitorsMonth')} value={mockStats.visitorsLastMonth} color="green" />
-            <StatCard title={t('admin.statsVisitorsDay')} value={mockStats.visitorsToday} color="purple" />
-          </div>
-        </section>
-
-        <section className="dashboard-section">
-          <h2 className="section-title">{t('admin.sectionArtworks')}</h2>
+          <h2 className="section-title">{t('dashboard.artworkStats')}</h2>
           <div className="stats-grid-4">
-            <StatCard title={t('admin.statsPaintingsAvailable')} value={mockStats.paintingsAvailable} color="amber" />
-            <StatCard title={t('admin.statsPaintingsSoldMonth')} value={mockStats.paintingsSoldMonth} color="pink" />
-            <StatCard title={t('admin.statsPaintingsTransit')} value={mockStats.paintingsTransit} color="indigo" />
-            <StatCard title={t('admin.statsPaintingsPendingShip')} value={mockStats.paintingsPendingShip} color="teal" />
+            <StatCard 
+              title={t('dashboard.totalArtworks')} 
+              value={statsLoading ? '...' : stats?.artworks?.total || 0} 
+              icon={Icons.artwork}
+              color="blue" 
+            />
+            <StatCard 
+              title={t('dashboard.availableArtworks')} 
+              value={statsLoading ? '...' : stats?.artworks?.available || 0} 
+              icon={Icons.check}
+              color="green" 
+            />
+            <StatCard 
+              title={t('dashboard.soldArtworks')} 
+              value={statsLoading ? '...' : stats?.artworks?.sold || 0} 
+              icon={Icons.sold}
+              color="purple" 
+            />
+            <StatCard 
+              title={t('dashboard.featuredArtworks')} 
+              value={statsLoading ? '...' : stats?.artworks?.featured || 0} 
+              icon={Icons.artwork}
+              color="amber" 
+            />
           </div>
         </section>
 
-        <div className="chart-section">
-          <ChartPlaceholder title={t('admin.chartTitle')} data={mockChartData} />
-        </div>
+        {/* Order Statistics */}
+        <section className="dashboard-section">
+          <h2 className="section-title">{t('dashboard.orderStats')}</h2>
+          <div className="stats-grid-4">
+            <StatCard 
+              title={t('dashboard.totalOrders')} 
+              value={statsLoading ? '...' : stats?.orders?.total || 0} 
+              icon={Icons.orders}
+              color="blue" 
+            />
+            <StatCard 
+              title={t('dashboard.pendingOrders')} 
+              value={statsLoading ? '...' : stats?.orders?.byStatus?.pending || 0} 
+              icon={Icons.pending}
+              color="amber" 
+            />
+            <StatCard 
+              title={t('dashboard.shippedOrders')} 
+              value={statsLoading ? '...' : stats?.orders?.byStatus?.shipped || 0} 
+              icon={Icons.shipped}
+              color="indigo" 
+            />
+            <StatCard 
+              title={t('dashboard.deliveredOrders')} 
+              value={statsLoading ? '...' : stats?.orders?.byStatus?.delivered || 0} 
+              icon={Icons.check}
+              color="green" 
+            />
+          </div>
+        </section>
 
+        {/* Revenue Statistics */}
+        <section className="dashboard-section">
+          <h2 className="section-title">{t('dashboard.revenueStats')}</h2>
+          <div className="stats-grid-3">
+            <StatCard 
+              title={t('dashboard.totalRevenue')} 
+              value={statsLoading ? '...' : `€${(stats?.revenue?.total || 0).toLocaleString('fi-FI')}`} 
+              icon={Icons.revenue}
+              color="green" 
+            />
+            <StatCard 
+              title={t('dashboard.monthlyRevenue')} 
+              value={statsLoading ? '...' : `€${(stats?.revenue?.thisMonth || 0).toLocaleString('fi-FI')}`} 
+              icon={Icons.revenue}
+              color="blue" 
+            />
+            <StatCard 
+              title={t('dashboard.yearlyRevenue')} 
+              value={statsLoading ? '...' : `€${(stats?.revenue?.thisYear || 0).toLocaleString('fi-FI')}`} 
+              icon={Icons.revenue}
+              color="purple" 
+            />
+          </div>
+        </section>
+
+        {/* Revenue Chart */}
+        <section className="dashboard-section">
+          <RevenueChart 
+            data={stats?.chartData || []} 
+            title={t('dashboard.revenueChart')} 
+          />
+        </section>
+
+        {/* Recent Orders */}
+        <section className="dashboard-section">
+          <h2 className="section-title">{t('dashboard.recentOrders')}</h2>
+          {ordersLoading ? (
+            <div className="loading-placeholder">{t('common.loading')}</div>
+          ) : (
+            <OrdersTable 
+              orders={orders} 
+              locale={locale}
+              onStatusChange={handleStatusChange}
+            />
+          )}
+        </section>
+
+        {/* Artwork Manager */}
         <section className="dashboard-section">
           <ArtworkManager />
         </section>
 
-        {currentUser?.role === 'admin' && (
-          <section className="dashboard-section admin-actions">
-            <a href={`/${locale}/user-register`} className="btn-secondary">
-              {t('admin.registerUser')}
-            </a>
-          </section>
-        )}
       </div>
+
+      {ConfirmDialog}
     </div>
   );
 }
