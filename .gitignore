@@ -15,6 +15,7 @@ client/out/
 client/next-env.d.ts
 .vercel
 client/node_modules/
+client/messages/REVISION_TEXTOS.md
 
 # === BUILD OUTPUTS ===
 # Vite, React legacy, and Server builds
