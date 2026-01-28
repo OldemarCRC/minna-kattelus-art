@@ -37,7 +37,7 @@
   },
   "gallery": {
     "title": "Galleri",
-    "description": "Utforska min samling av samtida nordisk konst",
+    "description": "Utforska min samling av målningar",
     "filters": {
       "all": "ALLA",
       "landscapes": "LANDSKAP",
@@ -63,7 +63,7 @@
   },
   "shop": {
     "title": "Butik",
-    "description": "Originalverk tillgängliga för förvärv. Varje verk är unikt och kommer med äkthetscertifikat.",
+    "description": "Handmålade ögonblick – Originalakvareller. Varje verk är ett unikt original, skapat för att bestå över tid. Jag använder endast pigment av högsta konstnärskvalitet och syrafritt 100 % bomullspapper, vilket garanterar att färgerna bevaras i generationer. Ett signerat äkthetsintyg medföljer varje verk.",
     "filters": {
       "all": "ALLA",
       "landscapes": "LANDSKAP",

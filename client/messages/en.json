@@ -37,7 +37,7 @@
   },
   "gallery": {
     "title": "Gallery",
-    "description": "Explore my collection of contemporary Nordic art",
+    "description": "Explore my collection of paintings",
     "filters": {
       "all": "ALL",
       "landscapes": "LANDSCAPES",
@@ -63,7 +63,7 @@
   },
   "shop": {
     "title": "Shop",
-    "description": "Original works available for acquisition. Each piece is unique and comes with a certificate of authenticity.",
+    "description": "Hand-painted moments – Original watercolours. Each piece is a unique original, created to stand the test of time. I use only the finest artist-quality pigments and premium 100% cotton acid-free paper, ensuring that the colours remain vibrant for generations. A signed Certificate of Authenticity is included with every artwork.",
     "filters": {
       "all": "ALL",
       "landscapes": "LANDSCAPES",

@@ -37,7 +37,7 @@
   },
   "gallery": {
     "title": "Galleria",
-    "description": "Tutustu kokoelmaani pohjoismaista nykytaidetta",
+    "description": "Tutustu kokoelmaan maalauksiani",
     "filters": {
       "all": "KAIKKI",
       "landscapes": "MAISEMAT",
@@ -63,7 +63,7 @@
   },
   "shop": {
     "title": "Kauppa",
-    "description": "Alkuperäisteoksia saatavilla. Jokainen teos on ainutlaatuinen ja mukana tulee aitoustodistus.",
+    "description": "Käsinmaalattuja hetkiä – Alkuperäiset akvarelliteokset. Jokainen teos on ainutlaatuinen alkuperäisteos, joka on luotu kestämään aikaa. Käytän vain parhaita taiteilijalaatuisia pigmenttejä ja korkealaatuista 100 % puuvillapaperia (happovapaa), mikä takaa värien säilyvyyden sukupolvelta toiselle. Teoksen mukana saat signeeratun aitoustodistuksen.",
     "filters": {
       "all": "KAIKKI",
       "landscapes": "MAISEMAT",

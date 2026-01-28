@@ -37,7 +37,7 @@
   },
   "gallery": {
     "title": "Galería",
-    "description": "Explora mi colección de arte nórdico contemporáneo",
+    "description": "Explorar mi colección de pinturas",
     "filters": {
       "all": "TODAS",
       "landscapes": "PAISAJES",
@@ -63,7 +63,7 @@
   },
   "shop": {
     "title": "Tienda",
-    "description": "Obras originales disponibles para adquisición. Cada pieza es única y viene con certificado de autenticidad.",
+    "description": "Momentos pintados a mano – Acuarelas originales. Cada obra es un original único, creado para perdurar en el tiempo. Utilizo únicamente pigmentos de la más alta calidad y papel de algodón 100% libre de ácido, lo que garantiza la conservación de los colores para las próximas generaciones. Se incluye un certificado de autenticidad firmado con cada obra.",
     "filters": {
       "all": "TODAS",
       "landscapes": "PAISAJES",
