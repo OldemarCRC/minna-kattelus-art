@@ -10,6 +10,7 @@ import authRoutes from './routes/auth.js';
 import contactRoutes from './routes/contact.js';
 import artworkRoutes from './routes/artworks.js';
 import orderRoutes from './routes/orderRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import helmet from 'helmet';
 import { doubleCsrf } from 'csrf-csrf';
@@ -133,6 +134,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/artworks', artworkRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
