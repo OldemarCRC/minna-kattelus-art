@@ -76,7 +76,7 @@ const GalleryGrid = () => {
       {/* Category Filter */}
       <div className="category-filter">
         <button
-          className={selectedCategory === '' ? 'active' : ''}
+          className={`filter-btn ${selectedCategory === '' ? 'active' : ''}`}
           onClick={() => setSelectedCategory('')}
         >
           {t('gallery.filters.all')}
@@ -86,7 +86,7 @@ const GalleryGrid = () => {
           return (
             <button
               key={category}
-              className={selectedCategory === translatedCategory ? 'active' : ''}
+              className={`filter-btn ${selectedCategory === translatedCategory ? 'active' : ''}`}
               onClick={() => setSelectedCategory(translatedCategory)}
             >
               {translatedCategory}
