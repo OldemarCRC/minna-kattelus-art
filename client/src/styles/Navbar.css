@@ -71,7 +71,11 @@
 .navbar-actions {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.navbar-actions>* {
   flex-shrink: 0;
 }
 
@@ -184,7 +188,7 @@
 }
 
 /* Divider before change password when register user exists */
-.dropdown-menu-button + .change-password-button {
+.dropdown-menu-button+.change-password-button {
   border-top: 1px solid var(--color-border);
   padding-top: 0.75rem;
   margin-top: 0.25rem;
@@ -379,6 +383,34 @@
 
 /* Mobile only */
 @media (max-width: 768px) {
+
+  .navbar-actions {
+    gap: 0.5rem;
+  }
+
+  .language-switcher {
+    order: 1;
+  }
+
+  .user-menu-container {
+    order: 2;
+  }
+
+  .cart-icon {
+    order: 3;
+    display: flex !important;
+    /* Force visibility */
+  }
+
+  .menu-toggle {
+    order: 4;
+    display: block;
+  }
+
+  .user-menu-toggle .username {
+    display: none;
+  }
+
   .navbar {
     padding: 0.75rem 0;
   }
@@ -387,13 +419,16 @@
     font-size: 1rem;
   }
 
-  .navbar-actions {
-    gap: 0.5rem;
+  .user-menu-toggle {
+    padding: 0.4rem 0.5rem;
+    min-width: auto;
   }
 
-  .user-menu-toggle {
-    padding: 0.35rem 0.5rem;
+  .user-menu-toggle .chevron {
+    width: 14px;
+    height: 14px;
   }
+
 
   .chevron {
     display: none;
@@ -412,6 +447,37 @@
     right: 1rem;
     width: auto;
     max-width: none;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .navbar-actions {
+    gap: 0.35rem;
+  }
+
+  .language-select {
+    padding: 0.3rem 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .user-menu-toggle {
+    padding: 0.3rem 0.4rem;
+  }
+
+  .user-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .cart-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .menu-toggle .hamburguer-icon {
+    width: 22px;
+    height: 22px;
   }
 }
 

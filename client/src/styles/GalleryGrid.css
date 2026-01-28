@@ -59,7 +59,10 @@
 
 .category-filter button:hover {
   border-color: #8b9d8a;
-  color: #2c3e2e;
+  color: var(--color-white);
+  background: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 74, 62, 0.3);
 }
 
 .category-filter button.active {

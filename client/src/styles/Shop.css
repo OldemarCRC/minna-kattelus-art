@@ -32,23 +32,34 @@
 
 .shop-filters {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: 1rem;
+  margin-bottom: 3rem;
   flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .filter-btn {
-  padding: 0.8rem 2rem;
-  background-color: transparent;
-  color: var(--color-text);
-  border: 1px solid var(--color-accent);
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 1px solid #d0d0d0;
+  border-radius: 25px;
   font-size: 0.9rem;
+  font-weight: 500;
+  color: #5a6b5d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
   letter-spacing: 0.5px;
-  transition: var(--transition);
 }
 
 .filter-btn:hover {
-  background-color: var(--color-background);
-  border-color: var(--color-primary);
+  border-color: #8b9d8a;
+  color: var(--color-white);
+  background: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 74, 62, 0.3);
 }
 
 .filter-btn.active {
@@ -294,6 +305,13 @@
   margin-right: auto;
 }
 
+.artwork-card .artwork-info,
+.shop-card .card-info,
+.card-content {
+  padding: 1rem;
+  padding-left: 1rem; /* Ensure left padding */
+}
+
 /* Responsive */
 @media (max-width: 968px) {
   .shop-controls {
@@ -341,5 +359,32 @@
   
   .product-overlay {
     opacity: 1;
+  }
+
+  .artwork-card,
+  .shop-card {
+    margin: 0 0.5rem;
+  }
+
+  .artwork-card .artwork-info,
+  .shop-card .card-info,
+  .card-content {
+    padding: 0.875rem;
+  }
+
+  .artwork-title,
+  .card-title {
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .artwork-details,
+  .card-details {
+    padding-left: 0;
+  }
+
+  .artwork-price,
+  .card-price {
+    padding-left: 0;
   }
 }

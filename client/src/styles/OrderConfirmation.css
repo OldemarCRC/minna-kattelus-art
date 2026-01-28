@@ -227,6 +227,12 @@
   margin-bottom: var(--spacing-sm);
 }
 
+.next-steps,
+.order-info-box,
+.confirmation-box {
+  padding: 1.5rem;
+}
+
 /* Customer Notes */
 .customer-notes {
   margin-bottom: var(--spacing-lg);
@@ -337,6 +343,43 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+
+.next-steps,
+  .order-info-box,
+  .confirmation-box {
+    padding: 1rem;
+    margin: 0 -0.5rem; /* Negative margin to extend to edges if needed */
+    border-radius: 0;
+  }
+
+  .next-steps h3,
+  .next-steps p,
+  .next-steps li {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .next-steps ul,
+  .next-steps ol {
+    padding-left: 1.25rem;
+  }
+
+  /* Ensure text contrast on green background */
+  .next-steps {
+    background-color: rgba(45, 74, 62, 0.08); /* Lighter green for better readability */
+  }
+
+  .next-steps h3 {
+    color: var(--color-primary);
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .next-steps p,
+  .next-steps li {
+    color: var(--color-text);
+  }
+
   .order-confirmation-page h1 {
     font-size: 2rem;
   }
@@ -368,6 +411,19 @@
   .btn-secondary {
     width: 100%;
     text-align: center;
+  }
+}
+
+@media (max-width: 428px) {
+  .next-steps,
+  .order-info-box {
+    padding: 0.875rem;
+    font-size: 0.85rem;
+  }
+
+  .order-details-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }
 
@@ -406,5 +462,69 @@
   /* Opcional: Ocultar botones internos que no quieras que salgan en el papel */
   .order-details-card button {
     display: none;
+  }
+}
+
+
+
+/* ===== ORDER CONFIRMATION - Mobile Fix ===== */
+/* Add these styles to OrderConfirmation.css */
+
+/* Fix green background text visibility on mobile */
+.next-steps,
+.order-info-box,
+.confirmation-box {
+  padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .next-steps,
+  .order-info-box,
+  .confirmation-box {
+    padding: 1rem;
+    margin: 0 -0.5rem; /* Negative margin to extend to edges if needed */
+    border-radius: 0;
+  }
+
+  .next-steps h3,
+  .next-steps p,
+  .next-steps li {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .next-steps ul,
+  .next-steps ol {
+    padding-left: 1.25rem;
+  }
+
+  /* Ensure text contrast on green background */
+  .next-steps {
+    background-color: rgba(45, 74, 62, 0.08); /* Lighter green for better readability */
+  }
+
+  .next-steps h3 {
+    color: var(--color-primary);
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .next-steps p,
+  .next-steps li {
+    color: var(--color-text);
+  }
+}
+
+/* iPhone specific */
+@media (max-width: 428px) {
+  .next-steps,
+  .order-info-box {
+    padding: 0.875rem;
+    font-size: 0.85rem;
+  }
+
+  .order-details-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }
