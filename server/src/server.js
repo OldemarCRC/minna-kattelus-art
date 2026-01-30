@@ -162,13 +162,15 @@ app.listen(PORT, () => {
   const nets = os.networkInterfaces();
   let localIp = 'localhost';
 
-  // Busca la IP real de la laptop en la red local
   for (const name of Object.keys(nets)) {
     for (const net of nets[name]) {
-      if (net.family === 'IPv4' && !net.internal) {
+      // Agregamos una condición para ignorar interfaces de Docker o VirtualBox
+      if (net.family === 'IPv4' && !net.internal && !name.toLowerCase().includes('docker')) {
         localIp = net.address;
+        break; // Detiene el bucle interno
       }
     }
+    if (localIp !== 'localhost') break; // Detiene el bucle externo si ya encontró la IP
   }
 
   console.log(`Server running on port ${PORT}`);
