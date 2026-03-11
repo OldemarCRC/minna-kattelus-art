@@ -414,6 +414,10 @@ label {
   padding: 0.875rem 1rem;
 }
 
+nextjs-portal {
+  display: none !important;
+}
+
 /* ===== RESPONSIVE ADJUSTMENTS ===== */
 @media (max-width: 768px) {
 
