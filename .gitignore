@@ -10,6 +10,7 @@
 !.yarn/versions
 
 # === NEXT.JS (client) ===
+.next/
 client/.next/
 client/out/
 client/next-env.d.ts
@@ -25,6 +26,8 @@ client/messages/REVISION_TEXTOS.md
 *.tsbuildinfo
 
 # === UPLOADS & DATABASE (server) ===
+# mongodump output - contains full DB export, never commit
+server/mongo-backup/
 # Ignore all uploads but keep the directory structure via .gitkeep
 server/uploads/artworks/*
 !server/uploads/artworks/.gitkeep
@@ -46,6 +49,12 @@ server/temp/
 .env.*.local
 *.env
 *.pem
+server/.env
+server/.env.local
+server/.env.development
+server/.env.production
+server/.env.*.local
+
 
 # === LOGS ===
 **/logs/
@@ -82,6 +91,7 @@ Desktop.ini
 docs/*
 !docs/OHJEET-TIEDOSTONIMET.md
 !docs/SCALING.md
+/CLAUDE.md
 
 # Ignore temporary files
 **/estructura.txt
