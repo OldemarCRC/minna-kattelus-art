@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import '@/styles/Dashboard.css';
 import ArtworkManager from '@/components/ArtworkManager';
 import axios from '@/lib/axios';
@@ -124,6 +125,8 @@ const RevenueChart = ({ data, title }) => {
 };
 
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
 // --- ORDERS TABLE COMPONENT ---
 const OrdersTable = ({ orders, locale, onStatusChange, ordersFilter, onRegisterRefund }) => {
   const t = useTranslations();
@@ -170,9 +173,32 @@ const OrdersTable = ({ orders, locale, onStatusChange, ordersFilter, onRegisterR
           </tr>
         </thead>
         <tbody>
-          {orders.map((order) => (
+          {orders.map((order) => {
+            const firstImage = order.items[0]?.image;
+            const thumbnailSrc = firstImage
+              ? `${API_URL}/uploads/artworks/${firstImage}`
+              : '/placeholder.jpg';
+            const extraItems = order.items.length - 1;
+
+            return (
             <tr key={order._id}>
-              <td className="order-number">{order.orderNumber}</td>
+              <td className="order-number">
+                <div className="order-number-cell">
+                  <div className="order-thumbnail-wrapper">
+                    <Image
+                      src={thumbnailSrc}
+                      alt={order.orderNumber}
+                      width={44}
+                      height={44}
+                      className="order-thumbnail"
+                    />
+                    {extraItems > 0 && (
+                      <span className="order-thumbnail-badge">+{extraItems}</span>
+                    )}
+                  </div>
+                  <span>{order.orderNumber}</span>
+                </div>
+              </td>
               <td>
                 <div className="customer-info">
                   <span className="customer-name">{order.customer.name}</span>
@@ -211,7 +237,8 @@ const OrdersTable = ({ orders, locale, onStatusChange, ordersFilter, onRegisterR
                 )}
               </td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
     </div>
