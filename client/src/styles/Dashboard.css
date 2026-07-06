@@ -635,6 +635,56 @@
 }
 
 
+/* ===== ORDERS FILTER TABS ===== */
+.orders-filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filter-tab {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background-color: var(--color-white);
+  color: var(--color-text-light);
+  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-tab:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.filter-tab.active {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* ===== REFUND ACTION BUTTON ===== */
+.btn-refund {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--color-primary);
+  background-color: var(--color-white);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn-refund:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
 /* ===== ORDERS TABLE ===== */
 .orders-table-wrapper {
   background-color: var(--color-white);

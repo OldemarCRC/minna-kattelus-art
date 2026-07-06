@@ -8,6 +8,7 @@ import ArtworkManager from '@/components/ArtworkManager';
 import axios from '@/lib/axios';
 import { toast } from 'sonner';
 import { useConfirmDialog } from '@/hooks/useConfirmDialog';
+import RefundDialog from '@/components/ui/RefundDialog';
 
 // --- ICONS ---
 const Icons = {
@@ -124,7 +125,7 @@ const RevenueChart = ({ data, title }) => {
 
 
 // --- ORDERS TABLE COMPONENT ---
-const OrdersTable = ({ orders, locale, onStatusChange }) => {
+const OrdersTable = ({ orders, locale, onStatusChange, ordersFilter, onRegisterRefund }) => {
   const t = useTranslations();
 
   const statusColors = {
@@ -149,7 +150,7 @@ const OrdersTable = ({ orders, locale, onStatusChange }) => {
   if (!orders || orders.length === 0) {
     return (
       <div className="orders-empty">
-        <p>{t('dashboard.noOrders')}</p>
+        <p>{t(ordersFilter === 'refund_pending' ? 'dashboard.noRefundsPending' : 'dashboard.noOrders')}</p>
       </div>
     );
   }
@@ -187,17 +188,27 @@ const OrdersTable = ({ orders, locale, onStatusChange }) => {
                 </span>
               </td>
               <td>
-                <select
-                  className="status-select"
-                  value={order.status}
-                  onChange={(e) => onStatusChange(order._id, e.target.value)}
-                >
-                  {statusOptions.map((status) => (
-                    <option key={status} value={status}>
-                      {t(`dashboard.statuses.${status}`)}
-                    </option>
-                  ))}
-                </select>
+                {ordersFilter === 'refund_pending' ? (
+                  <button
+                    type="button"
+                    className="btn-refund"
+                    onClick={() => onRegisterRefund(order)}
+                  >
+                    {t('dashboard.registerRefund')}
+                  </button>
+                ) : (
+                  <select
+                    className="status-select"
+                    value={order.status}
+                    onChange={(e) => onStatusChange(order._id, e.target.value)}
+                  >
+                    {statusOptions.map((status) => (
+                      <option key={status} value={status}>
+                        {t(`dashboard.statuses.${status}`)}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </td>
             </tr>
           ))}
@@ -222,6 +233,9 @@ export default function DashboardPage() {
   const [orders, setOrders] = useState([]);
   const [statsLoading, setStatsLoading] = useState(true);
   const [ordersLoading, setOrdersLoading] = useState(true);
+  const [ordersFilter, setOrdersFilter] = useState('all');
+  const [refundOrder, setRefundOrder] = useState(null);
+  const [refundDialogOpen, setRefundDialogOpen] = useState(false);
 
   // Auth check
   useEffect(() => {
@@ -269,8 +283,12 @@ export default function DashboardPage() {
   // Fetch orders
   useEffect(() => {
     const fetchOrders = async () => {
+      setOrdersLoading(true);
       try {
-        const response = await axios.get('/api/orders?limit=10');
+        const query = ordersFilter === 'refund_pending'
+          ? '/api/orders?limit=10&paymentStatus=refund_pending'
+          : '/api/orders?limit=10';
+        const response = await axios.get(query);
         if (response.data.success) {
           setOrders(response.data.data);
         }
@@ -285,7 +303,7 @@ export default function DashboardPage() {
     if (currentUser) {
       fetchOrders();
     }
-  }, [currentUser, t]);
+  }, [currentUser, ordersFilter, t]);
 
   // Handle order status change
   const handleStatusChange = async (orderId, newStatus) => {
@@ -314,6 +332,17 @@ export default function DashboardPage() {
       console.error('Error updating order status:', error);
       toast.error(t('dashboard.errorUpdatingStatus'));
     }
+  };
+
+  // Open the refund registration dialog for an order
+  const handleOpenRefundDialog = (order) => {
+    setRefundOrder(order);
+    setRefundDialogOpen(true);
+  };
+
+  // Refund registered - the order is no longer refund_pending, drop it from this list
+  const handleRefundSuccess = (updatedOrder) => {
+    setOrders(orders.filter((order) => order._id !== updatedOrder._id));
   };
 
   // Show nothing while loading
@@ -431,13 +460,31 @@ export default function DashboardPage() {
         {/* Recent Orders */}
         <section className="dashboard-section">
           <h2 className="section-title">{t('dashboard.recentOrders')}</h2>
+          <div className="orders-filter-tabs">
+            <button
+              type="button"
+              className={`filter-tab ${ordersFilter === 'all' ? 'active' : ''}`}
+              onClick={() => setOrdersFilter('all')}
+            >
+              {t('dashboard.filterAll')}
+            </button>
+            <button
+              type="button"
+              className={`filter-tab ${ordersFilter === 'refund_pending' ? 'active' : ''}`}
+              onClick={() => setOrdersFilter('refund_pending')}
+            >
+              {t('dashboard.filterPendingRefunds')}
+            </button>
+          </div>
           {ordersLoading ? (
             <div className="loading-placeholder">{t('common.loading')}</div>
           ) : (
-            <OrdersTable 
-              orders={orders} 
+            <OrdersTable
+              orders={orders}
               locale={locale}
               onStatusChange={handleStatusChange}
+              ordersFilter={ordersFilter}
+              onRegisterRefund={handleOpenRefundDialog}
             />
           )}
         </section>
@@ -450,6 +497,12 @@ export default function DashboardPage() {
       </div>
 
       {ConfirmDialog}
+      <RefundDialog
+        order={refundOrder}
+        open={refundDialogOpen}
+        onOpenChange={setRefundDialogOpen}
+        onSuccess={handleRefundSuccess}
+      />
     </div>
   );
 }

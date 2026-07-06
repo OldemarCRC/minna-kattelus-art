@@ -185,9 +185,11 @@ export const getOrderByNumber = async (req, res) => {
 // Get all orders (Admin only)
 export const getAllOrders = async (req, res) => {
   try {
-    const { status, page = 1, limit = 20 } = req.query;
+    const { status, paymentStatus, page = 1, limit = 20 } = req.query;
 
-    const query = status ? { status } : {};
+    const query = {};
+    if (status) query.status = status;
+    if (paymentStatus) query.paymentStatus = paymentStatus;
 
     const orders = await Order.find(query)
       .sort({ createdAt: -1 })
@@ -308,6 +310,65 @@ export const updateOrderStatus = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error updating order',
+      error: error.message
+    });
+  }
+};
+
+// Register a refund for an order pending one (Admin only)
+export const registerRefund = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { amount, date, method, reference, notes } = req.body;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found'
+      });
+    }
+
+    if (order.paymentStatus !== 'refund_pending') {
+      console.log('⚠️ Cannot register refund for order', order.orderNumber, '- paymentStatus is', order.paymentStatus);
+      return res.status(400).json({
+        success: false,
+        message: 'Esta orden no tiene una devolución pendiente de registrar.'
+      });
+    }
+
+    if (!amount || !date || !method || !reference) {
+      return res.status(400).json({
+        success: false,
+        message: 'Faltan datos requeridos: amount, date, method y reference son obligatorios.'
+      });
+    }
+
+    order.refund = {
+      amount,
+      date,
+      method,
+      reference,
+      notes: notes || '',
+      processedBy: req.user.id
+    };
+    order.paymentStatus = 'refunded';
+
+    await order.save();
+    console.log('✅ Refund registered for order', order.orderNumber);
+
+    res.json({
+      success: true,
+      message: 'Refund registered successfully',
+      data: order
+    });
+
+  } catch (error) {
+    console.error('❌ Register refund error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error registering refund',
       error: error.message
     });
   }

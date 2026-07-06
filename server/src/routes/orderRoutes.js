@@ -1,10 +1,11 @@
 import express from 'express';
-import { 
-  createOrder, 
-  getOrder, 
+import {
+  createOrder,
+  getOrder,
   getOrderByNumber,
   getAllOrders,
-  updateOrderStatus 
+  updateOrderStatus,
+  registerRefund
 } from '../controllers/orderController.js';
 import { protect, adminOnly } from '../middleware/authMiddleware.js';
 import { orderLimiter } from '../middleware/rateLimiter.js';
@@ -21,5 +22,6 @@ router.get('/:orderId', getOrder);
 // Admin routes
 router.get('/', protect, adminOnly, getAllOrders);
 router.patch('/:orderId/status', protect, adminOnly, updateOrderStatus);
+router.patch('/:orderId/refund', protect, adminOnly, registerRefund);
 
 export default router;
