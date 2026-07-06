@@ -71,6 +71,7 @@ export const createOrder = async (req, res) => {
     console.log('🔢 Generated order number:', orderNumber);
 
     // Create order
+    // TODO: replace with real payment gateway confirmation once Stripe/Paytrail is integrated. Currently simulated since checkout has no real payment processor yet.
     const order = new Order({
       orderNumber,
       customer,
@@ -80,7 +81,8 @@ export const createOrder = async (req, res) => {
       total,
       paymentMethod: paymentMethod || 'bank_transfer',
       customerNotes,
-      currency: 'EUR'
+      currency: 'EUR',
+      paymentStatus: 'paid'
     });
 
     await order.save();
