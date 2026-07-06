@@ -1,6 +1,7 @@
 import Order from '../models/Order.js';
 import Artwork from '../models/Artwork.js';
 import { sendOrderConfirmationEmail } from '../utils/mailer.js';
+import { hasActiveOrderForArtwork } from '../utils/orderValidation.js';
 
 // Create new order
 export const createOrder = async (req, res) => {
@@ -229,6 +230,42 @@ export const updateOrderStatus = async (req, res) => {
       });
     }
 
+    const oldStatus = order.status;
+    const isCancelling = status && oldStatus !== 'cancelled' && status === 'cancelled';
+    const isRestoringFromCancelled = status && oldStatus === 'cancelled' && status !== 'cancelled';
+
+    if (isRestoringFromCancelled) {
+      // CASE B - check ALL items for conflicts first, before touching anything
+      const conflicts = [];
+
+      for (const item of order.items) {
+        const artwork = await Artwork.findById(item.artworkId);
+        if (artwork && artwork.available === false) {
+          conflicts.push(artwork);
+        }
+      }
+
+      if (conflicts.length > 0) {
+        const conflictTitles = conflicts
+          .map((artwork) => `"${artwork.title?.en || artwork._id}"`)
+          .join(', ');
+        console.log('⚠️ Cannot restore order', order.orderNumber, '- artwork(s) already claimed:', conflictTitles);
+        return res.status(409).json({
+          success: false,
+          message: `No se puede revertir la cancelación: la(s) obra(s) ${conflictTitles} ya está(n) reservada(s) o vendida(s) en otra orden.`
+        });
+      }
+
+      // No conflicts - reserve every item's artwork again for this order
+      for (const item of order.items) {
+        await Artwork.findByIdAndUpdate(item.artworkId, { available: false });
+      }
+
+      if (order.paymentStatus === 'refund_pending') {
+        order.paymentStatus = 'paid';
+      }
+    }
+
     if (status) order.status = status;
     if (trackingNumber) order.trackingNumber = trackingNumber;
     if (adminNotes) order.adminNotes = adminNotes;
@@ -238,6 +275,24 @@ export const updateOrderStatus = async (req, res) => {
     }
     if (status === 'delivered' && !order.deliveredAt) {
       order.deliveredAt = new Date();
+    }
+
+    if (isCancelling) {
+      // CASE A - free up each artwork unless another active order still claims it
+      for (const item of order.items) {
+        const conflictingOrder = await hasActiveOrderForArtwork(item.artworkId, order._id);
+
+        if (!conflictingOrder) {
+          await Artwork.findByIdAndUpdate(item.artworkId, { available: true });
+          console.log('✅ Artwork', item.artworkId.toString(), 'marked available after order cancellation');
+        } else {
+          console.log(`⚠️ Artwork ${item.artworkId} not reactivated - claimed by another active order ${conflictingOrder.orderNumber}`);
+        }
+      }
+
+      if (order.paymentStatus === 'paid') {
+        order.paymentStatus = 'refund_pending';
+      }
     }
 
     await order.save();

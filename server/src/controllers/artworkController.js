@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { sanitizeInput } from '../utils/sanitizer.js';
+import { hasActiveOrderForArtwork } from '../utils/orderValidation.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -164,6 +165,20 @@ export const updateArtwork = async (req, res) => {
     }
 
     const oldImage = artwork.image;
+
+    // If reactivating an artwork that was unavailable, make sure it's not
+    // already claimed by another active order before allowing it
+    if (req.body.available === 'true' && artwork.available === false) {
+      const conflictingOrder = await hasActiveOrderForArtwork(artwork._id);
+
+      if (conflictingOrder) {
+        console.log(`⚠️ Cannot mark artwork ${artwork._id} as available - claimed by order ${conflictingOrder.orderNumber}`);
+        return res.status(409).json({
+          success: false,
+          message: `No se puede marcar esta obra como disponible: ya está reservada en la orden ${conflictingOrder.orderNumber} (estado: ${conflictingOrder.status}).`
+        });
+      }
+    }
 
     // Parsear campos JSON
     const title = JSON.parse(req.body.title);
