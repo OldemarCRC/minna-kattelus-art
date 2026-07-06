@@ -6,6 +6,32 @@
 - Direct inventory checks at checkout
 - Single payment simulation
 
+## Payment & Refund Handling (added 2026-07-06)
+
+### Current: Simulated Payment Confirmation
+Checkout has no real payment gateway integration yet (Stripe vs Paytrail compared in
+`INTEGRACION_PAGOS.md`, neither implemented). `createOrder` marks every order
+`paymentStatus: 'paid'` immediately on creation as a placeholder — this is **technical
+debt**, not a real payment guarantee. Replace with actual gateway confirmation before
+processing real transactions.
+
+### Refund as a Two-Step Process
+Cancelling a paid order and returning the money are treated as separate events in time
+(a bank refund can take days). Cancelling a paid order automatically sets
+`paymentStatus: 'refund_pending'`; a separate admin action
+(`PATCH /api/orders/:orderId/refund`) records the actual refund (amount, date, method,
+reference) and moves the order to `refunded`. This keeps a clean audit trail for
+accounting/tax purposes instead of forcing the admin to know refund details at
+cancellation time.
+
+### Double-Sale Prevention via Active Order Lookup
+`hasActiveOrderForArtwork()` (`server/src/utils/orderValidation.js`) checks whether any
+non-cancelled order still references an artwork before letting it become `available`
+again — whether via order cancellation, reverting a cancellation, or manually editing
+the artwork in Artwork Management. This is a synchronous DB lookup, appropriate at
+current volume. See "Trigger 3: Inventory Management Issues" below for when a more
+robust reservation system (locking, TTL-based holds) becomes necessary.
+
 ## When to Scale
 
 ### Trigger 1: Multi-Device Users
