@@ -45,8 +45,18 @@ const orderSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ['pending', 'paid', 'failed'],
+    enum: ['pending', 'paid', 'failed', 'refund_pending', 'refunded'],
     default: 'pending'
+  },
+
+  // Refund details, filled in once a refund is registered
+  refund: {
+    amount: { type: Number },
+    date: { type: Date },
+    method: { type: String, enum: ['bank_transfer', 'credit_card', 'stripe', 'other'] },
+    reference: { type: String },
+    notes: { type: String },
+    processedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
   },
 
   // Order Status
