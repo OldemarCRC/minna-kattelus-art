@@ -70,9 +70,12 @@ const StatCard = ({ title, value, icon, color, onClick }) => (
 
 // --- REVENUE CHART COMPONENT (Improved) ---
 
-const RevenueChart = ({ data, title }) => {
+const CURRENT_MONTH_ABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][new Date().getMonth()];
+const CURRENT_YEAR = new Date().getFullYear();
+
+const RevenueChart = ({ data, title, highlightCurrentMonth = false }) => {
   const t = useTranslations();
-  
+
   // If no data at all
   if (!data || data.length === 0) {
     return (
@@ -102,7 +105,10 @@ const RevenueChart = ({ data, title }) => {
               const heightPercent = (item.revenue / maxRevenue) * 100;
               // Minimum height of 4% if there's any revenue, so it's visible
               const displayHeight = item.revenue > 0 ? Math.max(heightPercent, 4) : 0;
-              
+              const isCurrentMonth = highlightCurrentMonth
+                && item.name === CURRENT_MONTH_ABBR
+                && item.year === CURRENT_YEAR;
+
               return (
                 <div key={index} className="chart-bar-item">
                   {item.revenue > 0 && (
@@ -111,7 +117,7 @@ const RevenueChart = ({ data, title }) => {
                     </span>
                   )}
                   <div
-                    className="chart-bar"
+                    className={`chart-bar${isCurrentMonth ? ' chart-bar-current' : ''}`}
                     style={{ height: `${displayHeight}%` }}
                     title={`${item.name} ${item.year}: €${item.revenue.toLocaleString('fi-FI')} (${item.orders} ${item.orders === 1 ? 'order' : 'orders'})`}
                   ></div>
@@ -323,6 +329,8 @@ export default function DashboardPage() {
   const [artworkFilter, setArtworkFilter] = useState('all');
   const artworkSectionRef = useRef(null);
   const ordersSectionRef = useRef(null);
+  const [highlightCurrentMonth, setHighlightCurrentMonth] = useState(false);
+  const revenueSectionRef = useRef(null);
 
   // Auth check
   useEffect(() => {
@@ -448,6 +456,12 @@ export default function DashboardPage() {
     ordersSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Revenue stat card clicked - just scroll to the chart; "This Month" also highlights its bar
+  const handleRevenueStatClick = (highlight = false) => {
+    setHighlightCurrentMonth(highlight);
+    revenueSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   // Show nothing while loading
   if (isLoading) {
     return null;
@@ -539,32 +553,36 @@ export default function DashboardPage() {
         <section className="dashboard-section">
           <h2 className="section-title">{t('dashboard.revenueStats')}</h2>
           <div className="stats-grid-3">
-            <StatCard 
-              title={t('dashboard.totalRevenue')} 
-              value={statsLoading ? '...' : `€${(stats?.revenue?.total || 0).toLocaleString('fi-FI')}`} 
+            <StatCard
+              title={t('dashboard.totalRevenue')}
+              value={statsLoading ? '...' : `€${(stats?.revenue?.total || 0).toLocaleString('fi-FI')}`}
               icon={Icons.revenue}
-              color="green" 
+              color="green"
+              onClick={() => handleRevenueStatClick(false)}
             />
-            <StatCard 
-              title={t('dashboard.monthlyRevenue')} 
-              value={statsLoading ? '...' : `€${(stats?.revenue?.thisMonth || 0).toLocaleString('fi-FI')}`} 
+            <StatCard
+              title={t('dashboard.monthlyRevenue')}
+              value={statsLoading ? '...' : `€${(stats?.revenue?.thisMonth || 0).toLocaleString('fi-FI')}`}
               icon={Icons.revenue}
-              color="blue" 
+              color="blue"
+              onClick={() => handleRevenueStatClick(true)}
             />
-            <StatCard 
-              title={t('dashboard.yearlyRevenue')} 
-              value={statsLoading ? '...' : `€${(stats?.revenue?.thisYear || 0).toLocaleString('fi-FI')}`} 
+            <StatCard
+              title={t('dashboard.yearlyRevenue')}
+              value={statsLoading ? '...' : `€${(stats?.revenue?.thisYear || 0).toLocaleString('fi-FI')}`}
               icon={Icons.revenue}
-              color="purple" 
+              color="purple"
+              onClick={() => handleRevenueStatClick(false)}
             />
           </div>
         </section>
 
         {/* Revenue Chart */}
-        <section className="dashboard-section">
-          <RevenueChart 
-            data={stats?.chartData || []} 
-            title={t('dashboard.revenueChart')} 
+        <section className="dashboard-section" ref={revenueSectionRef}>
+          <RevenueChart
+            data={stats?.chartData || []}
+            title={t('dashboard.revenueChart')}
+            highlightCurrentMonth={highlightCurrentMonth}
           />
         </section>
 
