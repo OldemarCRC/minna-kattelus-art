@@ -322,6 +322,7 @@ export default function DashboardPage() {
   const [refundDialogOpen, setRefundDialogOpen] = useState(false);
   const [artworkFilter, setArtworkFilter] = useState('all');
   const artworkSectionRef = useRef(null);
+  const ordersSectionRef = useRef(null);
 
   // Auth check
   useEffect(() => {
@@ -371,9 +372,12 @@ export default function DashboardPage() {
     const fetchOrders = async () => {
       setOrdersLoading(true);
       try {
-        const query = ordersFilter === 'refund_pending'
-          ? '/api/orders?limit=10&paymentStatus=refund_pending'
-          : '/api/orders?limit=10';
+        let query = '/api/orders?limit=10';
+        if (ordersFilter === 'refund_pending') {
+          query += '&paymentStatus=refund_pending';
+        } else if (ordersFilter !== 'all') {
+          query += `&status=${ordersFilter}`;
+        }
         const response = await axios.get(query);
         if (response.data.success) {
           setOrders(response.data.data);
@@ -438,6 +442,12 @@ export default function DashboardPage() {
     artworkSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Order stat card clicked - apply the matching filter and scroll to Recent Orders
+  const handleOrderStatClick = (filter) => {
+    setOrdersFilter(filter);
+    ordersSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   // Show nothing while loading
   if (isLoading) {
     return null;
@@ -494,29 +504,33 @@ export default function DashboardPage() {
         <section className="dashboard-section">
           <h2 className="section-title">{t('dashboard.orderStats')}</h2>
           <div className="stats-grid-4">
-            <StatCard 
-              title={t('dashboard.totalOrders')} 
-              value={statsLoading ? '...' : stats?.orders?.total || 0} 
+            <StatCard
+              title={t('dashboard.totalOrders')}
+              value={statsLoading ? '...' : stats?.orders?.total || 0}
               icon={Icons.orders}
-              color="blue" 
+              color="blue"
+              onClick={() => handleOrderStatClick('all')}
             />
-            <StatCard 
-              title={t('dashboard.pendingOrders')} 
-              value={statsLoading ? '...' : stats?.orders?.byStatus?.pending || 0} 
+            <StatCard
+              title={t('dashboard.pendingOrders')}
+              value={statsLoading ? '...' : stats?.orders?.byStatus?.pending || 0}
               icon={Icons.pending}
-              color="amber" 
+              color="amber"
+              onClick={() => handleOrderStatClick('pending')}
             />
-            <StatCard 
-              title={t('dashboard.shippedOrders')} 
-              value={statsLoading ? '...' : stats?.orders?.byStatus?.shipped || 0} 
+            <StatCard
+              title={t('dashboard.shippedOrders')}
+              value={statsLoading ? '...' : stats?.orders?.byStatus?.shipped || 0}
               icon={Icons.shipped}
-              color="indigo" 
+              color="indigo"
+              onClick={() => handleOrderStatClick('shipped')}
             />
-            <StatCard 
-              title={t('dashboard.deliveredOrders')} 
-              value={statsLoading ? '...' : stats?.orders?.byStatus?.delivered || 0} 
+            <StatCard
+              title={t('dashboard.deliveredOrders')}
+              value={statsLoading ? '...' : stats?.orders?.byStatus?.delivered || 0}
               icon={Icons.check}
-              color="green" 
+              color="green"
+              onClick={() => handleOrderStatClick('delivered')}
             />
           </div>
         </section>
@@ -555,7 +569,7 @@ export default function DashboardPage() {
         </section>
 
         {/* Recent Orders */}
-        <section className="dashboard-section">
+        <section className="dashboard-section" ref={ordersSectionRef}>
           <h2 className="section-title">{t('dashboard.recentOrders')}</h2>
           <div className="orders-filter-tabs">
             <button
