@@ -17,18 +17,17 @@ const ARTWORK_FILTER_LABELS = {
   featured: 'Featured Artworks'
 };
 
-const ArtworkManager = () => {
+const ArtworkManager = ({ artworkFilter = 'all', onArtworkFilterChange }) => {
   const locale = useLocale();
   const t = useTranslations();
   const { confirm, ConfirmDialog } = useConfirmDialog();
-  
+
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingArtwork, setEditingArtwork] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [artworkFilter, setArtworkFilter] = useState('all');
 
   const userStr = typeof window !== 'undefined' ? sessionStorage.getItem('user') : null;
   const currentUser = userStr ? JSON.parse(userStr) : null;
@@ -255,28 +254,28 @@ const ArtworkManager = () => {
         <button
           type="button"
           className={`filter-tab ${artworkFilter === 'all' ? 'active' : ''}`}
-          onClick={() => setArtworkFilter('all')}
+          onClick={() => onArtworkFilterChange?.('all')}
         >
           All
         </button>
         <button
           type="button"
           className={`filter-tab ${artworkFilter === 'available' ? 'active' : ''}`}
-          onClick={() => setArtworkFilter('available')}
+          onClick={() => onArtworkFilterChange?.('available')}
         >
           Available
         </button>
         <button
           type="button"
           className={`filter-tab ${artworkFilter === 'sold' ? 'active' : ''}`}
-          onClick={() => setArtworkFilter('sold')}
+          onClick={() => onArtworkFilterChange?.('sold')}
         >
           Sold
         </button>
         <button
           type="button"
           className={`filter-tab ${artworkFilter === 'featured' ? 'active' : ''}`}
-          onClick={() => setArtworkFilter('featured')}
+          onClick={() => onArtworkFilterChange?.('featured')}
         >
           Featured
         </button>

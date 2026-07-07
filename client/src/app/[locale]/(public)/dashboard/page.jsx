@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -53,8 +53,11 @@ const Icons = {
 };
 
 // --- STAT CARD COMPONENT ---
-const StatCard = ({ title, value, icon, color }) => (
-  <div className={`stat-card ${color}`}>
+const StatCard = ({ title, value, icon, color, onClick }) => (
+  <div
+    className={`stat-card ${color}${onClick ? ' clickable' : ''}`}
+    onClick={onClick}
+  >
     <div>
       <p className="card-title">{title}</p>
       <p className="card-value">{typeof value === 'number' ? value.toLocaleString('fi-FI') : value}</p>
@@ -317,6 +320,8 @@ export default function DashboardPage() {
   const [ordersFilter, setOrdersFilter] = useState('all');
   const [refundOrder, setRefundOrder] = useState(null);
   const [refundDialogOpen, setRefundDialogOpen] = useState(false);
+  const [artworkFilter, setArtworkFilter] = useState('all');
+  const artworkSectionRef = useRef(null);
 
   // Auth check
   useEffect(() => {
@@ -427,6 +432,12 @@ export default function DashboardPage() {
     setOrders(orders.filter((order) => order._id !== updatedOrder._id));
   };
 
+  // Artwork stat card clicked - apply the matching filter and scroll to Artwork Management
+  const handleArtworkStatClick = (filter) => {
+    setArtworkFilter(filter);
+    artworkSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   // Show nothing while loading
   if (isLoading) {
     return null;
@@ -448,29 +459,33 @@ export default function DashboardPage() {
         <section className="dashboard-section">
           <h2 className="section-title">{t('dashboard.artworkStats')}</h2>
           <div className="stats-grid-4">
-            <StatCard 
-              title={t('dashboard.totalArtworks')} 
-              value={statsLoading ? '...' : stats?.artworks?.total || 0} 
+            <StatCard
+              title={t('dashboard.totalArtworks')}
+              value={statsLoading ? '...' : stats?.artworks?.total || 0}
               icon={Icons.artwork}
-              color="blue" 
+              color="blue"
+              onClick={() => handleArtworkStatClick('all')}
             />
-            <StatCard 
-              title={t('dashboard.availableArtworks')} 
-              value={statsLoading ? '...' : stats?.artworks?.available || 0} 
+            <StatCard
+              title={t('dashboard.availableArtworks')}
+              value={statsLoading ? '...' : stats?.artworks?.available || 0}
               icon={Icons.check}
-              color="green" 
+              color="green"
+              onClick={() => handleArtworkStatClick('available')}
             />
-            <StatCard 
-              title={t('dashboard.soldArtworks')} 
-              value={statsLoading ? '...' : stats?.artworks?.sold || 0} 
+            <StatCard
+              title={t('dashboard.soldArtworks')}
+              value={statsLoading ? '...' : stats?.artworks?.sold || 0}
               icon={Icons.sold}
-              color="purple" 
+              color="purple"
+              onClick={() => handleArtworkStatClick('sold')}
             />
-            <StatCard 
-              title={t('dashboard.featuredArtworks')} 
-              value={statsLoading ? '...' : stats?.artworks?.featured || 0} 
+            <StatCard
+              title={t('dashboard.featuredArtworks')}
+              value={statsLoading ? '...' : stats?.artworks?.featured || 0}
               icon={Icons.artwork}
-              color="amber" 
+              color="amber"
+              onClick={() => handleArtworkStatClick('featured')}
             />
           </div>
         </section>
@@ -572,8 +587,8 @@ export default function DashboardPage() {
         </section>
 
         {/* Artwork Manager */}
-        <section className="dashboard-section">
-          <ArtworkManager />
+        <section className="dashboard-section" ref={artworkSectionRef}>
+          <ArtworkManager artworkFilter={artworkFilter} onArtworkFilterChange={setArtworkFilter} />
         </section>
 
       </div>
