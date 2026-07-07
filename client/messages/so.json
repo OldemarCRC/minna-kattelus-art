@@ -470,6 +470,11 @@
         "errorRegisteringRefund": "Khalad markii la diiwaan gelinayay lacag-celinta",
         "refundMissingFields": "Fadlan buuxi qadarka, taariikhda, habka iyo tixraaca",
         "noRefundsPending": "Ma jiraan lacag-celin sugaya",
+        "errors": {
+            "ARTWORK_HAS_ACTIVE_ORDER": "Farshaxankan lama calaamadi karo mid la heli karo: horey ayaa loogu qoray dalabka {orderNumber} (xaaladda: {orderStatus}).",
+            "ORDER_STATUS_ARTWORK_CONFLICT": "Lama celin karo joojinta: {artworkTitles} horey ayaa loogu qoray ama lagu iibiyay dalab kale.",
+            "REFUND_NOT_PENDING": "Dalabkan ma laha lacag-celin sugaysa in la diiwaan geliyo."
+        },
         "statuses": {
             "pending": "Sugaya",
             "confirmed": "La Xaqiijiyay",

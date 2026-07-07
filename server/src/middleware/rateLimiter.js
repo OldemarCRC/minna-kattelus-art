@@ -83,6 +83,9 @@ export const apiLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+  // En desarrollo varios navegadores/dispositivos comparten la misma IP de red,
+  // así que este límite general se desactiva para no bloquear pruebas cruzadas.
+  skip: () => process.env.NODE_ENV === 'development',
 });
 
 export const uploadArtworkLimiter = rateLimit({

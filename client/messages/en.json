@@ -470,6 +470,11 @@
     "errorRegisteringRefund": "Error registering refund",
     "refundMissingFields": "Please fill in amount, date, method and reference",
     "noRefundsPending": "No refunds pending",
+    "errors": {
+      "ARTWORK_HAS_ACTIVE_ORDER": "This artwork cannot be marked as available: it is already reserved in order {orderNumber} (status: {orderStatus}).",
+      "ORDER_STATUS_ARTWORK_CONFLICT": "Cannot revert the cancellation: {artworkTitles} already reserved or sold in another order.",
+      "REFUND_NOT_PENDING": "This order does not have a pending refund to register."
+    },
     "statuses": {
       "pending": "Pending",
       "confirmed": "Confirmed",

@@ -470,6 +470,11 @@
     "errorRegisteringRefund": "Error al registrar la devolución",
     "refundMissingFields": "Completa monto, fecha, método y referencia",
     "noRefundsPending": "No hay devoluciones pendientes",
+    "errors": {
+      "ARTWORK_HAS_ACTIVE_ORDER": "Esta obra no se puede marcar como disponible: ya está reservada en la orden {orderNumber} (estado: {orderStatus}).",
+      "ORDER_STATUS_ARTWORK_CONFLICT": "No se puede revertir la cancelación: {artworkTitles} ya está reservada o vendida en otra orden.",
+      "REFUND_NOT_PENDING": "Esta orden no tiene una devolución pendiente de registrar."
+    },
     "statuses": {
       "pending": "Pendiente",
       "confirmed": "Confirmado",

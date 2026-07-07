@@ -470,6 +470,11 @@
     "errorRegisteringRefund": "Fel vid registrering av återbetalning",
     "refundMissingFields": "Fyll i belopp, datum, metod och referens",
     "noRefundsPending": "Inga väntande återbetalningar",
+    "errors": {
+      "ARTWORK_HAS_ACTIVE_ORDER": "Detta konstverk kan inte markeras som tillgängligt: det är redan reserverat i beställning {orderNumber} (status: {orderStatus}).",
+      "ORDER_STATUS_ARTWORK_CONFLICT": "Kan inte återställa avbokningen: {artworkTitles} är redan reserverat eller sålt i en annan beställning.",
+      "REFUND_NOT_PENDING": "Denna beställning har ingen väntande återbetalning att registrera."
+    },
     "statuses": {
       "pending": "Väntande",
       "confirmed": "Bekräftad",

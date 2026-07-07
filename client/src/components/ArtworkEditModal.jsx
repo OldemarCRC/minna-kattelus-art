@@ -1,9 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import axios from '@/lib/axios';
 import { useConfirmDialog } from '@/hooks/useConfirmDialog';
+import { getErrorMessage } from '@/lib/apiErrors';
 import { CATEGORIES } from '@/constants/artworkCategories';
 import {
   AlertDialog,
@@ -19,6 +21,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 // Admin-only editing modal - fields are intentionally not translated (see ArtworkManager.jsx)
 export default function ArtworkEditModal({ artwork, open, onOpenChange, onSuccess }) {
+  const t = useTranslations();
   const { confirm, ConfirmDialog } = useConfirmDialog();
 
   const [formData, setFormData] = useState(null);
@@ -155,7 +158,8 @@ export default function ArtworkEditModal({ artwork, open, onOpenChange, onSucces
       onSuccess?.();
     } catch (err) {
       console.error('Error saving artwork:', err);
-      const errorMsg = err.response?.data?.message || 'Error saving artwork';
+      const fallback = err.response?.data?.message || 'Error saving artwork';
+      const errorMsg = getErrorMessage(t, err, { fallback });
       toast.error('Error saving artwork', {
         description: errorMsg,
       });

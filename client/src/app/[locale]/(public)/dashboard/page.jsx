@@ -9,6 +9,7 @@ import ArtworkManager from '@/components/ArtworkManager';
 import axios from '@/lib/axios';
 import { toast } from 'sonner';
 import { useConfirmDialog } from '@/hooks/useConfirmDialog';
+import { getErrorMessage } from '@/lib/apiErrors';
 import RefundDialog from '@/components/ui/RefundDialog';
 
 // --- ICONS ---
@@ -357,7 +358,8 @@ export default function DashboardPage() {
       }
     } catch (error) {
       console.error('Error updating order status:', error);
-      toast.error(t('dashboard.errorUpdatingStatus'));
+      const errorMsg = getErrorMessage(t, error, { locale, fallback: t('dashboard.errorUpdatingStatus') });
+      toast.error(errorMsg);
     }
   };
 

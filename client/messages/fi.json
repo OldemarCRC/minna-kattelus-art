@@ -470,6 +470,11 @@
     "errorRegisteringRefund": "Virhe hyvitystä kirjattaessa",
     "refundMissingFields": "Täytä summa, päivämäärä, tapa ja viite",
     "noRefundsPending": "Ei odottavia hyvityksiä",
+    "errors": {
+      "ARTWORK_HAS_ACTIVE_ORDER": "Tätä teosta ei voi merkitä saatavilla olevaksi: se on jo varattu tilauksessa {orderNumber} (tila: {orderStatus}).",
+      "ORDER_STATUS_ARTWORK_CONFLICT": "Peruutusta ei voi kumota: {artworkTitles} on jo varattu tai myyty toisessa tilauksessa.",
+      "REFUND_NOT_PENDING": "Tällä tilauksella ei ole odottavaa hyvitystä rekisteröitäväksi."
+    },
     "statuses": {
       "pending": "Odottaa",
       "confirmed": "Vahvistettu",

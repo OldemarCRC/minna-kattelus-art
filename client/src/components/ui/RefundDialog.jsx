@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import axios from '@/lib/axios';
 import { toast } from 'sonner';
+import { getErrorMessage } from '@/lib/apiErrors';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -61,7 +62,8 @@ export default function RefundDialog({ order, open, onOpenChange, onSuccess }) {
       }
     } catch (error) {
       console.error('Error registering refund:', error);
-      toast.error(t('dashboard.errorRegisteringRefund'));
+      const errorMsg = getErrorMessage(t, error, { fallback: t('dashboard.errorRegisteringRefund') });
+      toast.error(errorMsg);
     } finally {
       setIsSubmitting(false);
     }

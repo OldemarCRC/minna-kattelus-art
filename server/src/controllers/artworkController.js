@@ -175,7 +175,9 @@ export const updateArtwork = async (req, res) => {
         console.log(`⚠️ Cannot mark artwork ${artwork._id} as available - claimed by order ${conflictingOrder.orderNumber}`);
         return res.status(409).json({
           success: false,
-          message: `No se puede marcar esta obra como disponible: ya está reservada en la orden ${conflictingOrder.orderNumber} (estado: ${conflictingOrder.status}).`
+          message: 'Artwork already reserved by another active order',
+          errorCode: 'ARTWORK_HAS_ACTIVE_ORDER',
+          errorData: { orderNumber: conflictingOrder.orderNumber, orderStatus: conflictingOrder.status }
         });
       }
     }

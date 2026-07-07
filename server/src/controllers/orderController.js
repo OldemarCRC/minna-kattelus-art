@@ -254,7 +254,11 @@ export const updateOrderStatus = async (req, res) => {
         console.log('⚠️ Cannot restore order', order.orderNumber, '- artwork(s) already claimed:', conflictTitles);
         return res.status(409).json({
           success: false,
-          message: `No se puede revertir la cancelación: la(s) obra(s) ${conflictTitles} ya está(n) reservada(s) o vendida(s) en otra orden.`
+          message: `Cannot revert cancellation: artwork(s) ${conflictTitles} already reserved or sold in another order`,
+          errorCode: 'ORDER_STATUS_ARTWORK_CONFLICT',
+          errorData: {
+            artworks: conflicts.map((artwork) => ({ id: artwork._id.toString(), title: artwork.title }))
+          }
         });
       }
 
@@ -334,14 +338,16 @@ export const registerRefund = async (req, res) => {
       console.log('⚠️ Cannot register refund for order', order.orderNumber, '- paymentStatus is', order.paymentStatus);
       return res.status(400).json({
         success: false,
-        message: 'Esta orden no tiene una devolución pendiente de registrar.'
+        message: 'Order does not have a pending refund to register',
+        errorCode: 'REFUND_NOT_PENDING'
       });
     }
 
     if (!amount || !date || !method || !reference) {
       return res.status(400).json({
         success: false,
-        message: 'Faltan datos requeridos: amount, date, method y reference son obligatorios.'
+        message: 'Missing required fields: amount, date, method and reference are mandatory',
+        errorCode: 'REFUND_MISSING_FIELDS'
       });
     }
 
