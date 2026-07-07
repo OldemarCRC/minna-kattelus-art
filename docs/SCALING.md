@@ -32,6 +32,30 @@ the artwork in Artwork Management. This is a synchronous DB lookup, appropriate 
 current volume. See "Trigger 3: Inventory Management Issues" below for when a more
 robust reservation system (locking, TTL-based holds) becomes necessary.
 
+## Session 2026-07-07 Notes
+
+### Business-Logic Error i18n Pattern (`errorCode` + `errorData`)
+Backend business-validation errors (409/400 for domain rules — artwork reservation
+conflicts, refund state checks — not generic 500s) return a stable `errorCode` string plus
+`errorData` with the interpolation values, instead of translated text. The frontend maps
+`errorCode` to a message via `client/src/lib/apiErrors.js` and `dashboard.errors.*` in
+`client/messages/*.json`. **Apply this same pattern to any new business-logic error** rather
+than hardcoding message text in a controller — it's what let this project add a 5th
+language without touching a single backend response.
+
+### `dangerouslyAllowLocalIP` — Technical Debt Before Production
+Gated to `NODE_ENV === 'development'` only (`client/next.config.mjs`), so `next/image`
+loading artwork thumbnails from the dev machine's private IP doesn't silently ship to
+production. Before deploying to a real host, confirm image `remotePatterns` point at an
+actual domain/CDN instead of a raw local IP — the dev-only flag won't be there to mask it.
+
+### Customer Locale Capture at Checkout
+`Order.locale` is captured from the client's active locale (`useLocale()`) at checkout time
+and drives which language `sendOrderConfirmationEmail`/`sendRefundConfirmationEmail` use.
+If a future flow creates orders without going through the checkout form (admin-created
+orders, guest re-orders, imports), remember to set `locale` explicitly — it silently
+defaults to `'en'` otherwise.
+
 ## When to Scale
 
 ### Trigger 1: Multi-Device Users
