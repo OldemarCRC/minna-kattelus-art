@@ -1,69 +1,59 @@
 'use client';
+
 import { useState, useEffect } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'sonner';
-import { useConfirmDialog } from '@/hooks/useConfirmDialog';
 import axios from '@/lib/axios';
-import ArtworkEditModal from '@/components/ArtworkEditModal';
+import { useConfirmDialog } from '@/hooks/useConfirmDialog';
 import { CATEGORIES } from '@/constants/artworkCategories';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+} from '@/components/ui/AlertDialog';
 import '@/styles/ArtworkManager.css';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
-const ArtworkManager = () => {
-  const locale = useLocale();
-  const t = useTranslations();
+// Admin-only editing modal - fields are intentionally not translated (see ArtworkManager.jsx)
+export default function ArtworkEditModal({ artwork, open, onOpenChange, onSuccess }) {
   const { confirm, ConfirmDialog } = useConfirmDialog();
-  
-  const [artworks, setArtworks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [showForm, setShowForm] = useState(false);
-  const [editingArtwork, setEditingArtwork] = useState(null);
-  const [editModalOpen, setEditModalOpen] = useState(false);
 
-  const userStr = typeof window !== 'undefined' ? sessionStorage.getItem('user') : null;
-  const currentUser = userStr ? JSON.parse(userStr) : null;
-  const isAdmin = currentUser?.role === 'admin';
-  
-  const [formData, setFormData] = useState({
-    title: { en: '', es: '', fi: '', sv: '', so: '' },
-    description: { en: '', es: '', fi: '', sv: '', so: '' },
-    category: { en: '', es: '', fi: '', sv: '', so: '' },
-    technique: { en: '', es: '', fi: '', sv: '', so: '' },
-    year: new Date().getFullYear(),
-    dimensions: { width: '', height: '', unit: 'cm' },
-    price: '',
-    currency: 'EUR',
-    available: true,
-    featured: false,
-    displayOrder: 0
-  });
-
+  const [formData, setFormData] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
+  const [isDirty, setIsDirty] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Load the artwork being edited whenever the modal opens for it
   useEffect(() => {
-    fetchArtworks();
-  }, []);
-
-  const fetchArtworks = async () => {
-    try {
-      const response = await axios.get('/api/artworks');
-      setArtworks(response.data.data);
-      setLoading(false);
-    } catch (err) {
-      console.error('Error fetching artworks:', err);
-      setError('Error loading artworks');
-      toast.error('Error loading artworks', {
-        description: 'Please try refreshing the page.',
+    if (open && artwork) {
+      setFormData({
+        title: artwork.title,
+        description: artwork.description,
+        technique: artwork.technique,
+        category: artwork.category,
+        year: artwork.year,
+        dimensions: artwork.dimensions,
+        price: artwork.price,
+        currency: artwork.currency,
+        available: artwork.available,
+        featured: artwork.featured,
+        displayOrder: artwork.displayOrder
       });
-      setLoading(false);
+      setImageFile(null);
+      setImagePreview(`${API_URL}/uploads/artworks/${artwork.image}`);
+      setIsDirty(false);
     }
-  };
+  }, [open, artwork]);
+
+  if (!open || !artwork || !formData) return null;
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
+    setIsDirty(true);
 
     if (name.includes('.')) {
       const [parent, child] = name.split('.');
@@ -83,18 +73,14 @@ const ArtworkManager = () => {
   };
 
   const handleCategoryChange = (e) => {
-    const selectedKey = e.target.value;
-    const selectedCategory = CATEGORIES[selectedKey];
-    
-    setFormData(prev => ({
-      ...prev,
-      category: selectedCategory
-    }));
+    const selectedCategory = CATEGORIES[e.target.value];
+    setIsDirty(true);
+    setFormData(prev => ({ ...prev, category: selectedCategory }));
   };
 
   const getCurrentCategoryKey = () => {
     if (!formData.category.en) return '';
-    
+
     for (const [key, value] of Object.entries(CATEGORIES)) {
       if (value.en === formData.category.en) {
         return key;
@@ -106,6 +92,7 @@ const ArtworkManager = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      setIsDirty(true);
       setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -115,14 +102,29 @@ const ArtworkManager = () => {
     }
   };
 
+  // Any attempt to close (Cancel button or Escape) must go through this,
+  // so unsaved changes are never lost silently
+  const requestClose = async () => {
+    if (isDirty) {
+      const confirmed = await confirm({
+        title: 'Discard changes?',
+        description: 'You have unsaved changes to this artwork. Are you sure you want to discard them?',
+        confirmText: 'Discard changes',
+        cancelText: 'Keep editing',
+        variant: 'danger',
+      });
+      if (!confirmed) return;
+    }
+    onOpenChange(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setIsSubmitting(true);
 
     try {
       const formDataToSend = new FormData();
 
-      // Add image if exists
       if (imageFile) {
         formDataToSend.append('image', imageFile);
       }
@@ -132,8 +134,7 @@ const ArtworkManager = () => {
       formDataToSend.append('category', JSON.stringify(formData.category));
       formDataToSend.append('technique', JSON.stringify(formData.technique));
       formDataToSend.append('dimensions', JSON.stringify(formData.dimensions));
-      
-      // Simple fields
+
       formDataToSend.append('year', formData.year);
       formDataToSend.append('price', formData.price);
       formDataToSend.append('currency', formData.currency);
@@ -141,106 +142,40 @@ const ArtworkManager = () => {
       formDataToSend.append('featured', formData.featured);
       formDataToSend.append('displayOrder', formData.displayOrder);
 
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
+      await axios.put(`/api/artworks/${artwork._id}`, formDataToSend, {
+        headers: { 'Content-Type': 'multipart/form-data' },
         withCredentials: true
-      };
-
-      await axios.post('/api/artworks', formDataToSend, config);
-      toast.success('Artwork created', {
-        description: 'The new artwork has been added to the gallery.',
       });
 
-      resetForm();
-      fetchArtworks();
-      setShowForm(false);
+      toast.success('Artwork updated', {
+        description: 'The artwork has been updated successfully.',
+      });
+      setIsDirty(false);
+      onOpenChange(false);
+      onSuccess?.();
     } catch (err) {
       console.error('Error saving artwork:', err);
       const errorMsg = err.response?.data?.message || 'Error saving artwork';
-      setError(errorMsg);
       toast.error('Error saving artwork', {
         description: errorMsg,
       });
+      // Keep the modal open with whatever the admin already typed
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
-  const handleEditClick = (artwork) => {
-    setEditingArtwork(artwork);
-    setEditModalOpen(true);
-  };
-
-  const handleDelete = async (id, title) => {
-    // Use AlertDialog for confirmation
-    const confirmed = await confirm({
-      title: 'Delete Artwork',
-      description: `Are you sure you want to delete "${title}"? This action cannot be undone.`,
-      confirmText: 'Delete',
-      cancelText: 'Cancel',
-      variant: 'danger',
-    });
-
-    if (!confirmed) return;
-
-    try {
-      await axios.delete(`/api/artworks/${id}`);
-      toast.success('Artwork deleted', {
-        description: 'The artwork has been permanently removed.',
-      });
-      fetchArtworks();
-    } catch (err) {
-      console.error('Error deleting artwork:', err);
-      const errorMsg = err.response?.data?.message || 'Error deleting artwork';
-      setError(errorMsg);
-      toast.error('Error deleting artwork', {
-        description: errorMsg,
-      });
-    }
-  };
-
-  const resetForm = () => {
-    setFormData({
-      title: { en: '', es: '', fi: '', sv: '', so: '' },
-      description: { en: '', es: '', fi: '', sv: '', so: '' },
-      technique: { en: '', es: '', fi: '', sv: '', so: '' },
-      category: { en: '', es: '', fi: '', sv: '', so: '' },
-      year: new Date().getFullYear(),
-      dimensions: { width: '', height: '', unit: 'cm' },
-      price: '',
-      currency: 'EUR',
-      available: true,
-      featured: false,
-      displayOrder: 0
-    });
-    setImageFile(null);
-    setImagePreview('');
-  };
-
-  if (loading) {
-    return <div className="loading">Loading artworks...</div>;
-  }
 
   return (
-    <div className="artwork-manager">
-      <div className="manager-header">
-        <h2>Artwork Management</h2>
-        <button
-          className="btn-primary btn-new-artwork"
-          onClick={() => {
-            resetForm();
-            setShowForm(!showForm);
-          }}
-        >
-          {showForm ? 'Cancel' : '+ New Artwork'}
-        </button>
-      </div>
+    <>
+      <AlertDialog open={open} onOpenChange={(next) => { if (!next) requestClose(); }}>
+        <AlertDialogContent className="artwork-edit-modal-content">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Edit Artwork</AlertDialogTitle>
+            <AlertDialogDescription>
+              Update the artwork details below.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
 
-      {error && <div className="alert alert-error">{error}</div>}
-
-      {showForm && (
-        <div className="artwork-form-container">
-          <h3>Create New Artwork</h3>
           <form onSubmit={handleSubmit} className="artwork-form">
             {/* Image Upload */}
             <div className="form-group full-width">
@@ -249,7 +184,6 @@ const ArtworkManager = () => {
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
-                required
               />
               {imagePreview && (
                 <div className="image-preview">
@@ -330,20 +264,19 @@ const ArtworkManager = () => {
                     </option>
                   ))}
                 </select>
-                {/* Show category in all languages (preview only) */}
                 {formData.category.en && (
                   <div className="category-preview">
                     <small>
-                      EN: {formData.category.en} | 
-                      ES: {formData.category.es} | 
-                      FI: {formData.category.fi} | 
+                      EN: {formData.category.en} |
+                      ES: {formData.category.es} |
+                      FI: {formData.category.fi} |
                       SV: {formData.category.sv} |
                       SO: {formData.category.so}
                     </small>
                   </div>
                 )}
               </div>
-              
+
               <div className="form-group">
                 <label>Year</label>
                 <input
@@ -458,82 +391,29 @@ const ArtworkManager = () => {
               </div>
             </div>
 
-            <div className="form-actions">
-              <button type="submit" className="btn-primary">
-                Create Artwork
-              </button>
+            <AlertDialogFooter>
               <button
                 type="button"
-                className="btn-secondary"
-                onClick={() => {
-                  resetForm();
-                  setShowForm(false);
-                }}
+                className="alert-dialog-cancel"
+                onClick={requestClose}
+                disabled={isSubmitting}
               >
                 Cancel
               </button>
-            </div>
+              {/* Plain button (not AlertDialogAction) so a failed submit doesn't
+                  auto-close the dialog - Radix's AlertDialogAction wraps Dialog.Close */}
+              <button
+                type="submit"
+                className="alert-dialog-action"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Saving...' : 'Update Artwork'}
+              </button>
+            </AlertDialogFooter>
           </form>
-        </div>
-      )}
-
-      {/* Artworks List */}
-      <div className="artworks-list">
-        <h3>All Artworks ({artworks.length})</h3>
-        <div className="artworks-grid">
-          {artworks.map(artwork => (
-            <div key={artwork._id} className="artwork-card">
-              <div className="artwork-image">
-                <img
-                  src={`${API_URL}/uploads/artworks/${artwork.image}`}
-                  alt={artwork.title[locale] || artwork.title.en}
-                />
-                {artwork.featured && <span className="badge-featured">Featured</span>}
-                {!artwork.available && <span className="badge-sold">Sold</span>}
-              </div>
-              <div className="artwork-info">
-                <h4>{artwork.title[locale] || artwork.title.en}</h4>
-                <p className="category">{artwork.category[locale] || artwork.category.en}</p>
-                <p className="price">
-                  {artwork.currency === 'EUR' ? '€' : '$'}{artwork.price}
-                </p>
-                <p className="dimensions">
-                  {artwork.dimensions.width} × {artwork.dimensions.height} {artwork.dimensions.unit}
-                </p>
-                <p className="year">{artwork.year}</p>
-              </div>
-              <div className="artwork-actions">
-                <button
-                  className="btn-edit"
-                  onClick={() => handleEditClick(artwork)}
-                >
-                  Edit
-                </button>
-                {isAdmin && (
-                  <button 
-                    onClick={() => handleDelete(artwork._id, artwork.title[locale] || artwork.title.en)} 
-                    className="btn-delete"
-                  >
-                    Delete
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Render the ConfirmDialog */}
+        </AlertDialogContent>
+      </AlertDialog>
       {ConfirmDialog}
-
-      <ArtworkEditModal
-        artwork={editingArtwork}
-        open={editModalOpen}
-        onOpenChange={setEditModalOpen}
-        onSuccess={fetchArtworks}
-      />
-    </div>
+    </>
   );
-};
-
-export default ArtworkManager;
+}

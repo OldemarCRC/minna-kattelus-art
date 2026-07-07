@@ -367,6 +367,29 @@
   color: var(--color-text-light);
 }
 
+/* Artwork Edit Modal - widen/scroll the AlertDialog content to fit the full form */
+.artwork-edit-modal-content {
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.artwork-edit-modal-content .artwork-form {
+  gap: 1.25rem;
+}
+
+.artwork-edit-modal-content .alert-dialog-footer {
+  margin-top: 0.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 768px) {
+  .artwork-edit-modal-content {
+    max-width: 95vw;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .artwork-manager {
