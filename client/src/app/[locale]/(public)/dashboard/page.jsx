@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { ChevronDown } from 'lucide-react';
 import '@/styles/Dashboard.css';
 import ArtworkManager from '@/components/ArtworkManager';
 import axios from '@/lib/axios';
@@ -131,6 +132,11 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 // --- ORDERS TABLE COMPONENT ---
 const OrdersTable = ({ orders, locale, onStatusChange, ordersFilter, onRegisterRefund }) => {
   const t = useTranslations();
+  const [expandedOrderId, setExpandedOrderId] = useState(null);
+
+  const toggleExpanded = (orderId) => {
+    setExpandedOrderId((prev) => (prev === orderId ? null : orderId));
+  };
 
   const statusColors = {
     pending: 'status-pending',
@@ -180,11 +186,21 @@ const OrdersTable = ({ orders, locale, onStatusChange, ordersFilter, onRegisterR
               ? `${API_URL}/uploads/artworks/${firstImage}`
               : '/placeholder.jpg';
             const extraItems = order.items.length - 1;
+            const isExpanded = expandedOrderId === order._id;
 
             return (
-            <tr key={order._id}>
+            <React.Fragment key={order._id}>
+            <tr
+              className="order-row"
+              onClick={() => toggleExpanded(order._id)}
+              aria-expanded={isExpanded}
+            >
               <td className="order-number">
                 <div className="order-number-cell">
+                  <ChevronDown
+                    size={16}
+                    className={`order-expand-chevron ${isExpanded ? 'expanded' : ''}`}
+                  />
                   <div className="order-thumbnail-wrapper">
                     <Image
                       src={thumbnailSrc}
@@ -219,7 +235,10 @@ const OrdersTable = ({ orders, locale, onStatusChange, ordersFilter, onRegisterR
                   <button
                     type="button"
                     className="btn-refund"
-                    onClick={() => onRegisterRefund(order)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onRegisterRefund(order);
+                    }}
                   >
                     {t('dashboard.registerRefund')}
                   </button>
@@ -227,6 +246,7 @@ const OrdersTable = ({ orders, locale, onStatusChange, ordersFilter, onRegisterR
                   <select
                     className="status-select"
                     value={order.status}
+                    onClick={(e) => e.stopPropagation()}
                     onChange={(e) => onStatusChange(order._id, e.target.value)}
                   >
                     {statusOptions.map((status) => (
@@ -238,6 +258,39 @@ const OrdersTable = ({ orders, locale, onStatusChange, ordersFilter, onRegisterR
                 )}
               </td>
             </tr>
+            {isExpanded && (
+              <tr className="order-details-row">
+                <td colSpan={7}>
+                  <div className="order-details-panel">
+                    {order.items.map((item, index) => {
+                      const itemThumbnailSrc = item.image
+                        ? `${API_URL}/uploads/artworks/${item.image}`
+                        : '/placeholder.jpg';
+                      const itemTitle = item.title?.[locale] || item.title?.en || '—';
+
+                      return (
+                        <div key={`${order._id}-item-${index}`} className="order-detail-item">
+                          <Image
+                            src={itemThumbnailSrc}
+                            alt={itemTitle}
+                            width={48}
+                            height={48}
+                            className="order-detail-thumbnail"
+                          />
+                          <div className="order-detail-item-info">
+                            <span className="order-detail-item-title">{itemTitle}</span>
+                            <span className="order-detail-item-price">
+                              {item.currency === 'EUR' ? '€' : '$'}{item.price.toFixed(2)}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </td>
+              </tr>
+            )}
+            </React.Fragment>
             );
           })}
         </tbody>
