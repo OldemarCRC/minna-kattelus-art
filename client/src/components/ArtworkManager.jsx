@@ -10,6 +10,13 @@ import '@/styles/ArtworkManager.css';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
+const ARTWORK_FILTER_LABELS = {
+  all: 'All Artworks',
+  available: 'Available Artworks',
+  sold: 'Sold Artworks',
+  featured: 'Featured Artworks'
+};
+
 const ArtworkManager = () => {
   const locale = useLocale();
   const t = useTranslations();
@@ -21,6 +28,7 @@ const ArtworkManager = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingArtwork, setEditingArtwork] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [artworkFilter, setArtworkFilter] = useState('all');
 
   const userStr = typeof window !== 'undefined' ? sessionStorage.getItem('user') : null;
   const currentUser = userStr ? JSON.parse(userStr) : null;
@@ -45,11 +53,18 @@ const ArtworkManager = () => {
 
   useEffect(() => {
     fetchArtworks();
-  }, []);
+  }, [artworkFilter]);
 
   const fetchArtworks = async () => {
     try {
-      const response = await axios.get('/api/artworks');
+      setLoading(true);
+
+      const params = {};
+      if (artworkFilter === 'available') params.available = true;
+      if (artworkFilter === 'sold') params.available = false;
+      if (artworkFilter === 'featured') params.featured = true;
+
+      const response = await axios.get('/api/artworks', { params });
       setArtworks(response.data.data);
       setLoading(false);
     } catch (err) {
@@ -233,6 +248,37 @@ const ArtworkManager = () => {
           }}
         >
           {showForm ? 'Cancel' : '+ New Artwork'}
+        </button>
+      </div>
+
+      <div className="artwork-filter-tabs">
+        <button
+          type="button"
+          className={`filter-tab ${artworkFilter === 'all' ? 'active' : ''}`}
+          onClick={() => setArtworkFilter('all')}
+        >
+          All
+        </button>
+        <button
+          type="button"
+          className={`filter-tab ${artworkFilter === 'available' ? 'active' : ''}`}
+          onClick={() => setArtworkFilter('available')}
+        >
+          Available
+        </button>
+        <button
+          type="button"
+          className={`filter-tab ${artworkFilter === 'sold' ? 'active' : ''}`}
+          onClick={() => setArtworkFilter('sold')}
+        >
+          Sold
+        </button>
+        <button
+          type="button"
+          className={`filter-tab ${artworkFilter === 'featured' ? 'active' : ''}`}
+          onClick={() => setArtworkFilter('featured')}
+        >
+          Featured
         </button>
       </div>
 
@@ -479,7 +525,7 @@ const ArtworkManager = () => {
 
       {/* Artworks List */}
       <div className="artworks-list">
-        <h3>All Artworks ({artworks.length})</h3>
+        <h3>{ARTWORK_FILTER_LABELS[artworkFilter]} ({artworks.length})</h3>
         <div className="artworks-grid">
           {artworks.map(artwork => (
             <div key={artwork._id} className="artwork-card">
