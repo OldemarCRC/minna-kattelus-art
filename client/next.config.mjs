@@ -37,6 +37,9 @@ const nextConfig = {
         pathname: '/uploads/**',
       },
     ],
+    // Solo se activa en desarrollo: en producción la IP local no es alcanzable
+    // y no queremos depender de recordar quitar este flag antes de desplegar.
+    ...(process.env.NODE_ENV === 'development' && { dangerouslyAllowLocalIP: true }),
   },
 
   // 5. Evitar errores si intentas usar librerías de Node en el cliente
