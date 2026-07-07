@@ -6,7 +6,14 @@ const orderSchema = new mongoose.Schema({
     required: false,  // Se genera en el controller
     unique: true
   },
-  
+
+  // Customer's locale at checkout time, used to send emails in their language
+  locale: {
+    type: String,
+    enum: ['en', 'es', 'fi', 'sv', 'so'],
+    default: 'en'
+  },
+
   // Customer Info
   customer: {
     name: { type: String, required: true },

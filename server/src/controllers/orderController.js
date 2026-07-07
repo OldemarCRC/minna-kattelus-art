@@ -1,6 +1,6 @@
 import Order from '../models/Order.js';
 import Artwork from '../models/Artwork.js';
-import { sendOrderConfirmationEmail } from '../utils/mailer.js';
+import { sendOrderConfirmationEmail, sendRefundConfirmationEmail, sendRefundNotificationEmail } from '../utils/mailer.js';
 import { hasActiveOrderForArtwork } from '../utils/orderValidation.js';
 
 // Create new order
@@ -8,7 +8,7 @@ export const createOrder = async (req, res) => {
   try {
     console.log('📦 CREATE ORDER - Request received');
 
-    const { customer, items, subtotal, shipping, total, paymentMethod, customerNotes } = req.body;
+    const { customer, items, subtotal, shipping, total, paymentMethod, customerNotes, locale } = req.body;
 
     // Validate required fields
     if (!customer || !items || !Array.isArray(items) || items.length === 0) {
@@ -83,7 +83,8 @@ export const createOrder = async (req, res) => {
       paymentMethod: paymentMethod || 'bank_transfer',
       customerNotes,
       currency: 'EUR',
-      paymentStatus: 'paid'
+      paymentStatus: 'paid',
+      locale: locale || 'en'
     });
 
     await order.save();
@@ -369,6 +370,20 @@ export const registerRefund = async (req, res) => {
       message: 'Refund registered successfully',
       data: order
     });
+
+    try {
+      await sendRefundConfirmationEmail(order);
+      console.log('✅ Refund confirmation email sent to:', order.customer.email);
+    } catch (emailError) {
+      console.error('⚠️ Failed to send refund confirmation email:', emailError.message);
+    }
+
+    try {
+      await sendRefundNotificationEmail(order, { username: req.user.username, email: req.user.email });
+      console.log('✅ Refund notification email sent to admin');
+    } catch (emailError) {
+      console.error('⚠️ Failed to send refund notification email:', emailError.message);
+    }
 
   } catch (error) {
     console.error('❌ Register refund error:', error);

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useConfirmDialog } from '@/hooks/useConfirmDialog';
@@ -13,6 +13,7 @@ export default function CheckoutPage() {
   const { items, total, clearCart, removeItem } = useCart();
   const t = useTranslations('checkout');
   const { locale } = useParams();
+  const currentLocale = useLocale();
   const router = useRouter();
   const { confirm, ConfirmDialog } = useConfirmDialog();
 
@@ -110,7 +111,8 @@ export default function CheckoutPage() {
         shipping: 0,
         total: total,
         paymentMethod: formData.paymentMethod,
-        customerNotes: formData.customerNotes
+        customerNotes: formData.customerNotes,
+        locale: currentLocale
       };
 
       const response = await axios.post('/api/orders', orderData);

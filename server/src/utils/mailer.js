@@ -31,6 +31,246 @@ const emailStyles = {
 };
 
 // ============================================
+// CUSTOMER-FACING EMAIL TEXTS (per order.locale)
+// ============================================
+// Only customer-facing emails (order confirmation, refund confirmation) are
+// localized. Admin/internal notification emails stay in English.
+const EMAIL_TEXTS = {
+  en: {
+    orderConfirmation: {
+      subjectPrefix: 'Order Confirmation',
+      thankYou: 'Thank You for Your Order!',
+      received: 'Your order has been received and is being processed.',
+      orderNumberLabel: 'Order Number',
+      orderDetails: 'Order Details',
+      itemCol: 'Item',
+      priceCol: 'Price',
+      subtotal: 'Subtotal',
+      shipping: 'Shipping',
+      total: 'Total',
+      shippingAddress: 'Shipping Address',
+      phone: 'Phone',
+      paymentMethodTitle: 'Payment Method',
+      bankTransfer: 'Bank Transfer',
+      creditDebitCard: 'Credit/Debit Card',
+      bankTransferDetailsTitle: 'Bank Transfer Details:',
+      bankTransferInstructions: 'Please transfer the total amount to:',
+      iban: 'IBAN:',
+      ibanPending: '[Bank details will be provided]',
+      reference: 'Reference:',
+      yourNotes: 'Your Notes',
+      whatsNext: "What's Next?",
+      step1: "We'll review your order and confirm availability",
+      step2: "You'll receive payment instructions (if bank transfer)",
+      step3: "Once payment is confirmed, we'll prepare your artwork for shipping",
+      step4: "You'll receive tracking information when shipped",
+      questions: 'Questions about your order?',
+      contactUs: 'Contact Us'
+    },
+    refundConfirmation: {
+      subjectPrefix: 'Refund Processed',
+      title: 'Your Refund Has Been Processed',
+      intro: 'We have processed the refund for your order. Here are the details:',
+      orderNumberLabel: 'Order Number',
+      amount: 'Refund Amount',
+      date: 'Refund Date',
+      method: 'Refund Method',
+      reference: 'Reference / Transaction Number',
+      notes: 'Notes',
+      methodNames: { bank_transfer: 'Bank Transfer', credit_card: 'Credit Card', stripe: 'Stripe', other: 'Other' },
+      questions: 'Questions about this refund?',
+      contactUs: 'Contact Us'
+    }
+  },
+  es: {
+    orderConfirmation: {
+      subjectPrefix: 'Confirmación de Pedido',
+      thankYou: '¡Gracias por tu Pedido!',
+      received: 'Hemos recibido tu pedido y lo estamos procesando.',
+      orderNumberLabel: 'Número de Pedido',
+      orderDetails: 'Detalles del Pedido',
+      itemCol: 'Artículo',
+      priceCol: 'Precio',
+      subtotal: 'Subtotal',
+      shipping: 'Envío',
+      total: 'Total',
+      shippingAddress: 'Dirección de Envío',
+      phone: 'Teléfono',
+      paymentMethodTitle: 'Método de Pago',
+      bankTransfer: 'Transferencia Bancaria',
+      creditDebitCard: 'Tarjeta de Crédito/Débito',
+      bankTransferDetailsTitle: 'Datos para la Transferencia:',
+      bankTransferInstructions: 'Por favor transfiere el monto total a:',
+      iban: 'IBAN:',
+      ibanPending: '[Los datos bancarios se proporcionarán próximamente]',
+      reference: 'Referencia:',
+      yourNotes: 'Tus Notas',
+      whatsNext: '¿Qué Sigue?',
+      step1: 'Revisaremos tu pedido y confirmaremos la disponibilidad',
+      step2: 'Recibirás las instrucciones de pago (si elegiste transferencia bancaria)',
+      step3: 'Una vez confirmado el pago, prepararemos tu obra para el envío',
+      step4: 'Recibirás la información de seguimiento cuando se envíe',
+      questions: '¿Tienes preguntas sobre tu pedido?',
+      contactUs: 'Contáctanos'
+    },
+    refundConfirmation: {
+      subjectPrefix: 'Devolución Procesada',
+      title: 'Tu Devolución Ha Sido Procesada',
+      intro: 'Hemos procesado la devolución de tu pedido. Aquí están los detalles:',
+      orderNumberLabel: 'Número de Pedido',
+      amount: 'Monto Devuelto',
+      date: 'Fecha de Devolución',
+      method: 'Método de Devolución',
+      reference: 'Referencia / Número de Transacción',
+      notes: 'Notas',
+      methodNames: { bank_transfer: 'Transferencia Bancaria', credit_card: 'Tarjeta de Crédito', stripe: 'Stripe', other: 'Otro' },
+      questions: '¿Tienes preguntas sobre esta devolución?',
+      contactUs: 'Contáctanos'
+    }
+  },
+  fi: {
+    orderConfirmation: {
+      subjectPrefix: 'Tilausvahvistus',
+      thankYou: 'Kiitos Tilauksestasi!',
+      received: 'Tilauksesi on vastaanotettu ja sitä käsitellään.',
+      orderNumberLabel: 'Tilausnumero',
+      orderDetails: 'Tilauksen Tiedot',
+      itemCol: 'Tuote',
+      priceCol: 'Hinta',
+      subtotal: 'Välisumma',
+      shipping: 'Toimitus',
+      total: 'Yhteensä',
+      shippingAddress: 'Toimitusosoite',
+      phone: 'Puhelin',
+      paymentMethodTitle: 'Maksutapa',
+      bankTransfer: 'Pankkisiirto',
+      creditDebitCard: 'Luotto-/Pankkikortti',
+      bankTransferDetailsTitle: 'Pankkisiirron Tiedot:',
+      bankTransferInstructions: 'Siirrä kokonaissumma tilille:',
+      iban: 'IBAN:',
+      ibanPending: '[Pankkitiedot toimitetaan myöhemmin]',
+      reference: 'Viite:',
+      yourNotes: 'Omat Muistiinpanosi',
+      whatsNext: 'Mitä Seuraavaksi?',
+      step1: 'Tarkistamme tilauksesi ja vahvistamme saatavuuden',
+      step2: 'Saat maksuohjeet (jos valitsit pankkisiirron)',
+      step3: 'Kun maksu on vahvistettu, valmistelemme teoksesi lähetystä varten',
+      step4: 'Saat seurantatiedot, kun tilaus lähetetään',
+      questions: 'Kysyttävää tilauksestasi?',
+      contactUs: 'Ota Yhteyttä'
+    },
+    refundConfirmation: {
+      subjectPrefix: 'Hyvitys Käsitelty',
+      title: 'Hyvityksesi On Käsitelty',
+      intro: 'Olemme käsitelleet tilauksesi hyvityksen. Tässä tiedot:',
+      orderNumberLabel: 'Tilausnumero',
+      amount: 'Hyvityksen Summa',
+      date: 'Hyvityksen Päivämäärä',
+      method: 'Hyvitystapa',
+      reference: 'Viite / Tapahtumanumero',
+      notes: 'Muistiinpanot',
+      methodNames: { bank_transfer: 'Pankkisiirto', credit_card: 'Luottokortti', stripe: 'Stripe', other: 'Muu' },
+      questions: 'Kysyttävää tästä hyvityksestä?',
+      contactUs: 'Ota Yhteyttä'
+    }
+  },
+  sv: {
+    orderConfirmation: {
+      subjectPrefix: 'Orderbekräftelse',
+      thankYou: 'Tack för Din Beställning!',
+      received: 'Din beställning har mottagits och behandlas.',
+      orderNumberLabel: 'Beställningsnummer',
+      orderDetails: 'Beställningsdetaljer',
+      itemCol: 'Artikel',
+      priceCol: 'Pris',
+      subtotal: 'Delsumma',
+      shipping: 'Frakt',
+      total: 'Totalt',
+      shippingAddress: 'Leveransadress',
+      phone: 'Telefon',
+      paymentMethodTitle: 'Betalningsmetod',
+      bankTransfer: 'Banköverföring',
+      creditDebitCard: 'Kredit-/Betalkort',
+      bankTransferDetailsTitle: 'Uppgifter för Banköverföring:',
+      bankTransferInstructions: 'Vänligen överför hela beloppet till:',
+      iban: 'IBAN:',
+      ibanPending: '[Bankuppgifter kommer att tillhandahållas]',
+      reference: 'Referens:',
+      yourNotes: 'Dina Anteckningar',
+      whatsNext: 'Vad Händer Nu?',
+      step1: 'Vi granskar din beställning och bekräftar tillgängligheten',
+      step2: 'Du får betalningsinstruktioner (vid banköverföring)',
+      step3: 'När betalningen är bekräftad förbereder vi ditt konstverk för leverans',
+      step4: 'Du får spårningsinformation när beställningen skickas',
+      questions: 'Frågor om din beställning?',
+      contactUs: 'Kontakta Oss'
+    },
+    refundConfirmation: {
+      subjectPrefix: 'Återbetalning Behandlad',
+      title: 'Din Återbetalning Har Behandlats',
+      intro: 'Vi har behandlat återbetalningen för din beställning. Här är detaljerna:',
+      orderNumberLabel: 'Beställningsnummer',
+      amount: 'Återbetalningsbelopp',
+      date: 'Återbetalningsdatum',
+      method: 'Återbetalningsmetod',
+      reference: 'Referens / Transaktionsnummer',
+      notes: 'Anteckningar',
+      methodNames: { bank_transfer: 'Banköverföring', credit_card: 'Kreditkort', stripe: 'Stripe', other: 'Annat' },
+      questions: 'Frågor om denna återbetalning?',
+      contactUs: 'Kontakta Oss'
+    }
+  },
+  so: {
+    orderConfirmation: {
+      subjectPrefix: 'Xaqiijinta Dalabka',
+      thankYou: 'Mahadsanid Dalabkaaga!',
+      received: 'Dalabkaaga waa la helay waana la habeynayaa.',
+      orderNumberLabel: 'Lambarka Dalabka',
+      orderDetails: 'Faahfaahinta Dalabka',
+      itemCol: 'Alaabta',
+      priceCol: 'Qiimaha',
+      subtotal: 'Wadarta Hoose',
+      shipping: 'Rarka',
+      total: 'Wadarta',
+      shippingAddress: 'Cinwaanka Rarka',
+      phone: 'Taleefanka',
+      paymentMethodTitle: 'Habka Lacag-bixinta',
+      bankTransfer: 'Wareejinta Bangiga',
+      creditDebitCard: 'Kaadhka Deynta/Bangiga',
+      bankTransferDetailsTitle: 'Faahfaahinta Wareejinta Bangiga:',
+      bankTransferInstructions: 'Fadlan u wareeji wadarta guud:',
+      iban: 'IBAN:',
+      ibanPending: '[Faahfaahinta bangiga waa la soo diri doonaa]',
+      reference: 'Tixraaca:',
+      yourNotes: 'Fiirooyinkaaga',
+      whatsNext: 'Maxaa Xigaa?',
+      step1: 'Waan dib u eegi doonaa dalabkaaga waana xaqiijin doonaa in la heli karo',
+      step2: 'Waxaad heli doontaa tilmaamaha lacag-bixinta (haddii aad dooratay wareejinta bangiga)',
+      step3: 'Marka lacag-bixinta la xaqiijiyo, waan diyaarin doonaa farshaxankaaga si loo diro',
+      step4: 'Waxaad heli doontaa macluumaadka raadraaca marka dalabka la diro',
+      questions: "Su'aalo ku saabsan dalabkaaga?",
+      contactUs: 'Nala Soo Xiriir'
+    },
+    refundConfirmation: {
+      subjectPrefix: 'Lacag-celin La Habeeyay',
+      title: 'Lacag-celintaada Waa La Habeeyay',
+      intro: 'Waanu habaynay lacag-celinta dalabkaaga. Faahfaahinta waa kuwan:',
+      orderNumberLabel: 'Lambarka Dalabka',
+      amount: 'Qadarka Lacag-celinta',
+      date: 'Taariikhda Lacag-celinta',
+      method: 'Habka Lacag-celinta',
+      reference: 'Tixraaca / Lambarka Dhaqdhaqaaqa',
+      notes: 'Fiirooyin',
+      methodNames: { bank_transfer: 'Wareejinta Bangiga', credit_card: 'Kaadhka Deynta', stripe: 'Stripe', other: 'Kale' },
+      questions: "Su'aalo ku saabsan lacag-celintan?",
+      contactUs: 'Nala Soo Xiriir'
+    }
+  }
+};
+
+const getEmailTexts = (locale) => EMAIL_TEXTS[locale] || EMAIL_TEXTS.en;
+
+// ============================================
 // CONTACT FORM EMAILS
 // ============================================
 
@@ -151,11 +391,14 @@ export const sendOrderConfirmationEmail = async (order) => {
     shipping,
     total,
     paymentMethod,
-    customerNotes
+    customerNotes,
+    locale
   } = order;
 
-  const emailSubject = `Order Confirmation #${orderNumber} - Minna Kattelus Art Gallery`;
-  
+  const texts = getEmailTexts(locale).orderConfirmation;
+
+  const emailSubject = `${texts.subjectPrefix} #${orderNumber} - Minna Kattelus Art Gallery`;
+
   // Generate items HTML
   const itemsHtml = items.map(item => `
     <tr>
@@ -185,106 +428,106 @@ export const sendOrderConfirmationEmail = async (order) => {
         <div style="width: 60px; height: 60px; background-color: #10b981; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
           <span style="color: white; font-size: 30px;">✓</span>
         </div>
-        <h1 style="${emailStyles.heading}">Thank You for Your Order!</h1>
-        <p style="color: #6B7280; font-size: 16px;">Your order has been received and is being processed.</p>
+        <h1 style="${emailStyles.heading}">${texts.thankYou}</h1>
+        <p style="color: #6B7280; font-size: 16px;">${texts.received}</p>
       </div>
-      
+
       <!-- Order Number -->
       <div style="background-color: #2D4A3E; color: white; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 30px;">
-        <p style="margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Order Number</p>
+        <p style="margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">${texts.orderNumberLabel}</p>
         <p style="margin: 10px 0 0; font-size: 24px; font-weight: bold;">${orderNumber}</p>
       </div>
-      
+
       <!-- Order Items -->
       <div style="${emailStyles.contentBox}">
-        <h3 style="color: #2D4A3E; margin-top: 0; margin-bottom: 20px;">Order Details</h3>
+        <h3 style="color: #2D4A3E; margin-top: 0; margin-bottom: 20px;">${texts.orderDetails}</h3>
         <table style="width: 100%; border-collapse: collapse;">
           <thead>
             <tr style="background-color: #F5F3F0;">
-              <th style="padding: 12px 15px; text-align: left; font-weight: 600;">Item</th>
-              <th style="padding: 12px 15px; text-align: right; font-weight: 600;">Price</th>
+              <th style="padding: 12px 15px; text-align: left; font-weight: 600;">${texts.itemCol}</th>
+              <th style="padding: 12px 15px; text-align: right; font-weight: 600;">${texts.priceCol}</th>
             </tr>
           </thead>
           <tbody>
             ${itemsHtml}
           </tbody>
         </table>
-        
+
         <!-- Totals -->
         <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #E5E7EB;">
           <table style="width: 100%;">
             <tr>
-              <td style="padding: 8px 0; color: #6B7280;">Subtotal:</td>
+              <td style="padding: 8px 0; color: #6B7280;">${texts.subtotal}:</td>
               <td style="padding: 8px 0; text-align: right;">€${subtotal.toFixed(2)}</td>
             </tr>
             <tr>
-              <td style="padding: 8px 0; color: #6B7280;">Shipping:</td>
+              <td style="padding: 8px 0; color: #6B7280;">${texts.shipping}:</td>
               <td style="padding: 8px 0; text-align: right;">€${shipping.toFixed(2)}</td>
             </tr>
             <tr style="font-size: 18px; font-weight: bold;">
-              <td style="padding: 15px 0; border-top: 2px solid #2D4A3E;">Total:</td>
+              <td style="padding: 15px 0; border-top: 2px solid #2D4A3E;">${texts.total}:</td>
               <td style="padding: 15px 0; border-top: 2px solid #2D4A3E; text-align: right; color: #2D4A3E;">€${total.toFixed(2)}</td>
             </tr>
           </table>
         </div>
       </div>
-      
+
       <!-- Shipping Address -->
       <div style="${emailStyles.infoBox}">
-        <h3 style="color: #2D4A3E; margin-top: 0;">Shipping Address</h3>
+        <h3 style="color: #2D4A3E; margin-top: 0;">${texts.shippingAddress}</h3>
         <p style="margin: 0; line-height: 1.8;">
           ${customer.name}<br>
           ${customer.address}<br>
           ${customer.city}, ${customer.postalCode}<br>
           ${customer.country}
         </p>
-        ${customer.phone ? `<p style="margin: 15px 0 0;"><strong>Phone:</strong> ${customer.phone}</p>` : ''}
+        ${customer.phone ? `<p style="margin: 15px 0 0;"><strong>${texts.phone}:</strong> ${customer.phone}</p>` : ''}
       </div>
-      
+
       <!-- Payment Method -->
       <div style="${emailStyles.infoBox}">
-        <h3 style="color: #2D4A3E; margin-top: 0;">Payment Method</h3>
+        <h3 style="color: #2D4A3E; margin-top: 0;">${texts.paymentMethodTitle}</h3>
         <p style="margin: 0;">
-          ${paymentMethod === 'bank_transfer' ? '🏦 Bank Transfer' : 
-            paymentMethod === 'card' ? '💳 Credit/Debit Card' : 
+          ${paymentMethod === 'bank_transfer' ? `🏦 ${texts.bankTransfer}` :
+            paymentMethod === 'card' ? `💳 ${texts.creditDebitCard}` :
             paymentMethod}
         </p>
         ${paymentMethod === 'bank_transfer' ? `
           <div style="background-color: #fff; padding: 15px; border-radius: 4px; margin-top: 15px; border-left: 3px solid #2D4A3E;">
-            <p style="margin: 0 0 10px; font-weight: bold;">Bank Transfer Details:</p>
+            <p style="margin: 0 0 10px; font-weight: bold;">${texts.bankTransferDetailsTitle}</p>
             <p style="margin: 0; font-size: 14px; line-height: 1.8;">
-              Please transfer the total amount to:<br>
-              <strong>IBAN:</strong> [Bank details will be provided]<br>
-              <strong>Reference:</strong> ${orderNumber}
+              ${texts.bankTransferInstructions}<br>
+              <strong>${texts.iban}</strong> ${texts.ibanPending}<br>
+              <strong>${texts.reference}</strong> ${orderNumber}
             </p>
           </div>
         ` : ''}
       </div>
-      
+
       ${customerNotes ? `
         <!-- Customer Notes -->
         <div style="${emailStyles.contentBox}">
-          <h3 style="color: #2D4A3E; margin-top: 0;">Your Notes</h3>
+          <h3 style="color: #2D4A3E; margin-top: 0;">${texts.yourNotes}</h3>
           <p style="margin: 0; line-height: 1.6; font-style: italic;">"${customerNotes}"</p>
         </div>
       ` : ''}
-      
+
       <!-- Next Steps -->
       <div style="${emailStyles.contentBox}">
-        <h3 style="color: #2D4A3E; margin-top: 0;">What's Next?</h3>
+        <h3 style="color: #2D4A3E; margin-top: 0;">${texts.whatsNext}</h3>
         <ol style="margin: 0; padding-left: 20px; line-height: 2;">
-          <li>We'll review your order and confirm availability</li>
-          <li>You'll receive payment instructions (if bank transfer)</li>
-          <li>Once payment is confirmed, we'll prepare your artwork for shipping</li>
-          <li>You'll receive tracking information when shipped</li>
+          <li>${texts.step1}</li>
+          <li>${texts.step2}</li>
+          <li>${texts.step3}</li>
+          <li>${texts.step4}</li>
         </ol>
       </div>
-      
+
       <!-- Contact Info -->
       <div style="text-align: center; margin: 30px 0; padding: 20px; background-color: #F5F3F0; border-radius: 8px;">
-        <p style="margin: 0 0 10px; color: #6B7280;">Questions about your order?</p>
+        <p style="margin: 0 0 10px; color: #6B7280;">${texts.questions}</p>
         <a href="mailto:${process.env.CONTACT_EMAIL || process.env.EMAIL_ADMIN}" style="color: #2D4A3E; font-weight: bold;">
-          Contact Us
+          ${texts.contactUs}
         </a>
       </div>
       
@@ -333,6 +576,109 @@ export const sendOrderConfirmationEmail = async (order) => {
         ${getEmailFooter()}
       </div>
     `,
+  });
+};
+
+// ============================================
+// REFUND EMAILS
+// ============================================
+
+// Notify the customer that their refund has been processed, in their locale
+export const sendRefundConfirmationEmail = async (order) => {
+  const { orderNumber, customer, locale, refund } = order;
+  const texts = getEmailTexts(locale).refundConfirmation;
+
+  const methodLabel = texts.methodNames[refund.method] || refund.method;
+  const formattedDate = new Date(refund.date).toLocaleDateString(locale || 'en');
+
+  const emailSubject = `${texts.subjectPrefix} #${orderNumber} - Minna Kattelus Art Gallery`;
+
+  const htmlContent = `
+    <div style="${emailStyles.container}">
+      <div style="text-align: center; margin-bottom: 30px;">
+        <div style="width: 60px; height: 60px; background-color: #10b981; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+          <span style="color: white; font-size: 30px;">✓</span>
+        </div>
+        <h1 style="${emailStyles.heading}">${texts.title}</h1>
+        <p style="color: #6B7280; font-size: 16px;">${texts.intro}</p>
+      </div>
+
+      <div style="background-color: #2D4A3E; color: white; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 30px;">
+        <p style="margin: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">${texts.orderNumberLabel}</p>
+        <p style="margin: 10px 0 0; font-size: 24px; font-weight: bold;">${orderNumber}</p>
+      </div>
+
+      <div style="${emailStyles.infoBox}">
+        <p style="${emailStyles.label}"><strong>${texts.amount}:</strong> €${Number(refund.amount).toFixed(2)}</p>
+        <p style="${emailStyles.label}"><strong>${texts.date}:</strong> ${formattedDate}</p>
+        <p style="${emailStyles.label}"><strong>${texts.method}:</strong> ${methodLabel}</p>
+        <p style="${emailStyles.label}"><strong>${texts.reference}:</strong> ${refund.reference}</p>
+        ${refund.notes ? `<p style="${emailStyles.label}"><strong>${texts.notes}:</strong> ${refund.notes}</p>` : ''}
+      </div>
+
+      <div style="text-align: center; margin: 30px 0; padding: 20px; background-color: #F5F3F0; border-radius: 8px;">
+        <p style="margin: 0 0 10px; color: #6B7280;">${texts.questions}</p>
+        <a href="mailto:${process.env.CONTACT_EMAIL || process.env.EMAIL_ADMIN}" style="color: #2D4A3E; font-weight: bold;">
+          ${texts.contactUs}
+        </a>
+      </div>
+
+      ${getEmailFooter()}
+    </div>
+  `;
+
+  const transporter = createTransporter();
+
+  await transporter.sendMail({
+    from: `"Minna Kattelus Art Gallery" <${process.env.EMAIL_FROM}>`,
+    to: customer.email,
+    subject: emailSubject,
+    html: htmlContent,
+  });
+};
+
+// Notify the admin (CONTACT_EMAIL) that a refund was registered - internal use, English only
+export const sendRefundNotificationEmail = async (order, processedBy) => {
+  const { orderNumber, customer, refund } = order;
+  const formattedDate = new Date(refund.date).toLocaleDateString('en');
+
+  const htmlContent = `
+    <div style="${emailStyles.container}">
+      <h1 style="${emailStyles.heading}">💸 Refund Registered</h1>
+
+      <div style="background-color: #10b981; color: white; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 30px;">
+        <p style="margin: 0; font-size: 14px;">Refund Amount</p>
+        <p style="margin: 10px 0 0; font-size: 32px; font-weight: bold;">€${Number(refund.amount).toFixed(2)}</p>
+      </div>
+
+      <div style="${emailStyles.infoBox}">
+        <p style="${emailStyles.label}"><strong>Order Number:</strong> ${orderNumber}</p>
+        <p style="${emailStyles.label}"><strong>Customer:</strong> ${customer.name}</p>
+        <p style="${emailStyles.label}"><strong>Email:</strong> <a href="mailto:${customer.email}">${customer.email}</a></p>
+        <p style="${emailStyles.label}"><strong>Refund Date:</strong> ${formattedDate}</p>
+        <p style="${emailStyles.label}"><strong>Method:</strong> ${refund.method}</p>
+        <p style="${emailStyles.label}"><strong>Reference:</strong> ${refund.reference}</p>
+        ${refund.notes ? `<p style="${emailStyles.label}"><strong>Notes:</strong> ${refund.notes}</p>` : ''}
+        <p style="${emailStyles.label}"><strong>Processed By:</strong> ${processedBy?.username || processedBy?.email || 'Unknown'}</p>
+      </div>
+
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${process.env.CLIENT_URL}/en/dashboard/orders/${order._id || orderNumber}" style="${emailStyles.button}">
+          View Order in Dashboard
+        </a>
+      </div>
+
+      ${getEmailFooter()}
+    </div>
+  `;
+
+  const transporter = createTransporter();
+
+  await transporter.sendMail({
+    from: `"Refund Notification" <${process.env.EMAIL_FROM}>`,
+    to: process.env.CONTACT_EMAIL || process.env.EMAIL_ADMIN,
+    subject: `💸 Refund Registered - Order #${orderNumber} - €${Number(refund.amount).toFixed(2)}`,
+    html: htmlContent,
   });
 };
 
