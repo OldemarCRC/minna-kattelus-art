@@ -41,6 +41,7 @@ export const sendContactMessage = async (req, res, next) => {
     const sanitizedName = sanitizeInput(name);
     const sanitizedEmail = sanitizeInput(email);
     const sanitizedMessage = sanitizeInput(message || '');
+    const sanitizedSubject = sanitizeInput(subject || '');
 
     // Validar campos requeridos
     if (!sanitizedName || !sanitizedEmail) {
@@ -82,7 +83,7 @@ export const sendContactMessage = async (req, res, next) => {
     let emailData = {
       name: sanitizedName,
       email: sanitizedEmail,
-      subject: subject || 'Contact Form Submission',
+      subject: sanitizedSubject || 'Contact Form Submission',
       message: sanitizedMessage
     };
 
